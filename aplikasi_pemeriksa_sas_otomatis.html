@@ -1,0 +1,1621 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAS Grader AI - Pemeriksa Lembar Jawaban & Rekap Nilai</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            900: '#1e3a8a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased min-h-screen flex flex-col">
+
+    <!-- Top Navigation Bar -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center gap-3">
+                    <div class="bg-primary-600 text-white p-2.5 rounded-xl shadow-md">
+                        <i class="fa-solid fa-file-signature text-xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-lg sm:text-xl font-bold text-slate-900 leading-tight">SAS Grader <span class="text-primary-600">AI</span></h1>
+                        <p class="text-[11px] text-slate-500 hidden sm:block">Sistem Koreksi Otomatis Umum &bull; Dev: <span class="font-semibold text-slate-700">Asep Jamhur, S.Pd., M.M.</span></p>
+                    </div>
+                </div>
+
+                <!-- Navigation Tabs -->
+                <nav class="flex space-x-1 sm:space-x-2 bg-slate-100 p-1 rounded-xl">
+                    <button onclick="switchTab('kunci')" id="tab-btn-kunci" class="tab-btn px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all bg-white text-primary-600 shadow-sm flex items-center gap-2">
+                        <i class="fa-solid fa-key"></i>
+                        <span>1. Kunci & Rubrik</span>
+                    </button>
+                    <button onclick="switchTab('periksa')" id="tab-btn-periksa" class="tab-btn px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all text-slate-600 hover:text-slate-900 flex items-center gap-2">
+                        <i class="fa-solid fa-camera"></i>
+                        <span>2. Foto & Koreksi</span>
+                    </button>
+                    <button onclick="switchTab('rekap')" id="tab-btn-rekap" class="tab-btn px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all text-slate-600 hover:text-slate-900 flex items-center gap-2">
+                        <i class="fa-solid fa-table-list"></i>
+                        <span>3. Rekap Nilai</span>
+                        <span id="badge-rekap" class="bg-primary-600 text-white text-[10px] px-1.5 py-0.5 rounded-full">0</span>
+                    </button>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Custom Toast / Notification Banner (Pengganti alert) -->
+    <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 max-w-sm w-full pointer-events-none px-4 sm:px-0"></div>
+
+    <!-- Main Content Area -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+
+        <!-- ========================================== -->
+        <!-- TAB 1: PENGATURAN KUNCI JAWABAN & RUBRIK   -->
+        <!-- ========================================== -->
+        <section id="tab-kunci" class="tab-content space-y-6">
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 sm:p-6">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-4 mb-5">
+                    <div>
+                        <h2 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+                            <i class="fa-solid fa-sliders text-primary-600"></i> Pengaturan Ujian & Kunci Jawaban
+                        </h2>
+                        <p class="text-sm text-slate-500 mt-0.5">Isi kunci jawaban dengan teliti. Sistem akan mengoreksi 100% berpatokan pada aturan di bawah ini.</p>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <button onclick="loadSampleData()" class="px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-semibold transition flex items-center gap-1.5">
+                            <i class="fa-solid fa-wand-magic-sparkles text-amber-500"></i> Isi Contoh Soal
+                        </button>
+                        <button onclick="saveAnswerKey()" class="px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-xl text-xs sm:text-sm font-semibold shadow-sm transition flex items-center gap-1.5">
+                            <i class="fa-solid fa-floppy-disk"></i> Simpan Kunci Jawaban
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Identitas Ujian -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5">Nama Guru / Pemeriksa</label>
+                        <input type="text" id="exam-teacher" placeholder="Nama lengkap & gelar guru..." class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5">Mata Pelajaran</label>
+                        <input type="text" id="exam-subject" placeholder="Semua Mapel (Contoh: Matematika / B. Indo)" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5">Satuan Pendidikan / Kelas</label>
+                        <input type="text" id="exam-class" placeholder="Contoh: SMPN 1 / Kelas VII-A" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5">KKM / Kriteria Ketuntasan</label>
+                        <input type="number" id="exam-kkm" value="75" min="0" max="100" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition">
+                    </div>
+                </div>
+
+                <!-- Pengaturan Bobot Nilai -->
+                <div class="bg-blue-50/70 border border-blue-100 rounded-xl p-4 mb-6">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
+                        <span class="text-sm font-bold text-blue-900 flex items-center gap-2">
+                            <i class="fa-solid fa-calculator text-blue-600"></i> Konfigurasi Bobot Skor (Total Maksimal: 100 Poin)
+                        </span>
+                        <span id="weight-status" class="text-xs font-bold px-2.5 py-1 rounded-lg bg-emerald-100 text-emerald-700">Total Bobot: 100%</span>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-medium text-slate-700 mb-1">Bobot Total Pilihan Ganda (%)</label>
+                            <input type="number" id="weight-pg" value="60" min="0" max="100" oninput="updateWeightValidation()" class="w-full px-3 py-2 bg-white border border-blue-200 rounded-lg text-sm font-semibold text-slate-800">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-slate-700 mb-1">Bobot Total Esai / Uraian (%)</label>
+                            <input type="number" id="weight-essay" value="40" min="0" max="100" oninput="updateWeightValidation()" class="w-full px-3 py-2 bg-white border border-blue-200 rounded-lg text-sm font-semibold text-slate-800">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dua Kolom: Pilihan Ganda & Esai -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    
+                    <!-- Kolom Pilihan Ganda -->
+                    <div class="border border-slate-200 rounded-2xl p-4 bg-slate-50/50 flex flex-col">
+                        <div class="flex items-center justify-between mb-3">
+                            <h3 class="font-bold text-slate-800 flex items-center gap-2">
+                                <span class="w-6 h-6 rounded-lg bg-primary-100 text-primary-700 flex items-center justify-center text-xs font-bold">A</span>
+                                Kunci Pilihan Ganda (PG)
+                            </h3>
+                            <span id="pg-count-badge" class="text-xs font-semibold bg-slate-200 text-slate-700 px-2.5 py-1 rounded-lg">0 Soal</span>
+                        </div>
+                        
+                        <p class="text-xs text-slate-500 mb-3">Masukkan kunci berurutan (Contoh: <code class="bg-white px-1.5 py-0.5 rounded border text-primary-700 font-mono">1.A, 2.B, 3.C</code> atau cukup <code class="bg-white px-1.5 py-0.5 rounded border text-primary-700 font-mono">ABCDABCD...</code>)</p>
+                        
+                        <textarea id="pg-key-input" rows="4" oninput="parsePGPreview()" placeholder="Ketik kunci jawaban PG di sini...&#10;Contoh: 1.A, 2.C, 3.B, 4.D, 5.A&#10;Atau: ACBDA" class="w-full p-3 bg-white border border-slate-300 rounded-xl text-sm font-mono focus:ring-2 focus:ring-primary-500 outline-none mb-3"></textarea>
+                        
+                        <!-- Preview Grid PG -->
+                        <div class="bg-white border border-slate-200 rounded-xl p-3 flex-grow">
+                            <div class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider mb-2">Pratinjau Kunci Terdeteksi:</div>
+                            <div id="pg-preview-grid" class="flex flex-wrap gap-1.5 max-h-48 overflow-y-auto">
+                                <span class="text-xs text-slate-400 italic">Belum ada kunci PG dimasukkan...</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Kolom Esai / Uraian -->
+                    <div class="border border-slate-200 rounded-2xl p-4 bg-slate-50/50 flex flex-col">
+                        <div class="flex items-center justify-between mb-3">
+                            <h3 class="font-bold text-slate-800 flex items-center gap-2">
+                                <span class="w-6 h-6 rounded-lg bg-indigo-100 text-indigo-700 flex items-center justify-center text-xs font-bold">B</span>
+                                Kunci & Rubrik Esai / Uraian
+                            </h3>
+                            <button onclick="addEssayRow()" class="px-2.5 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-semibold transition flex items-center gap-1">
+                                <i class="fa-solid fa-plus"></i> Tambah Esai
+                            </button>
+                        </div>
+                        <p class="text-xs text-slate-500 mb-3">Tuliskan jawaban inti / kata kunci wajib dan skor maksimal tiap nomor esai agar AI menilai secara objektif tanpa meleset.</p>
+                        
+                        <div id="essay-list-container" class="space-y-3 max-h-[320px] overflow-y-auto pr-1">
+                            <!-- Item esai akan di-render di sini -->
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- TAB 2: KAMERA / UNGGAH & KOREKSI LEMBAR    -->
+        <!-- ========================================== -->
+        <section id="tab-periksa" class="tab-content hidden space-y-6">
+            
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                
+                <!-- Panel Kiri: Input Foto Lembar Jawaban -->
+                <div class="lg:col-span-5 space-y-4">
+                    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5">
+                        <h2 class="text-base font-bold text-slate-900 mb-1 flex items-center gap-2">
+                            <i class="fa-solid fa-camera-retro text-primary-600"></i> Ambil / Unggah Foto Jawaban
+                        </h2>
+                        <p class="text-xs text-slate-500 mb-4">Pastikan tulisan nama siswa, nomor soal, silangan/lingkaran PG, dan tulisan esai terlihat terang & jelas.</p>
+
+                        <!-- Tombol Aksi Kamera / Galeri -->
+                        <div class="grid grid-cols-2 gap-3 mb-4">
+                            <button type="button" onclick="openLiveCamera()" class="cursor-pointer flex flex-col items-center justify-center p-4 border-2 border-dashed border-primary-300 bg-primary-50/50 hover:bg-primary-50 rounded-2xl transition text-center group">
+                                <div class="w-10 h-10 rounded-full bg-primary-100 text-primary-600 flex items-center justify-center mb-2 group-hover:scale-110 transition">
+                                    <i class="fa-solid fa-camera text-lg"></i>
+                                </div>
+                                <span class="text-xs font-bold text-primary-800">Buka Kamera</span>
+                                <span class="text-[10px] text-primary-600 mt-0.5">Langsung Foto Kertas</span>
+                            </button>
+
+                            <label for="gallery-input" class="cursor-pointer flex flex-col items-center justify-center p-4 border-2 border-dashed border-slate-300 bg-slate-50 hover:bg-slate-100 rounded-2xl transition text-center group">
+                                <div class="w-10 h-10 rounded-full bg-slate-200 text-slate-700 flex items-center justify-center mb-2 group-hover:scale-110 transition">
+                                    <i class="fa-solid fa-images text-lg"></i>
+                                </div>
+                                <span class="text-xs font-bold text-slate-800">Pilih File / Galeri</span>
+                                <span class="text-[10px] text-slate-500 mt-0.5">Bisa Pilih Banyak Halaman</span>
+                                <input type="file" id="gallery-input" accept="image/*" multiple class="hidden" onchange="handleImageUpload(event)">
+                            </label>
+                        </div>
+
+                        <!-- Input Cadangan jika browser memblokir akses WebRTC langsung -->
+                        <input type="file" id="fallback-camera-input" accept="image/*" capture="environment" class="hidden" onchange="handleImageUpload(event)">
+                        <div id="uploaded-images-wrapper" class="hidden space-y-3 mb-4">
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs font-semibold text-slate-700">Foto Lembar Jawaban (<span id="image-count">0</span> Halaman):</span>
+                                <button onclick="clearImages()" class="text-xs text-red-600 hover:underline font-medium">Hapus Semua</button>
+                            </div>
+                            <div id="image-preview-list" class="grid grid-cols-2 gap-2 max-h-60 overflow-y-auto p-1">
+                                <!-- Thumbnail gambar muncul di sini -->
+                            </div>
+                        </div>
+
+                        <!-- Opsional: Input Manual Nama jika tulisan siswa sulit dibaca -->
+                        <div class="mb-4">
+                            <label class="block text-xs font-semibold text-slate-700 mb-1">Nama Siswa (Opsional - Otomatis dibaca dari foto)</label>
+                            <input type="text" id="manual-student-name" placeholder="Kosongkan agar AI membaca nama di kertas..." class="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs focus:ring-2 focus:ring-primary-500 outline-none">
+                        </div>
+
+                        <!-- Tombol Mulai Koreksi -->
+                        <button id="btn-analyze" onclick="analyzeStudentSheet()" disabled class="w-full py-3.5 px-4 bg-primary-600 hover:bg-primary-700 disabled:bg-slate-300 disabled:cursor-not-allowed text-white font-bold rounded-xl shadow-md transition flex items-center justify-center gap-2 text-sm">
+                            <i class="fa-solid fa-microchip"></i>
+                            <span>Periksa & Hitung Nilai Sekarang</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Panel Kanan: Hasil Koreksi Detail & Verifikasi Guru -->
+                <div class="lg:col-span-7">
+                    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 min-h-[450px] flex flex-col">
+                        
+                        <!-- State Kosong -->
+                        <div id="result-empty-state" class="flex-grow flex flex-col items-center justify-center text-center p-6">
+                            <div class="w-16 h-16 rounded-2xl bg-slate-100 text-slate-400 flex items-center justify-center mb-3 text-2xl">
+                                <i class="fa-solid fa-magnifying-glass-chart"></i>
+                            </div>
+                            <h3 class="text-base font-bold text-slate-700">Belum Ada Lembar Diperiksa</h3>
+                            <p class="text-xs text-slate-500 max-w-sm mt-1">Foto atau unggah lembar jawaban siswa di sebelah kiri, lalu klik tombol periksa untuk melihat rincian koreksi PG dan Esai secara presisi.</p>
+                        </div>
+
+                        <!-- State Loading -->
+                        <div id="result-loading-state" class="hidden flex-grow flex flex-col items-center justify-center text-center p-6">
+                            <div class="relative w-16 h-16 mb-4">
+                                <div class="absolute inset-0 border-4 border-primary-100 rounded-full"></div>
+                                <div class="absolute inset-0 border-4 border-primary-600 rounded-full border-t-transparent animate-spin"></div>
+                                <i class="fa-solid fa-eye text-primary-600 absolute inset-0 flex items-center justify-center text-lg"></i>
+                            </div>
+                            <h3 class="text-base font-bold text-slate-800">Sedang Memindai & Mengoreksi Jawaban...</h3>
+                            <p class="text-xs text-slate-500 max-w-sm mt-1">AI sedang membaca tulisan tangan, mencocokkan kunci Pilihan Ganda, dan mengevaluasi rubrik Esai secara teliti.</p>
+                        </div>
+
+                        <!-- State Hasil Koreksi -->
+                        <div id="result-content-state" class="hidden space-y-5">
+                            
+                            <!-- Header Kartu Nilai Siswa -->
+                            <div class="bg-gradient-to-r from-slate-900 to-slate-800 text-white rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-md">
+                                <div class="space-y-1.5 flex-grow">
+                                    <div class="flex items-center gap-2">
+                                        <span class="text-[10px] uppercase tracking-wider bg-white/15 px-2 py-0.5 rounded font-semibold">Hasil Koreksi Terverifikasi</span>
+                                        <span id="res-kkm-badge" class="text-[10px] uppercase tracking-wider bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2 py-0.5 rounded font-bold">TUNTAS</span>
+                                    </div>
+                                    <div class="flex flex-col sm:flex-row sm:items-center gap-2 pt-1">
+                                        <input type="text" id="res-student-name" class="bg-white/10 border border-white/20 rounded-lg px-2.5 py-1 text-base font-bold text-white focus:outline-none focus:border-primary-400" placeholder="Nama Siswa">
+                                        <input type="text" id="res-student-class" class="bg-white/10 border border-white/20 rounded-lg px-2.5 py-1 text-xs text-slate-200 w-32 focus:outline-none focus:border-primary-400" placeholder="Kelas / No. Absen">
+                                    </div>
+                                </div>
+
+                                <div class="flex items-center gap-4 bg-white/10 rounded-xl p-3 border border-white/10">
+                                    <div class="text-right">
+                                        <div class="text-[11px] text-slate-300">Nilai Akhir</div>
+                                        <div id="res-total-score" class="text-3xl font-extrabold text-amber-400 leading-none mt-0.5">0</div>
+                                    </div>
+                                    <div class="h-10 w-[1px] bg-white/20"></div>
+                                    <div class="text-xs space-y-1 text-slate-200">
+                                        <div>PG: <strong id="res-pg-score-summary" class="text-white">0</strong></div>
+                                        <div>Esai: <strong id="res-essay-score-summary" class="text-white">0</strong></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Catatan Koreksi Umum AI -->
+                            <div id="res-general-note" class="bg-amber-50 border border-amber-200 rounded-xl p-3 text-xs text-amber-900 flex items-start gap-2.5">
+                                <i class="fa-solid fa-circle-info text-amber-600 mt-0.5"></i>
+                                <span id="res-general-note-text">Pemeriksaan selesai. Anda dapat mengklik jawaban di bawah ini jika ingin melakukan koreksi manual sebelum menyimpan ke rekap.</span>
+                            </div>
+
+                            <!-- Rincian Koreksi Pilihan Ganda (Interaktif / Bisa Dikoreksi Manual) -->
+                            <div>
+                                <div class="flex items-center justify-between mb-2">
+                                    <h4 class="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
+                                        <i class="fa-solid fa-list-check text-primary-600"></i> Rincian Pilihan Ganda
+                                        <span class="text-[10px] font-normal text-slate-400">(Klik item untuk ubah status benar/salah jika perlu)</span>
+                                    </h4>
+                                    <span id="res-pg-fraction" class="text-xs font-bold text-primary-700 bg-primary-50 px-2.5 py-0.5 rounded-lg">Benar: 0 / 0</span>
+                                </div>
+                                <div id="res-pg-grid" class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 gap-2 max-h-56 overflow-y-auto p-1">
+                                    <!-- Item PG rendered here -->
+                                </div>
+                            </div>
+
+                            <!-- Rincian Koreksi Esai (Dengan Input Override Skor) -->
+                            <div>
+                                <div class="flex items-center justify-between mb-2">
+                                    <h4 class="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
+                                        <i class="fa-solid fa-pen-nib text-indigo-600"></i> Rincian Penilaian Esai
+                                    </h4>
+                                    <span id="res-essay-fraction" class="text-xs font-bold text-indigo-700 bg-indigo-50 px-2.5 py-0.5 rounded-lg">Poin: 0 / 0</span>
+                                </div>
+                                <div id="res-essay-list" class="space-y-3">
+                                    <!-- Item Esai rendered here -->
+                                </div>
+                            </div>
+
+                            <!-- Tombol Simpan ke Rekap Nilai -->
+                            <div class="pt-3 border-t border-slate-200 flex flex-col sm:flex-row gap-3 justify-end">
+                                <button onclick="resetAnalysisView()" class="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-bold transition">
+                                    Batal / Foto Ulang
+                                </button>
+                                <button onclick="commitResultToRecap()" class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs sm:text-sm font-bold shadow-sm transition flex items-center justify-center gap-2">
+                                    <i class="fa-solid fa-check-double"></i>
+                                    <span>Simpan Nilai ke Daftar Rekap</span>
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- TAB 3: REKAPITULASI NILAI & EKSPOR EXCEL   -->
+        <!-- ========================================== -->
+        <section id="tab-rekap" class="tab-content hidden space-y-6">
+            
+            <!-- Statistik Ringkas Kelas -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
+                    <div class="text-xs text-slate-500 font-medium">Total Siswa Diperiksa</div>
+                    <div id="stat-total-students" class="text-2xl font-extrabold text-slate-900 mt-1">0</div>
+                </div>
+                <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
+                    <div class="text-xs text-slate-500 font-medium">Rata-Rata Kelas</div>
+                    <div id="stat-avg-score" class="text-2xl font-extrabold text-primary-600 mt-1">0.0</div>
+                </div>
+                <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
+                    <div class="text-xs text-slate-500 font-medium">Nilai Tertinggi</div>
+                    <div id="stat-max-score" class="text-2xl font-extrabold text-emerald-600 mt-1">0</div>
+                </div>
+                <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
+                    <div class="text-xs text-slate-500 font-medium">Tuntas KKM</div>
+                    <div id="stat-pass-rate" class="text-2xl font-extrabold text-indigo-600 mt-1">0%</div>
+                </div>
+            </div>
+
+            <!-- Tabel Rekap Nilai -->
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                <div class="p-5 border-b border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div>
+                        <h2 class="text-base font-bold text-slate-900 flex items-center gap-2">
+                            <i class="fa-solid fa-table text-primary-600"></i> Rekapitulasi Nilai SAS Siswa
+                        </h2>
+                        <p id="recap-subtitle" class="text-xs text-slate-500 mt-0.5">Daftar nilai hasil koreksi otomatis yang telah diverifikasi.</p>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <button onclick="exportToCSV()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold shadow-sm transition flex items-center gap-1.5">
+                            <i class="fa-solid fa-file-excel"></i> Unduh Rekap Excel (.CSV)
+                        </button>
+                        <button onclick="confirmClearRecap()" class="px-3 py-2 bg-red-50 hover:bg-red-100 text-red-600 rounded-xl text-xs font-semibold transition flex items-center gap-1.5">
+                            <i class="fa-solid fa-trash-can"></i> Hapus Semua
+                        </button>
+                    </div>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-slate-50 border-b border-slate-200 text-[11px] font-bold uppercase tracking-wider text-slate-600">
+                                <th class="py-3 px-4 text-center w-12">No</th>
+                                <th class="py-3 px-4">Nama Siswa</th>
+                                <th class="py-3 px-4">Kelas</th>
+                                <th class="py-3 px-4 text-center">PG Benar</th>
+                                <th class="py-3 px-4 text-center">Skor PG</th>
+                                <th class="py-3 px-4 text-center">Skor Esai</th>
+                                <th class="py-3 px-4 text-center">Nilai Akhir</th>
+                                <th class="py-3 px-4 text-center">Status</th>
+                                <th class="py-3 px-4 text-right">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="recap-table-body" class="divide-y divide-slate-100 text-sm">
+                            <!-- Baris data siswa akan dirender di sini -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer Resmi Pengembang -->
+    <footer class="bg-white border-t border-slate-200 py-4 mt-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-slate-500">
+            <div>
+                <span class="font-bold text-slate-700">SAS Grader AI</span> &mdash; Aplikasi Pemeriksa Lembar Jawaban Otomatis untuk Umum
+            </div>
+            <div>
+                Dikembangkan oleh: <span class="font-bold text-primary-700">Asep Jamhur, S.Pd., M.M.</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal Kamera Langsung (Live Camera Viewfinder) -->
+    <div id="live-camera-modal" class="fixed inset-0 bg-slate-950/95 z-50 hidden flex-col justify-between p-4">
+        <div class="flex items-center justify-between text-white max-w-2xl w-full mx-auto pt-2">
+            <div class="flex items-center gap-2">
+                <i class="fa-solid fa-camera text-primary-400"></i>
+                <span class="text-sm font-bold">Kamera Lembar Jawaban SAS</span>
+            </div>
+            <div class="flex items-center gap-2">
+                <button type="button" onclick="switchCameraFacing()" class="px-3 py-1.5 bg-white/15 hover:bg-white/25 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition">
+                    <i class="fa-solid fa-camera-rotate"></i> Ganti Kamera
+                </button>
+                <button type="button" onclick="closeLiveCamera()" class="w-8 h-8 rounded-lg bg-red-600/80 hover:bg-red-600 flex items-center justify-center text-white transition">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="relative max-w-2xl w-full mx-auto my-auto flex items-center justify-center overflow-hidden rounded-2xl border-2 border-white/20 bg-black aspect-[3/4] max-h-[68vh]">
+            <video id="camera-video-stream" autoplay playsinline muted class="w-full h-full object-cover"></video>
+            
+            <!-- Indikator Memuat Kamera / Peringatan jika Preview Memblokir Video -->
+            <div id="camera-loading-overlay" class="absolute inset-0 bg-slate-900/90 flex flex-col items-center justify-center text-center p-6 z-10">
+                <div class="w-10 h-10 border-4 border-primary-500 border-t-transparent rounded-full animate-spin mb-3"></div>
+                <p id="camera-status-text" class="text-xs font-semibold text-white">Menghubungkan ke lensa kamera...</p>
+                <p class="text-[11px] text-slate-400 mt-1 max-w-xs">Jika layar tetap gelap (karena pembatasan izin kamera pada browser/preview), gunakan tombol Kamera Bawaan di bawah.</p>
+            </div>
+
+            <!-- Garis bantu bingkai kertas -->
+            <div class="absolute inset-6 border-2 border-dashed border-primary-400/70 rounded-xl pointer-events-none flex items-end justify-center pb-3 z-20">
+                <span class="bg-slate-900/75 text-white text-[11px] px-3 py-1 rounded-full">Posisikan lembar jawaban di dalam bingkai</span>
+            </div>
+        </div>
+
+        <div class="max-w-2xl w-full mx-auto pb-4 flex flex-col items-center gap-3">
+            <div class="flex items-center justify-center gap-6">
+                <button type="button" onclick="triggerNativeCamera()" class="px-4 py-2.5 bg-white/15 hover:bg-white/25 text-white rounded-xl text-xs font-bold flex items-center gap-2 border border-white/20 transition">
+                    <i class="fa-solid fa-mobile-screen-button"></i> Kamera Bawaan HP
+                </button>
+                <button type="button" onclick="capturePhotoFromStream()" class="w-16 h-16 rounded-full bg-white border-4 border-primary-500 shadow-lg flex items-center justify-center active:scale-95 transition">
+                    <div class="w-12 h-12 rounded-full bg-primary-600 flex items-center justify-center text-white">
+                        <i class="fa-solid fa-camera text-xl"></i>
+                    </div>
+                </button>
+            </div>
+            <span class="text-xs text-slate-300">Tekan tombol bulat untuk memotret, atau pilih <strong>Kamera Bawaan HP</strong> jika layar gelap</span>
+        </div>
+    </div>
+
+    <!-- Modal Detail / Konfirmasi Hapus -->
+    <div id="custom-modal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-xs z-50 hidden items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-lg w-full p-6 shadow-xl border border-slate-200 space-y-4">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                <h3 id="modal-title" class="text-base font-bold text-slate-900">Detail Jawaban Siswa</h3>
+                <button onclick="closeModal()" class="text-slate-400 hover:text-slate-700"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <div id="modal-body" class="text-xs text-slate-600 max-h-96 overflow-y-auto space-y-3"></div>
+            <div id="modal-footer" class="pt-3 border-t border-slate-100 flex justify-end gap-2">
+                <button onclick="closeModal()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-bold">Tutup</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ==========================================
+        // KONFIGURASI API & STATE UTAMA APLIKASI
+        // ==========================================
+        const apiKey = ""; // Otomatis diisi oleh lingkungan runtime
+        const GEMINI_MODEL = "gemini-3-flash-preview";
+
+        let appState = {
+            examInfo: {
+                teacherName: "",
+                subject: "",
+                className: "",
+                kkm: 75,
+                weightPG: 60,
+                weightEssay: 40
+            },
+            pgKeys: {}, // Format: { 1: 'A', 2: 'B', ... }
+            essayKeys: [
+                { number: 1, keyText: "", maxScore: 10 }
+            ],
+            uploadedImages: [], // Array of { base64, mimeType, previewUrl }
+            currentAnalysis: null,
+            recapList: []
+        };
+
+        // ==========================================
+        // INISIALISASI & PENYIMPANAN LOKAL (LOCALSTORAGE)
+        // ==========================================
+        window.onload = function () {
+            loadFromLocalStorage();
+            renderEssayRows();
+            parsePGPreview();
+            updateWeightValidation();
+            renderRecapTable();
+        };
+
+        function saveToLocalStorage() {
+            try {
+                const dataToSave = {
+                    examInfo: appState.examInfo,
+                    pgKeys: appState.pgKeys,
+                    essayKeys: appState.essayKeys,
+                    recapList: appState.recapList
+                };
+                localStorage.setItem('sas_grader_ai_data_v1', JSON.stringify(dataToSave));
+            } catch (e) {
+                console.warn("Gagal menyimpan ke localStorage:", e);
+            }
+        }
+
+        function loadFromLocalStorage() {
+            try {
+                const saved = localStorage.getItem('sas_grader_ai_data_v1');
+                if (saved) {
+                    const parsed = JSON.parse(saved);
+                    if (parsed.examInfo) appState.examInfo = { ...appState.examInfo, ...parsed.examInfo };
+                    if (parsed.pgKeys) appState.pgKeys = parsed.pgKeys;
+                    if (parsed.essayKeys && parsed.essayKeys.length > 0) appState.essayKeys = parsed.essayKeys;
+                    if (parsed.recapList) appState.recapList = parsed.recapList;
+
+                    // Sinkronkan ke form input
+                    document.getElementById('exam-teacher').value = appState.examInfo.teacherName || "";
+                    document.getElementById('exam-subject').value = appState.examInfo.subject || "";
+                    document.getElementById('exam-class').value = appState.examInfo.className || "";
+                    document.getElementById('exam-kkm').value = appState.examInfo.kkm ?? 75;
+                    document.getElementById('weight-pg').value = appState.examInfo.weightPG ?? 60;
+                    document.getElementById('weight-essay').value = appState.examInfo.weightEssay ?? 40;
+
+                    // Rekonstruksi teks kunci PG
+                    const pgEntries = Object.entries(appState.pgKeys).sort((a, b) => Number(a[0]) - Number(b[0]));
+                    if (pgEntries.length > 0) {
+                        document.getElementById('pg-key-input').value = pgEntries.map(([num, ans]) => `${num}.${ans}`).join(', ');
+                    }
+                }
+            } catch (e) {
+                console.warn("Gagal memuat dari localStorage:", e);
+            }
+        }
+
+        // ==========================================
+        // NAVIGASI TAB & NOTIFIKASI TOAST
+        // ==========================================
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('bg-white', 'text-primary-600', 'shadow-sm');
+                btn.classList.add('text-slate-600');
+            });
+
+            const targetSection = document.getElementById(`tab-${tabName}`);
+            const targetBtn = document.getElementById(`tab-btn-${tabName}`);
+            if (targetSection) targetSection.classList.remove('hidden');
+            if (targetBtn) {
+                targetBtn.classList.remove('text-slate-600');
+                targetBtn.classList.add('bg-white', 'text-primary-600', 'shadow-sm');
+            }
+
+            if (tabName === 'rekap') {
+                renderRecapTable();
+            }
+        }
+
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            
+            const styles = {
+                success: 'bg-emerald-600 text-white border-emerald-700',
+                error: 'bg-red-600 text-white border-red-700',
+                warning: 'bg-amber-500 text-white border-amber-600',
+                info: 'bg-slate-800 text-white border-slate-900'
+            };
+
+            const icons = {
+                success: 'fa-circle-check',
+                error: 'fa-circle-exclamation',
+                warning: 'fa-triangle-exclamation',
+                info: 'fa-circle-info'
+            };
+
+            toast.className = `${styles[type] || styles.info} border px-4 py-3 rounded-xl shadow-lg text-xs font-semibold flex items-center gap-2.5 pointer-events-auto transition-all duration-300 transform translate-y-2 opacity-0`;
+            toast.innerHTML = `<i class="fa-solid ${icons[type] || icons.info} text-sm"></i><span>${message}</span>`;
+
+            container.appendChild(toast);
+            requestAnimationFrame(() => {
+                toast.classList.remove('translate-y-2', 'opacity-0');
+            });
+
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-y-2');
+                setTimeout(() => toast.remove(), 300);
+            }, 3500);
+        }
+
+        // ==========================================
+        // TAB 1: PENGATURAN KUNCI JAWABAN & RUBRIK
+        // ==========================================
+        function updateWeightValidation() {
+            const wPG = Number(document.getElementById('weight-pg').value) || 0;
+            const wEssay = Number(document.getElementById('weight-essay').value) || 0;
+            const total = wPG + wEssay;
+            const badge = document.getElementById('weight-status');
+
+            badge.textContent = `Total Bobot: ${total}%`;
+            if (total === 100) {
+                badge.className = "text-xs font-bold px-2.5 py-1 rounded-lg bg-emerald-100 text-emerald-700";
+            } else {
+                badge.className = "text-xs font-bold px-2.5 py-1 rounded-lg bg-amber-100 text-amber-800";
+            }
+        }
+
+        function parsePGPreview() {
+            const rawText = document.getElementById('pg-key-input').value.toUpperCase();
+            const parsed = {};
+
+            // Cek pola berpasangan seperti "1.A", "2: B", "3-C", "4) D"
+            const pairRegex = /(\d+)\s*[.):\-=\s]\s*([A-E])\b/g;
+            let match;
+            let foundPairs = false;
+
+            while ((match = pairRegex.exec(rawText)) !== null) {
+                foundPairs = true;
+                const num = parseInt(match[1], 10);
+                const ans = match[2];
+                if (num > 0 && num <= 200) {
+                    parsed[num] = ans;
+                }
+            }
+
+            // Jika tidak pakai nomor, ambil deretan huruf A-E berurutan (misal: "ABCDABCD")
+            if (!foundPairs) {
+                const lettersOnly = rawText.replace(/[^A-E]/g, '');
+                for (let i = 0; i < lettersOnly.length; i++) {
+                    parsed[i + 1] = lettersOnly[i];
+                }
+            }
+
+            appState.pgKeys = parsed;
+            const keys = Object.keys(parsed).map(Number).sort((a, b) => a - b);
+            document.getElementById('pg-count-badge').textContent = `${keys.length} Soal`;
+
+            const grid = document.getElementById('pg-preview-grid');
+            if (keys.length === 0) {
+                grid.innerHTML = `<span class="text-xs text-slate-400 italic">Belum ada kunci PG dimasukkan...</span>`;
+                return;
+            }
+
+            grid.innerHTML = keys.map(num => `
+                <span class="inline-flex items-center gap-1 px-2 py-1 rounded-lg bg-primary-50 border border-primary-200 text-xs font-mono font-bold text-primary-800">
+                    <span class="text-slate-400 font-normal">${num}.</span>${parsed[num]}
+                </span>
+            `).join('');
+        }
+
+        function renderEssayRows() {
+            const container = document.getElementById('essay-list-container');
+            if (appState.essayKeys.length === 0) {
+                container.innerHTML = `<div class="text-xs text-slate-400 italic text-center py-6">Tidak ada soal esai. Klik "+ Tambah Esai" jika ada soal uraian.</div>`;
+                return;
+            }
+
+            container.innerHTML = appState.essayKeys.map((item, idx) => `
+                <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-2xs space-y-2">
+                    <div class="flex items-center justify-between gap-2">
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs font-bold text-indigo-700 bg-indigo-50 px-2 py-1 rounded-lg">No.</span>
+                            <input type="number" min="1" value="${item.number}" onchange="updateEssayField(${idx}, 'number', Number(this.value))" 
+                                class="w-14 px-2 py-1 bg-slate-50 border border-slate-300 rounded-lg text-xs font-bold text-center">
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <label class="text-[11px] font-semibold text-slate-600">Skor Maks:</label>
+                            <input type="number" min="1" max="100" value="${item.maxScore}" onchange="updateEssayField(${idx}, 'maxScore', Number(this.value))" 
+                                class="w-16 px-2 py-1 bg-slate-50 border border-slate-300 rounded-lg text-xs font-bold text-center text-indigo-700">
+                            <button type="button" onclick="removeEssayRow(${idx})" class="w-7 h-7 rounded-lg bg-red-50 hover:bg-red-100 text-red-600 flex items-center justify-center text-xs transition" title="Hapus nomor esai">
+                                <i class="fa-solid fa-trash-can"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <textarea rows="2" oninput="updateEssayField(${idx}, 'keyText', this.value)" placeholder="Tuliskan kunci jawaban / poin penting penilaian esai nomor ${item.number}..." 
+                        class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-xs focus:ring-2 focus:ring-indigo-500 outline-none">${item.keyText}</textarea>
+                </div>
+            `).join('');
+        }
+
+        function addEssayRow() {
+            const nextNum = appState.essayKeys.length > 0 
+                ? Math.max(...appState.essayKeys.map(e => Number(e.number))) + 1 
+                : 1;
+            appState.essayKeys.push({ number: nextNum, keyText: "", maxScore: 10 });
+            renderEssayRows();
+        }
+
+        function removeEssayRow(index) {
+            appState.essayKeys.splice(index, 1);
+            renderEssayRows();
+        }
+
+        function updateEssayField(index, field, value) {
+            if (appState.essayKeys[index]) {
+                appState.essayKeys[index][field] = value;
+            }
+        }
+
+        function saveAnswerKey() {
+            parsePGPreview();
+            appState.examInfo = {
+                teacherName: document.getElementById('exam-teacher').value.trim(),
+                subject: document.getElementById('exam-subject').value.trim(),
+                className: document.getElementById('exam-class').value.trim(),
+                kkm: Number(document.getElementById('exam-kkm').value) || 75,
+                weightPG: Number(document.getElementById('weight-pg').value) || 0,
+                weightEssay: Number(document.getElementById('weight-essay').value) || 0
+            };
+
+            saveToLocalStorage();
+            renderRecapTable();
+            showToast("Kunci jawaban & pengaturan ujian berhasil disimpan!", "success");
+        }
+
+        function loadSampleData() {
+            document.getElementById('exam-subject').value = "Ilmu Pengetahuan Alam (Contoh)";
+            document.getElementById('exam-class').value = "VIII-A";
+            document.getElementById('exam-kkm').value = 75;
+            document.getElementById('weight-pg').value = 60;
+            document.getElementById('weight-essay').value = 40;
+            document.getElementById('pg-key-input').value = "1.A, 2.C, 3.B, 4.D, 5.A, 6.B, 7.D, 8.C, 9.A, 10.B";
+
+            appState.essayKeys = [
+                { number: 1, keyText: "Fotosintesis adalah proses tumbuhan hijau mengubah air dan karbon dioksida menjadi glukosa dan oksigen dengan bantuan cahaya matahari dan klorofil.", maxScore: 20 },
+                { number: 2, keyText: "Tiga cara menjaga kesehatan sistem pernapasan: tidak merokok, memakai masker di area berpolusi, dan rutin berolahraga.", maxScore: 20 }
+            ];
+
+            parsePGPreview();
+            renderEssayRows();
+            updateWeightValidation();
+            saveAnswerKey();
+            showToast("Contoh soal & kunci berhasil dimuat!", "info");
+        }
+
+        // ==========================================
+        // TAB 2: KAMERA LANGSUNG (WEBRTC) & UNGGAH GAMBAR
+        // ==========================================
+        let activeMediaStream = null;
+        let currentFacingMode = 'environment'; // Default kamera belakang (HP/Tablet)
+        let cameraCheckTimer = null;
+
+        function triggerNativeCamera() {
+            closeLiveCamera();
+            document.getElementById('fallback-camera-input').click();
+        }
+
+        async function openLiveCamera() {
+            const modal = document.getElementById('live-camera-modal');
+            const videoEl = document.getElementById('camera-video-stream');
+            const loadingOverlay = document.getElementById('camera-loading-overlay');
+            const statusText = document.getElementById('camera-status-text');
+
+            // Hentikan stream lama jika masih berjalan
+            stopCameraStream();
+
+            if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+                showToast("Membuka kamera bawaan perangkat...", "info");
+                document.getElementById('fallback-camera-input').click();
+                return;
+            }
+
+            // Tampilkan modal & overlay loading
+            loadingOverlay.classList.remove('hidden');
+            statusText.textContent = "Menghubungkan ke lensa kamera...";
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+
+            try {
+                // Gunakan constraint fleksibel agar tidak gagal di laptop/HP tertentu
+                const constraints = {
+                    video: {
+                        facingMode: currentFacingMode
+                    },
+                    audio: false
+                };
+
+                activeMediaStream = await navigator.mediaDevices.getUserMedia(constraints);
+                videoEl.srcObject = activeMediaStream;
+                videoEl.setAttribute('playsinline', '');
+                videoEl.muted = true;
+
+                // Wajib panggil play() secara eksplisit agar video tidak freeze/gelap di Android & iOS
+                await videoEl.play();
+
+                // Sembunyikan overlay loading setelah frame video benar-benar masuk
+                const hideLoadingWhenReady = () => {
+                    if (videoEl.videoWidth > 0 && videoEl.videoHeight > 0) {
+                        loadingOverlay.classList.add('hidden');
+                    }
+                };
+
+                videoEl.onloadeddata = hideLoadingWhenReady;
+                videoEl.onplaying = hideLoadingWhenReady;
+
+                // Cek setelah 2.5 detik: jika masih gelap (videoWidth === 0), beri pesan jelas
+                cameraCheckTimer = setTimeout(() => {
+                    if (videoEl.videoWidth === 0 || videoEl.readyState < 2) {
+                        statusText.textContent = "Layar kamera terblokir oleh jendela pratinjau/iframe.";
+                        showToast("Kamera langsung diblokir jendela pratinjau. Klik 'Kamera Bawaan HP' untuk memotret.", "warning");
+                    } else {
+                        loadingOverlay.classList.add('hidden');
+                    }
+                }, 2500);
+
+            } catch (err) {
+                console.warn("Akses WebRTC kamera ditolak atau tidak tersedia:", err);
+                closeLiveCamera();
+                showToast("Mengalihkan ke Kamera Bawaan Perangkat...", "info");
+                document.getElementById('fallback-camera-input').click();
+            }
+        }
+
+        function switchCameraFacing() {
+            currentFacingMode = currentFacingMode === 'environment' ? 'user' : 'environment';
+            openLiveCamera();
+        }
+
+        function stopCameraStream() {
+            if (cameraCheckTimer) {
+                clearTimeout(cameraCheckTimer);
+                cameraCheckTimer = null;
+            }
+            if (activeMediaStream) {
+                activeMediaStream.getTracks().forEach(track => track.stop());
+                activeMediaStream = null;
+            }
+            const videoEl = document.getElementById('camera-video-stream');
+            if (videoEl) {
+                videoEl.srcObject = null;
+            }
+        }
+
+        function closeLiveCamera() {
+            stopCameraStream();
+            const modal = document.getElementById('live-camera-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function capturePhotoFromStream() {
+            const videoEl = document.getElementById('camera-video-stream');
+            if (!videoEl || !videoEl.videoWidth || videoEl.videoWidth === 0) {
+                showToast("Gambar kamera belum muncul. Silakan klik tombol 'Kamera Bawaan HP'.", "warning");
+                return;
+            }
+
+            const canvas = document.createElement('canvas');
+            const MAX_DIM = 1600;
+            let width = videoEl.videoWidth;
+            let height = videoEl.videoHeight;
+
+            if (width > height && width > MAX_DIM) {
+                height *= MAX_DIM / width;
+                width = MAX_DIM;
+            } else if (height > MAX_DIM) {
+                width *= MAX_DIM / height;
+                height = MAX_DIM;
+            }
+
+            canvas.width = width;
+            canvas.height = height;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(videoEl, 0, 0, width, height);
+
+            const dataUrl = canvas.toDataURL('image/jpeg', 0.90);
+            const base64Data = dataUrl.split(',')[1];
+
+            appState.uploadedImages.push({
+                base64: base64Data,
+                mimeType: 'image/jpeg',
+                previewUrl: dataUrl
+            });
+
+            renderUploadedImages();
+            closeLiveCamera();
+            showToast(`Foto halaman ke-${appState.uploadedImages.length} berhasil dijepret!`, "success");
+        }
+
+        function handleImageUpload(event) {
+            const files = Array.from(event.target.files);
+            if (!files.length) return;
+
+            files.forEach(file => {
+                if (!file.type.startsWith('image/')) return;
+                
+                // Kompres/resize gambar di canvas agar cepat diunggah namun tetap tajam & terbaca jelas
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const img = new Image();
+                    img.onload = function () {
+                        const canvas = document.createElement('canvas');
+                        const MAX_DIM = 1600; // Resolusi tinggi agar tulisan kecil & tanda silang terbaca presisi
+                        let width = img.width;
+                        let height = img.height;
+
+                        if (width > height && width > MAX_DIM) {
+                            height *= MAX_DIM / width;
+                            width = MAX_DIM;
+                        } else if (height > MAX_DIM) {
+                            width *= MAX_DIM / height;
+                            height = MAX_DIM;
+                        }
+
+                        canvas.width = width;
+                        canvas.height = height;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, width, height);
+
+                        const dataUrl = canvas.toDataURL('image/jpeg', 0.88);
+                        const base64Data = dataUrl.split(',')[1];
+
+                        appState.uploadedImages.push({
+                            base64: base64Data,
+                            mimeType: 'image/jpeg',
+                            previewUrl: dataUrl
+                        });
+                        renderUploadedImages();
+                    };
+                    img.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            });
+
+            // Reset input agar file yang sama bisa dipilih ulang jika diperlukan
+            event.target.value = '';
+        }
+
+        function renderUploadedImages() {
+            const wrapper = document.getElementById('uploaded-images-wrapper');
+            const list = document.getElementById('image-preview-list');
+            const countSpan = document.getElementById('image-count');
+            const analyzeBtn = document.getElementById('btn-analyze');
+
+            countSpan.textContent = appState.uploadedImages.length;
+
+            if (appState.uploadedImages.length === 0) {
+                wrapper.classList.add('hidden');
+                analyzeBtn.disabled = true;
+                return;
+            }
+
+            wrapper.classList.remove('hidden');
+            analyzeBtn.disabled = false;
+
+            list.innerHTML = appState.uploadedImages.map((img, idx) => `
+                <div class="relative group rounded-xl overflow-hidden border border-slate-200 bg-slate-100 aspect-[3/4]">
+                    <img src="${img.previewUrl}" alt="Halaman ${idx + 1}" class="w-full h-full object-cover">
+                    <div class="absolute top-1.5 left-1.5 bg-slate-900/75 text-white text-[10px] font-bold px-2 py-0.5 rounded-md">
+                        Hal. ${idx + 1}
+                    </div>
+                    <button onclick="removeSingleImage(${idx})" class="absolute top-1.5 right-1.5 w-6 h-6 bg-red-600 text-white rounded-full flex items-center justify-center text-xs shadow hover:bg-red-700 transition">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        function removeSingleImage(index) {
+            appState.uploadedImages.splice(index, 1);
+            renderUploadedImages();
+        }
+
+        function clearImages() {
+            appState.uploadedImages = [];
+            renderUploadedImages();
+        }
+
+        // Pemanggilan Gemini API dengan Exponential Backoff & Structured JSON Output
+        async function fetchWithBackoff(url, payload, maxRetries = 4) {
+            let delay = 1000;
+            for (let attempt = 0; attempt <= maxRetries; attempt++) {
+                try {
+                    const response = await fetch(url, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    if (!response.ok) {
+                        throw new Error(`HTTP Error: ${response.status}`);
+                    }
+                    return await response.json();
+                } catch (err) {
+                    if (attempt === maxRetries) throw err;
+                    await new Promise(res => setTimeout(res, delay));
+                    delay *= 2;
+                }
+            }
+        }
+
+        async function analyzeStudentSheet() {
+            parsePGPreview();
+            const pgNumbers = Object.keys(appState.pgKeys).map(Number).sort((a, b) => a - b);
+            const validEssays = appState.essayKeys.filter(e => e.keyText.trim() !== "");
+
+            if (pgNumbers.length === 0 && validEssays.length === 0) {
+                showToast("Kunci jawaban masih kosong! Silakan isi di Tab 1 terlebih dahulu.", "error");
+                switchTab('kunci');
+                return;
+            }
+
+            if (appState.uploadedImages.length === 0) {
+                showToast("Silakan foto atau unggah lembar jawaban siswa terlebih dahulu.", "warning");
+                return;
+            }
+
+            // Ubah UI ke Mode Loading
+            document.getElementById('result-empty-state').classList.add('hidden');
+            document.getElementById('result-content-state').classList.add('hidden');
+            document.getElementById('result-loading-state').classList.remove('hidden');
+            document.getElementById('btn-analyze').disabled = true;
+
+            // Susun Instruksi Sistem & Rubrik Ketat
+            const pgKeyString = pgNumbers.map(n => `Nomor ${n}: ${appState.pgKeys[n]}`).join('\n');
+            const essayRubricString = validEssays.map(e => 
+                `Esai Nomor ${e.number} (Skor Maksimal: ${e.maxScore}):\nKunci Jawaban/Rubrik: ${e.keyText}`
+            ).join('\n\n');
+
+            const manualName = document.getElementById('manual-student-name').value.trim();
+
+            const systemInstruction = `Anda adalah sistem korektor ujian SAS (Sumatif Akhir Semester) dengan tingkat ketelitian dan akurasi 100% absolut.
+Tugas Anda adalah membaca foto lembar jawaban siswa, mengekstrak jawaban yang ditulis/dipilih siswa, dan mencocokkannya secara ketat dengan KUNCI JAWABAN resmi.
+
+ATURAN KETAT PEMERIKSAAN (ZERO-ERROR POLICY):
+1. IDENTITAS SISWA: Baca Nama Lengkap dan Kelas/No. Absen siswa dari bagian atas lembar jawaban. Jika tidak terbaca atau kosong, tulis "Tanpa Nama".
+2. PILIHAN GANDA (PG):
+   - Periksa tanda silang (X), lingkaran (O), arsiran, atau huruf jawaban (A/B/C/D/E) yang dipilih siswa untuk setiap nomor soal yang ada di kunci jawaban.
+   - Jika siswa memilih dua jawaban sekaligus tanpa coretan pembatalan yang jelas, atau membiarkannya kosong, catat jawaban siswa sebagai "KOSONG" atau "GANDA" dan tandai salah.
+   - Jika ada coretan pembatalan (misal tanda = pada silangan lama) dan memilih huruf baru, ambil pilihan yang sah.
+   - JANGAN PERNAH mengubah kunci jawaban. Bandingkan pilihan siswa persis dengan kunci yang diberikan.
+3. ESAI / URAIAN:
+   - Transkripsikan tulisan tangan jawaban siswa pada setiap nomor esai secara akurat.
+   - Nilai jawaban siswa berdasarkan kesesuaian konsep, langkah pengerjaan, dan kata kunci pada RUBRIK ESAI.
+   - Berikan skor numerik antara 0 hingga Skor Maksimal soal tersebut secara adil dan objektif. Jika jawaban kosong atau melenceng jauh, beri skor 0. Jika sebagian konsep benar, beri skor proporsional.
+   - Berikan alasan singkat dan jelas mengapa siswa mendapat skor tersebut.`;
+
+            const promptText = `Periksa lembar jawaban siswa pada gambar terlampir berdasarkan kunci berikut:
+
+=== KUNCI JAWABAN PILIHAN GANDA (${pgNumbers.length} Soal) ===
+${pgNumbers.length > 0 ? pgKeyString : "Tidak ada soal Pilihan Ganda."}
+
+=== KUNCI & RUBRIK JAWABAN ESAI (${validEssays.length} Soal) ===
+${validEssays.length > 0 ? essayRubricString : "Tidak ada soal Esai."}
+
+Pastikan semua nomor soal pada kunci jawaban diperiksa seluruhnya tanpa ada satu nomor pun yang terlewat.`;
+
+            // Gabungkan teks prompt dan semua halaman gambar
+            const userParts = [{ text: promptText }];
+            appState.uploadedImages.forEach(img => {
+                userParts.push({
+                    inlineData: {
+                        mimeType: img.mimeType,
+                        data: img.base64
+                    }
+                });
+            });
+
+            const payload = {
+                contents: [{ role: "user", parts: userParts }],
+                systemInstruction: { parts: [{ text: systemInstruction }] },
+                generationConfig: {
+                    temperature: 0.0, // Nol agar deterministik dan bebas halusinasi
+                    responseMimeType: "application/json",
+                    responseSchema: {
+                        type: "OBJECT",
+                        properties: {
+                            studentName: { type: "STRING", description: "Nama lengkap siswa yang tertulis di lembar jawaban" },
+                            studentClass: { type: "STRING", description: "Kelas atau nomor absen siswa jika tertulis" },
+                            generalNotes: { type: "STRING", description: "Catatan singkat hasil pemeriksaan lembar jawaban" },
+                            pgResults: {
+                                type: "ARRAY",
+                                description: "Daftar hasil per nomor untuk semua soal Pilihan Ganda pada kunci",
+                                items: {
+                                    type: "OBJECT",
+                                    properties: {
+                                        number: { type: "INTEGER" },
+                                        studentAnswer: { type: "STRING", description: "Huruf jawaban siswa (A/B/C/D/E) atau KOSONG/GANDA" },
+                                        correctKey: { type: "STRING", description: "Kunci jawaban resmi" },
+                                        isCorrect: { type: "BOOLEAN" }
+                                    },
+                                    required: ["number", "studentAnswer", "correctKey", "isCorrect"]
+                                }
+                            },
+                            essayResults: {
+                                type: "ARRAY",
+                                description: "Daftar hasil per nomor untuk semua soal Esai pada kunci",
+                                items: {
+                                    type: "OBJECT",
+                                    properties: {
+                                        number: { type: "INTEGER" },
+                                        transcribedAnswer: { type: "STRING", description: "Transkripsi teks jawaban tulisan siswa" },
+                                        maxScore: { type: "NUMBER" },
+                                        awardedScore: { type: "NUMBER", description: "Skor yang diberikan antara 0 sampai maxScore" },
+                                        feedback: { type: "STRING", description: "Alasan penilaian singkat berdasarkan rubrik" }
+                                    },
+                                    required: ["number", "transcribedAnswer", "maxScore", "awardedScore", "feedback"]
+                                }
+                            }
+                        },
+                        required: ["studentName", "studentClass", "generalNotes", "pgResults", "essayResults"]
+                    }
+                }
+            };
+
+            try {
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${apiKey}`;
+                const result = await fetchWithBackoff(apiUrl, payload);
+                const rawJsonText = result?.candidates?.[0]?.content?.parts?.[0]?.text;
+
+                if (!rawJsonText) {
+                    throw new Error("Respons AI kosong atau tidak valid.");
+                }
+
+                const parsedResult = JSON.parse(rawJsonText);
+
+                // ==============================================================
+                // LAPISAN VALIDASI DETERMINISTIK (ANTI-KESALAHAN HITUNG)
+                // Memastikan kunci jawaban & status benar/salah PG 100% sesuai kunci guru
+                // ==============================================================
+                const verifiedPG = pgNumbers.map(num => {
+                    const officialKey = appState.pgKeys[num];
+                    const found = (parsedResult.pgResults || []).find(p => Number(p.number) === num);
+                    const studentAns = found ? String(found.studentAnswer).trim().toUpperCase() : "KOSONG";
+                    const isExactMatch = studentAns === officialKey;
+                    return {
+                        number: num,
+                        studentAnswer: studentAns,
+                        correctKey: officialKey,
+                        isCorrect: isExactMatch
+                    };
+                });
+
+                const verifiedEssay = validEssays.map(rubric => {
+                    const found = (parsedResult.essayResults || []).find(e => Number(e.number) === Number(rubric.number));
+                    let score = found ? Number(found.awardedScore) : 0;
+                    // Pastikan skor tidak melebihi batas maksimal dan tidak negatif
+                    if (isNaN(score) || score < 0) score = 0;
+                    if (score > rubric.maxScore) score = rubric.maxScore;
+
+                    return {
+                        number: Number(rubric.number),
+                        transcribedAnswer: found ? found.transcribedAnswer : "(Tidak terbaca / Kosong)",
+                        maxScore: Number(rubric.maxScore),
+                        awardedScore: score,
+                        feedback: found ? found.feedback : "Tidak ada jawaban."
+                    };
+                });
+
+                appState.currentAnalysis = {
+                    studentName: manualName || parsedResult.studentName || "Siswa Tanpa Nama",
+                    studentClass: parsedResult.studentClass || appState.examInfo.className || "-",
+                    generalNotes: parsedResult.generalNotes || "Koreksi berhasil dilakukan.",
+                    pgResults: verifiedPG,
+                    essayResults: verifiedEssay
+                };
+
+                renderAnalysisResult();
+                showToast("Lembar jawaban berhasil diperiksa dengan presisi!", "success");
+
+            } catch (error) {
+                console.error("Error saat memeriksa lembar:", error);
+                document.getElementById('result-loading-state').classList.add('hidden');
+                document.getElementById('result-empty-state').classList.remove('hidden');
+                showToast("Gagal memproses gambar. Pastikan koneksi stabil & foto jelas, lalu coba lagi.", "error");
+            } finally {
+                document.getElementById('btn-analyze').disabled = false;
+            }
+        }
+
+        // ==========================================
+        // RENDER HASIL KOREKSI & HITUNG NILAI AKHIR
+        // ==========================================
+        function calculateCurrentScores() {
+            const data = appState.currentAnalysis;
+            if (!data) return { pgCorrect: 0, pgTotal: 0, pgWeightedScore: 0, essayEarned: 0, essayMax: 0, essayWeightedScore: 0, finalScore: 0 };
+
+            const pgTotal = data.pgResults.length;
+            const pgCorrect = data.pgResults.filter(p => p.isCorrect).length;
+            const weightPG = pgTotal > 0 ? (Number(appState.examInfo.weightPG) || 0) : 0;
+
+            const essayMax = data.essayResults.reduce((sum, e) => sum + Number(e.maxScore), 0);
+            const essayEarned = data.essayResults.reduce((sum, e) => sum + Number(e.awardedScore), 0);
+            const weightEssay = essayMax > 0 ? (Number(appState.examInfo.weightEssay) || 0) : 0;
+
+            // Jika hanya salah satu jenis soal yang digunakan, normalisasi ke 100
+            let effectiveWeightPG = weightPG;
+            let effectiveWeightEssay = weightEssay;
+            if (pgTotal > 0 && essayMax === 0) {
+                effectiveWeightPG = 100;
+                effectiveWeightEssay = 0;
+            } else if (pgTotal === 0 && essayMax > 0) {
+                effectiveWeightPG = 0;
+                effectiveWeightEssay = 100;
+            }
+
+            const pgWeightedScore = pgTotal > 0 ? (pgCorrect / pgTotal) * effectiveWeightPG : 0;
+            const essayWeightedScore = essayMax > 0 ? (essayEarned / essayMax) * effectiveWeightEssay : 0;
+            const finalScore = Math.round((pgWeightedScore + essayWeightedScore) * 100) / 100;
+
+            return {
+                pgCorrect,
+                pgTotal,
+                pgWeightedScore: Math.round(pgWeightedScore * 100) / 100,
+                essayEarned: Math.round(essayEarned * 100) / 100,
+                essayMax,
+                essayWeightedScore: Math.round(essayWeightedScore * 100) / 100,
+                finalScore
+            };
+        }
+
+        function renderAnalysisResult() {
+            const data = appState.currentAnalysis;
+            if (!data) return;
+
+            document.getElementById('result-loading-state').classList.add('hidden');
+            document.getElementById('result-empty-state').classList.add('hidden');
+            document.getElementById('result-content-state').classList.remove('hidden');
+
+            document.getElementById('res-student-name').value = data.studentName;
+            document.getElementById('res-student-class').value = data.studentClass;
+            document.getElementById('res-general-note-text').textContent = data.generalNotes;
+
+            updateScoreDisplayHeader();
+
+            // Render Grid Pilihan Ganda
+            const pgGrid = document.getElementById('res-pg-grid');
+            if (data.pgResults.length === 0) {
+                pgGrid.innerHTML = `<div class="col-span-full text-xs text-slate-400 italic py-2">Tidak ada soal Pilihan Ganda.</div>`;
+            } else {
+                pgGrid.innerHTML = data.pgResults.map((item, idx) => `
+                    <button type="button" onclick="togglePGCorrectness(${idx})" title="Klik untuk mengoreksi manual benar/salah"
+                        class="flex items-center justify-between p-2 rounded-xl border text-left transition ${
+                            item.isCorrect 
+                            ? 'bg-emerald-50/80 border-emerald-200 hover:bg-emerald-100' 
+                            : 'bg-red-50/80 border-red-200 hover:bg-red-100'
+                        }">
+                        <div>
+                            <div class="text-[10px] font-bold text-slate-500">No. ${item.number}</div>
+                            <div class="text-xs font-extrabold ${item.isCorrect ? 'text-emerald-800' : 'text-red-800'}">
+                                ${item.studentAnswer} <span class="font-normal text-[10px] text-slate-500">(Kunci: ${item.correctKey})</span>
+                            </div>
+                        </div>
+                        <div class="w-5 h-5 rounded-full flex items-center justify-center text-[10px] ${
+                            item.isCorrect ? 'bg-emerald-600 text-white' : 'bg-red-600 text-white'
+                        }">
+                            <i class="fa-solid ${item.isCorrect ? 'fa-check' : 'fa-xmark'}"></i>
+                        </div>
+                    </button>
+                `).join('');
+            }
+
+            // Render Daftar Esai
+            const essayList = document.getElementById('res-essay-list');
+            if (data.essayResults.length === 0) {
+                essayList.innerHTML = `<div class="text-xs text-slate-400 italic py-2">Tidak ada soal Esai.</div>`;
+            } else {
+                essayList.innerHTML = data.essayResults.map((item, idx) => `
+                    <div class="bg-slate-50 border border-slate-200 rounded-xl p-3.5 space-y-2">
+                        <div class="flex flex-wrap items-center justify-between gap-2">
+                            <span class="text-xs font-bold text-indigo-800 bg-indigo-100 px-2.5 py-0.5 rounded-lg">Esai Nomor ${item.number}</span>
+                            <div class="flex items-center gap-1.5 bg-white px-2.5 py-1 rounded-lg border border-slate-200">
+                                <label class="text-[11px] font-semibold text-slate-600">Skor:</label>
+                                <input type="number" step="0.5" min="0" max="${item.maxScore}" value="${item.awardedScore}" 
+                                    onchange="overrideEssayScore(${idx}, this.value)"
+                                    class="w-14 text-center font-extrabold text-xs text-indigo-700 border-b border-indigo-300 focus:outline-none">
+                                <span class="text-xs text-slate-400 font-semibold">/ ${item.maxScore}</span>
+                            </div>
+                        </div>
+                        <div class="bg-white p-2.5 rounded-lg border border-slate-200/80 text-xs text-slate-700">
+                            <span class="text-[10px] font-bold uppercase text-slate-400 block mb-0.5">Jawaban Terbaca di Kertas:</span>
+                            "${item.transcribedAnswer}"
+                        </div>
+                        <div class="text-[11px] text-slate-600 flex items-start gap-1.5">
+                            <i class="fa-solid fa-comment-dots text-indigo-500 mt-0.5"></i>
+                            <span><strong>Analisis:</strong> ${item.feedback}</span>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function updateScoreDisplayHeader() {
+            const scores = calculateCurrentScores();
+            const kkm = Number(appState.examInfo.kkm) || 75;
+            const isPass = scores.finalScore >= kkm;
+
+            document.getElementById('res-total-score').textContent = scores.finalScore;
+            document.getElementById('res-pg-score-summary').textContent = `${scores.pgWeightedScore} (${scores.pgCorrect}/${scores.pgTotal})`;
+            document.getElementById('res-essay-score-summary').textContent = `${scores.essayWeightedScore} (${scores.essayEarned}/${scores.essayMax})`;
+            
+            document.getElementById('res-pg-fraction').textContent = `Benar: ${scores.pgCorrect} / ${scores.pgTotal}`;
+            document.getElementById('res-essay-fraction').textContent = `Poin: ${scores.essayEarned} / ${scores.essayMax}`;
+
+            const kkmBadge = document.getElementById('res-kkm-badge');
+            if (isPass) {
+                kkmBadge.textContent = `TUNTAS (KKM ${kkm})`;
+                kkmBadge.className = "text-[10px] uppercase tracking-wider bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2 py-0.5 rounded font-bold";
+            } else {
+                kkmBadge.textContent = `REMEDIAL (KKM ${kkm})`;
+                kkmBadge.className = "text-[10px] uppercase tracking-wider bg-red-500/20 text-red-300 border border-red-500/30 px-2 py-0.5 rounded font-bold";
+            }
+        }
+
+        // Fitur Koreksi Manual Guru (Jika guru ingin menyesuaikan hasil AI)
+        function togglePGCorrectness(index) {
+            if (!appState.currentAnalysis) return;
+            appState.currentAnalysis.pgResults[index].isCorrect = !appState.currentAnalysis.pgResults[index].isCorrect;
+            renderAnalysisResult();
+        }
+
+        function overrideEssayScore(index, newValue) {
+            if (!appState.currentAnalysis) return;
+            const item = appState.currentAnalysis.essayResults[index];
+            let val = parseFloat(newValue);
+            if (isNaN(val) || val < 0) val = 0;
+            if (val > item.maxScore) val = item.maxScore;
+            item.awardedScore = val;
+            updateScoreDisplayHeader();
+        }
+
+        function resetAnalysisView() {
+            appState.currentAnalysis = null;
+            clearImages();
+            document.getElementById('manual-student-name').value = '';
+            document.getElementById('result-content-state').classList.add('hidden');
+            document.getElementById('result-loading-state').classList.add('hidden');
+            document.getElementById('result-empty-state').classList.remove('hidden');
+        }
+
+        // Simpan ke Daftar Rekap Nilai
+        function commitResultToRecap() {
+            if (!appState.currentAnalysis) return;
+
+            const studentName = document.getElementById('res-student-name').value.trim() || "Siswa Tanpa Nama";
+            const studentClass = document.getElementById('res-student-class').value.trim() || "-";
+            const scores = calculateCurrentScores();
+            const kkm = Number(appState.examInfo.kkm) || 75;
+
+            const record = {
+                id: Date.now(),
+                timestamp: new Date().toLocaleString('id-ID'),
+                studentName,
+                studentClass,
+                pgCorrect: scores.pgCorrect,
+                pgTotal: scores.pgTotal,
+                pgWeightedScore: scores.pgWeightedScore,
+                essayEarned: scores.essayEarned,
+                essayMax: scores.essayMax,
+                essayWeightedScore: scores.essayWeightedScore,
+                finalScore: scores.finalScore,
+                isPass: scores.finalScore >= kkm,
+                details: JSON.parse(JSON.stringify(appState.currentAnalysis))
+            };
+
+            appState.recapList.push(record);
+            saveToLocalStorage();
+            renderRecapTable();
+            resetAnalysisView();
+
+            showToast(`Nilai ${studentName} (${record.finalScore}) berhasil ditambahkan ke Rekap!`, "success");
+        }
+
+        // ==========================================
+        // TAB 3: REKAPITULASI NILAI & EKSPOR CSV
+        // ==========================================
+        function renderRecapTable() {
+            const list = appState.recapList;
+            document.getElementById('badge-rekap').textContent = list.length;
+
+            // Update Subtitle
+            const teacherLabel = appState.examInfo.teacherName && appState.examInfo.teacherName !== "-" ? `Guru: ${appState.examInfo.teacherName} | ` : "";
+            const subjectLabel = appState.examInfo.subject || "Umum";
+            const classLabel = appState.examInfo.className || "-";
+            document.getElementById('recap-subtitle').textContent = `${teacherLabel}Mapel: ${subjectLabel} | Kelas: ${classLabel} | KKM: ${appState.examInfo.kkm}`;
+
+            // Hitung Statistik
+            const totalStudents = list.length;
+            const avgScore = totalStudents > 0 
+                ? (list.reduce((sum, r) => sum + r.finalScore, 0) / totalStudents).toFixed(1) 
+                : "0.0";
+            const maxScore = totalStudents > 0 
+                ? Math.max(...list.map(r => r.finalScore)) 
+                : 0;
+            const passCount = list.filter(r => r.isPass).length;
+            const passRate = totalStudents > 0 ? Math.round((passCount / totalStudents) * 100) : 0;
+
+            document.getElementById('stat-total-students').textContent = totalStudents;
+            document.getElementById('stat-avg-score').textContent = avgScore;
+            document.getElementById('stat-max-score').textContent = maxScore;
+            document.getElementById('stat-pass-rate').textContent = `${passRate}%`;
+
+            const tbody = document.getElementById('recap-table-body');
+            if (totalStudents === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="9" class="py-12 text-center text-slate-400">
+                            <i class="fa-solid fa-folder-open text-3xl mb-2 block text-slate-300"></i>
+                            <span class="text-xs font-medium">Belum ada data nilai siswa. Silakan periksa lembar jawaban di Tab 2.</span>
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            tbody.innerHTML = list.map((row, idx) => `
+                <tr class="hover:bg-slate-50/80 transition">
+                    <td class="py-3 px-4 text-center font-semibold text-slate-500">${idx + 1}</td>
+                    <td class="py-3 px-4 font-bold text-slate-900">${row.studentName}</td>
+                    <td class="py-3 px-4 text-xs text-slate-600">${row.studentClass}</td>
+                    <td class="py-3 px-4 text-center text-xs font-mono">${row.pgCorrect}/${row.pgTotal}</td>
+                    <td class="py-3 px-4 text-center font-semibold text-slate-700">${row.pgWeightedScore}</td>
+                    <td class="py-3 px-4 text-center font-semibold text-slate-700">${row.essayWeightedScore}</td>
+                    <td class="py-3 px-4 text-center">
+                        <span class="font-extrabold text-base ${row.isPass ? 'text-primary-700' : 'text-red-600'}">${row.finalScore}</span>
+                    </td>
+                    <td class="py-3 px-4 text-center">
+                        <span class="px-2.5 py-1 rounded-full text-[10px] font-bold ${
+                            row.isPass ? 'bg-emerald-100 text-emerald-700' : 'bg-red-100 text-red-700'
+                        }">
+                            ${row.isPass ? 'TUNTAS' : 'REMEDIAL'}
+                        </span>
+                    </td>
+                    <td class="py-3 px-4 text-right space-x-1">
+                        <button onclick="viewStudentDetail(${row.id})" class="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-semibold" title="Lihat Detail Jawaban">
+                            <i class="fa-solid fa-eye"></i>
+                        </button>
+                        <button onclick="deleteRecapRow(${row.id})" class="px-2.5 py-1 bg-red-50 hover:bg-red-100 text-red-600 rounded-lg text-xs font-semibold" title="Hapus Data">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function viewStudentDetail(id) {
+            const record = appState.recapList.find(r => r.id === id);
+            if (!record) return;
+
+            document.getElementById('modal-title').textContent = `Detail Koreksi: ${record.studentName} (${record.studentClass})`;
+            
+            let pgHtml = record.details.pgResults.map(p => 
+                `<span class="inline-block px-2 py-1 m-0.5 rounded text-[11px] font-mono border ${
+                    p.isCorrect ? 'bg-emerald-50 border-emerald-200 text-emerald-800' : 'bg-red-50 border-red-200 text-red-800'
+                }">${p.number}.${p.studentAnswer} ${p.isCorrect ? '✓' : `(✗ Kunci:${p.correctKey})`}</span>`
+            ).join('');
+
+            let essayHtml = record.details.essayResults.map(e => `
+                <div class="p-2.5 bg-slate-50 rounded-xl border border-slate-200 space-y-1">
+                    <div class="flex justify-between font-bold text-slate-800">
+                        <span>Esai No. ${e.number}</span>
+                        <span class="text-indigo-600">Skor: ${e.awardedScore} / ${e.maxScore}</span>
+                    </div>
+                    <p class="text-slate-600 italic">"${e.transcribedAnswer}"</p>
+                    <p class="text-[11px] text-slate-500">Catatan: ${e.feedback}</p>
+                </div>
+            `).join('');
+
+            document.getElementById('modal-body').innerHTML = `
+                <div class="bg-slate-900 text-white p-3 rounded-xl flex justify-between items-center">
+                    <span>Nilai Akhir: <strong class="text-amber-400 text-lg">${record.finalScore}</strong></span>
+                    <span class="text-[11px] text-slate-300">Diperiksa: ${record.timestamp}</span>
+                </div>
+                <div>
+                    <h4 class="font-bold text-slate-800 mb-1">Pilihan Ganda (${record.pgCorrect}/${record.pgTotal} Benar):</h4>
+                    <div>${pgHtml || '-'}</div>
+                </div>
+                <div class="space-y-2">
+                    <h4 class="font-bold text-slate-800">Esai / Uraian:</h4>
+                    ${essayHtml || '-'}
+                </div>
+            `;
+
+            document.getElementById('modal-footer').innerHTML = `
+                <button onclick="closeModal()" class="px-4 py-2 bg-slate-800 text-white rounded-xl text-xs font-bold">Tutup</button>
+            `;
+
+            const modal = document.getElementById('custom-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('custom-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function deleteRecapRow(id) {
+            appState.recapList = appState.recapList.filter(r => r.id !== id);
+            saveToLocalStorage();
+            renderRecapTable();
+            showToast("Data siswa dihapus dari rekap.", "info");
+        }
+
+        function confirmClearRecap() {
+            if (appState.recapList.length === 0) return;
+
+            document.getElementById('modal-title').textContent = "Konfirmasi Hapus Semua Rekap";
+            document.getElementById('modal-body').innerHTML = `
+                <p class="text-sm text-slate-700">Apakah Anda yakin ingin menghapus seluruh <strong>${appState.recapList.length} data nilai siswa</strong> dari daftar rekap? Tindakan ini tidak dapat dibatalkan.</p>
+            `;
+            document.getElementById('modal-footer').innerHTML = `
+                <button onclick="closeModal()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-bold">Batal</button>
+                <button onclick="executeClearRecap()" class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-xl text-xs font-bold">Ya, Hapus Semua</button>
+            `;
+            const modal = document.getElementById('custom-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function executeClearRecap() {
+            appState.recapList = [];
+            saveToLocalStorage();
+            renderRecapTable();
+            closeModal();
+            showToast("Seluruh rekap nilai berhasil dikosongkan.", "info");
+        }
+
+        function exportToCSV() {
+            if (appState.recapList.length === 0) {
+                showToast("Belum ada data nilai untuk diekspor.", "warning");
+                return;
+            }
+
+            // Header CSV dengan pemisah titik koma (;) agar langsung rapi saat dibuka di Microsoft Excel Indonesia
+            const headers = [
+                "No",
+                "Nama Siswa",
+                "Kelas / Absen",
+                "Mata Pelajaran",
+                "Guru Pemeriksa",
+                "PG Benar",
+                "Total Soal PG",
+                "Skor PG",
+                "Poin Esai",
+                "Maks Poin Esai",
+                "Skor Esai",
+                "Nilai Akhir",
+                "KKM",
+                "Status Ketuntasan",
+                "Waktu Koreksi"
+            ];
+
+            const rows = appState.recapList.map((r, index) => [
+                index + 1,
+                `"${r.studentName.replace(/"/g, '""')}"`,
+                `"${r.studentClass.replace(/"/g, '""')}"`,
+                `"${(appState.examInfo.subject || 'Umum').replace(/"/g, '""')}"`,
+                `"${(appState.examInfo.teacherName || '-').replace(/"/g, '""')}"`,
+                r.pgCorrect,
+                r.pgTotal,
+                String(r.pgWeightedScore).replace('.', ','),
+                String(r.essayEarned).replace('.', ','),
+                r.essayMax,
+                String(r.essayWeightedScore).replace('.', ','),
+                String(r.finalScore).replace('.', ','),
+                appState.examInfo.kkm,
+                r.isPass ? "TUNTAS" : "REMEDIAL",
+                `"${r.timestamp}"`
+            ]);
+
+            // Tambahkan catatan pengembang pada baris paling bawah file Excel
+            const footerNote = ["", `"Dicetak melalui SAS Grader AI - Pengembang: Asep Jamhur, S.Pd., M.M."`];
+
+            // Tambahkan BOM UTF-8 agar karakter terbaca sempurna di Excel
+            const csvContent = "\uFEFF" + [headers.join(";"), ...rows.map(e => e.join(";")), "", footerNote.join(";")].join("\n");
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            
+            const link = document.createElement("a");
+            const safeSubject = (appState.examInfo.subject || 'Umum').replace(/[^a-zA-Z0-9]/g, '_');
+            link.setAttribute("href", url);
+            link.setAttribute("download", `Rekap_Nilai_SAS_${safeSubject}_${new Date().toISOString().slice(0,10)}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+
+            showToast("File Rekap Excel (.CSV) berhasil diunduh!", "success");
+        }
+    </script>
+</body>
+</html>
