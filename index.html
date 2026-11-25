@@ -124,56 +124,78 @@
                         </span>
                         <span id="weight-status" class="text-xs font-bold px-2.5 py-1 rounded-lg bg-emerald-100 text-emerald-700">Total Bobot: 100%</span>
                     </div>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                         <div>
-                            <label class="block text-xs font-medium text-slate-700 mb-1">Bobot Total Pilihan Ganda (%)</label>
-                            <input type="number" id="weight-pg" value="60" min="0" max="100" oninput="updateWeightValidation()" class="w-full px-3 py-2 bg-white border border-blue-200 rounded-lg text-sm font-semibold text-slate-800">
+                            <label class="block text-xs font-medium text-slate-700 mb-1">Bobot Pilihan Ganda (%)</label>
+                            <input type="number" id="weight-pg" value="50" min="0" max="100" oninput="updateWeightValidation()" class="w-full px-3 py-2 bg-white border border-blue-200 rounded-lg text-sm font-semibold text-slate-800">
                         </div>
                         <div>
-                            <label class="block text-xs font-medium text-slate-700 mb-1">Bobot Total Esai / Uraian (%)</label>
-                            <input type="number" id="weight-essay" value="40" min="0" max="100" oninput="updateWeightValidation()" class="w-full px-3 py-2 bg-white border border-blue-200 rounded-lg text-sm font-semibold text-slate-800">
+                            <label class="block text-xs font-medium text-slate-700 mb-1">Bobot Isian Singkat (%)</label>
+                            <input type="number" id="weight-short" value="20" min="0" max="100" oninput="updateWeightValidation()" class="w-full px-3 py-2 bg-white border border-blue-200 rounded-lg text-sm font-semibold text-slate-800">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-slate-700 mb-1">Bobot Esai / Uraian (%)</label>
+                            <input type="number" id="weight-essay" value="30" min="0" max="100" oninput="updateWeightValidation()" class="w-full px-3 py-2 bg-white border border-blue-200 rounded-lg text-sm font-semibold text-slate-800">
                         </div>
                     </div>
                 </div>
 
-                <!-- Dua Kolom: Pilihan Ganda & Esai -->
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- Tiga Kolom: Pilihan Ganda, Isian Singkat & Esai -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
                     
-                    <!-- Kolom Pilihan Ganda -->
+                    <!-- Kolom A: Pilihan Ganda -->
                     <div class="border border-slate-200 rounded-2xl p-4 bg-slate-50/50 flex flex-col">
                         <div class="flex items-center justify-between mb-3">
-                            <h3 class="font-bold text-slate-800 flex items-center gap-2">
+                            <h3 class="font-bold text-slate-800 flex items-center gap-2 text-sm">
                                 <span class="w-6 h-6 rounded-lg bg-primary-100 text-primary-700 flex items-center justify-center text-xs font-bold">A</span>
-                                Kunci Pilihan Ganda (PG)
+                                Pilihan Ganda (PG)
                             </h3>
                             <span id="pg-count-badge" class="text-xs font-semibold bg-slate-200 text-slate-700 px-2.5 py-1 rounded-lg">0 Soal</span>
                         </div>
                         
-                        <p class="text-xs text-slate-500 mb-3">Masukkan kunci berurutan (Contoh: <code class="bg-white px-1.5 py-0.5 rounded border text-primary-700 font-mono">1.A, 2.B, 3.C</code> atau cukup <code class="bg-white px-1.5 py-0.5 rounded border text-primary-700 font-mono">ABCDABCD...</code>)</p>
+                        <p class="text-xs text-slate-500 mb-3">Ketik berurutan (Contoh: <code class="bg-white px-1 py-0.5 rounded border text-primary-700 font-mono">1.A, 2.B, 3.C</code> atau <code class="bg-white px-1 py-0.5 rounded border text-primary-700 font-mono">ABCDA...</code>)</p>
                         
                         <textarea id="pg-key-input" rows="4" oninput="parsePGPreview()" placeholder="Ketik kunci jawaban PG di sini...&#10;Contoh: 1.A, 2.C, 3.B, 4.D, 5.A&#10;Atau: ACBDA" class="w-full p-3 bg-white border border-slate-300 rounded-xl text-sm font-mono focus:ring-2 focus:ring-primary-500 outline-none mb-3"></textarea>
                         
                         <!-- Preview Grid PG -->
                         <div class="bg-white border border-slate-200 rounded-xl p-3 flex-grow">
-                            <div class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider mb-2">Pratinjau Kunci Terdeteksi:</div>
+                            <div class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider mb-2">Pratinjau Kunci PG:</div>
                             <div id="pg-preview-grid" class="flex flex-wrap gap-1.5 max-h-48 overflow-y-auto">
                                 <span class="text-xs text-slate-400 italic">Belum ada kunci PG dimasukkan...</span>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Kolom Esai / Uraian -->
+                    <!-- Kolom B: Isian Singkat -->
                     <div class="border border-slate-200 rounded-2xl p-4 bg-slate-50/50 flex flex-col">
                         <div class="flex items-center justify-between mb-3">
-                            <h3 class="font-bold text-slate-800 flex items-center gap-2">
-                                <span class="w-6 h-6 rounded-lg bg-indigo-100 text-indigo-700 flex items-center justify-center text-xs font-bold">B</span>
-                                Kunci & Rubrik Esai / Uraian
+                            <h3 class="font-bold text-slate-800 flex items-center gap-2 text-sm">
+                                <span class="w-6 h-6 rounded-lg bg-teal-100 text-teal-700 flex items-center justify-center text-xs font-bold">B</span>
+                                Isian Singkat
                             </h3>
-                            <button onclick="addEssayRow()" class="px-2.5 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-semibold transition flex items-center gap-1">
-                                <i class="fa-solid fa-plus"></i> Tambah Esai
+                            <button type="button" onclick="addShortAnswerRow()" class="px-2.5 py-1.5 bg-teal-600 hover:bg-teal-700 text-white rounded-lg text-xs font-semibold transition flex items-center gap-1">
+                                <i class="fa-solid fa-plus"></i> Tambah
                             </button>
                         </div>
-                        <p class="text-xs text-slate-500 mb-3">Tuliskan jawaban inti / kata kunci wajib dan skor maksimal tiap nomor esai agar AI menilai secara objektif tanpa meleset.</p>
+                        <p class="text-xs text-slate-500 mb-3">Tulis kata/angka jawaban pasti tiap nomor (toleransi ejaan/sinonim jelas).</p>
+                        
+                        <div id="short-answer-list-container" class="space-y-2.5 max-h-[320px] overflow-y-auto pr-1">
+                            <!-- Item isian singkat akan di-render di sini -->
+                        </div>
+                    </div>
+
+                    <!-- Kolom C: Esai / Uraian -->
+                    <div class="border border-slate-200 rounded-2xl p-4 bg-slate-50/50 flex flex-col">
+                        <div class="flex items-center justify-between mb-3">
+                            <h3 class="font-bold text-slate-800 flex items-center gap-2 text-sm">
+                                <span class="w-6 h-6 rounded-lg bg-indigo-100 text-indigo-700 flex items-center justify-center text-xs font-bold">C</span>
+                                Esai / Uraian
+                            </h3>
+                            <button type="button" onclick="addEssayRow()" class="px-2.5 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-semibold transition flex items-center gap-1">
+                                <i class="fa-solid fa-plus"></i> Tambah
+                            </button>
+                        </div>
+                        <p class="text-xs text-slate-500 mb-3">Tuliskan jawaban inti / kata kunci wajib dan skor maksimal tiap nomor uraian.</p>
                         
                         <div id="essay-list-container" class="space-y-3 max-h-[320px] overflow-y-auto pr-1">
                             <!-- Item esai akan di-render di sini -->
@@ -291,8 +313,9 @@
                                         <div id="res-total-score" class="text-3xl font-extrabold text-amber-400 leading-none mt-0.5">0</div>
                                     </div>
                                     <div class="h-10 w-[1px] bg-white/20"></div>
-                                    <div class="text-xs space-y-1 text-slate-200">
+                                    <div class="text-[11px] space-y-0.5 text-slate-200">
                                         <div>PG: <strong id="res-pg-score-summary" class="text-white">0</strong></div>
+                                        <div>Isian: <strong id="res-short-score-summary" class="text-white">0</strong></div>
                                         <div>Esai: <strong id="res-essay-score-summary" class="text-white">0</strong></div>
                                     </div>
                                 </div>
@@ -309,12 +332,26 @@
                                 <div class="flex items-center justify-between mb-2">
                                     <h4 class="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
                                         <i class="fa-solid fa-list-check text-primary-600"></i> Rincian Pilihan Ganda
-                                        <span class="text-[10px] font-normal text-slate-400">(Klik item untuk ubah status benar/salah jika perlu)</span>
+                                        <span class="text-[10px] font-normal text-slate-400">(Klik item untuk ubah benar/salah)</span>
                                     </h4>
                                     <span id="res-pg-fraction" class="text-xs font-bold text-primary-700 bg-primary-50 px-2.5 py-0.5 rounded-lg">Benar: 0 / 0</span>
                                 </div>
                                 <div id="res-pg-grid" class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 gap-2 max-h-56 overflow-y-auto p-1">
                                     <!-- Item PG rendered here -->
+                                </div>
+                            </div>
+
+                            <!-- Rincian Koreksi Isian Singkat (Interaktif / Bisa Dikoreksi Manual) -->
+                            <div>
+                                <div class="flex items-center justify-between mb-2">
+                                    <h4 class="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
+                                        <i class="fa-solid fa-spell-check text-teal-600"></i> Rincian Isian Singkat
+                                        <span class="text-[10px] font-normal text-slate-400">(Klik item untuk ubah benar/salah)</span>
+                                    </h4>
+                                    <span id="res-short-fraction" class="text-xs font-bold text-teal-700 bg-teal-50 px-2.5 py-0.5 rounded-lg">Benar: 0 / 0</span>
+                                </div>
+                                <div id="res-short-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-56 overflow-y-auto p-1">
+                                    <!-- Item Isian Singkat rendered here -->
                                 </div>
                             </div>
 
@@ -402,6 +439,8 @@
                                 <th class="py-3 px-4">Kelas</th>
                                 <th class="py-3 px-4 text-center">PG Benar</th>
                                 <th class="py-3 px-4 text-center">Skor PG</th>
+                                <th class="py-3 px-4 text-center">Isian Benar</th>
+                                <th class="py-3 px-4 text-center">Skor Isian</th>
                                 <th class="py-3 px-4 text-center">Skor Esai</th>
                                 <th class="py-3 px-4 text-center">Nilai Akhir</th>
                                 <th class="py-3 px-4 text-center">Status</th>
@@ -505,10 +544,14 @@
                 subject: "",
                 className: "",
                 kkm: 75,
-                weightPG: 60,
-                weightEssay: 40
+                weightPG: 50,
+                weightShort: 20,
+                weightEssay: 30
             },
             pgKeys: {}, // Format: { 1: 'A', 2: 'B', ... }
+            shortAnswerKeys: [
+                { number: 1, keyText: "" }
+            ],
             essayKeys: [
                 { number: 1, keyText: "", maxScore: 10 }
             ],
@@ -522,6 +565,7 @@
         // ==========================================
         window.onload = function () {
             loadFromLocalStorage();
+            renderShortAnswerRows();
             renderEssayRows();
             parsePGPreview();
             updateWeightValidation();
@@ -533,6 +577,7 @@
                 const dataToSave = {
                     examInfo: appState.examInfo,
                     pgKeys: appState.pgKeys,
+                    shortAnswerKeys: appState.shortAnswerKeys,
                     essayKeys: appState.essayKeys,
                     recapList: appState.recapList
                 };
@@ -549,6 +594,7 @@
                     const parsed = JSON.parse(saved);
                     if (parsed.examInfo) appState.examInfo = { ...appState.examInfo, ...parsed.examInfo };
                     if (parsed.pgKeys) appState.pgKeys = parsed.pgKeys;
+                    if (parsed.shortAnswerKeys && parsed.shortAnswerKeys.length > 0) appState.shortAnswerKeys = parsed.shortAnswerKeys;
                     if (parsed.essayKeys && parsed.essayKeys.length > 0) appState.essayKeys = parsed.essayKeys;
                     if (parsed.recapList) appState.recapList = parsed.recapList;
 
@@ -557,8 +603,9 @@
                     document.getElementById('exam-subject').value = appState.examInfo.subject || "";
                     document.getElementById('exam-class').value = appState.examInfo.className || "";
                     document.getElementById('exam-kkm').value = appState.examInfo.kkm ?? 75;
-                    document.getElementById('weight-pg').value = appState.examInfo.weightPG ?? 60;
-                    document.getElementById('weight-essay').value = appState.examInfo.weightEssay ?? 40;
+                    document.getElementById('weight-pg').value = appState.examInfo.weightPG ?? 50;
+                    document.getElementById('weight-short').value = appState.examInfo.weightShort ?? 20;
+                    document.getElementById('weight-essay').value = appState.examInfo.weightEssay ?? 30;
 
                     // Rekonstruksi teks kunci PG
                     const pgEntries = Object.entries(appState.pgKeys).sort((a, b) => Number(a[0]) - Number(b[0]));
@@ -631,8 +678,9 @@
         // ==========================================
         function updateWeightValidation() {
             const wPG = Number(document.getElementById('weight-pg').value) || 0;
+            const wShort = Number(document.getElementById('weight-short').value) || 0;
             const wEssay = Number(document.getElementById('weight-essay').value) || 0;
-            const total = wPG + wEssay;
+            const total = wPG + wShort + wEssay;
             const badge = document.getElementById('weight-status');
 
             badge.textContent = `Total Bobot: ${total}%`;
@@ -684,6 +732,47 @@
                     <span class="text-slate-400 font-normal">${num}.</span>${parsed[num]}
                 </span>
             `).join('');
+        }
+
+        function renderShortAnswerRows() {
+            const container = document.getElementById('short-answer-list-container');
+            if (appState.shortAnswerKeys.length === 0) {
+                container.innerHTML = `<div class="text-xs text-slate-400 italic text-center py-6">Tidak ada isian singkat. Klik "+ Tambah" jika ada.</div>`;
+                return;
+            }
+
+            container.innerHTML = appState.shortAnswerKeys.map((item, idx) => `
+                <div class="bg-white p-2.5 rounded-xl border border-slate-200 shadow-2xs flex items-center gap-2">
+                    <span class="text-xs font-bold text-teal-700 bg-teal-50 px-2 py-1 rounded-lg shrink-0">No.</span>
+                    <input type="number" min="1" value="${item.number}" onchange="updateShortAnswerField(${idx}, 'number', Number(this.value))" 
+                        class="w-12 px-1.5 py-1 bg-slate-50 border border-slate-300 rounded-lg text-xs font-bold text-center shrink-0">
+                    <input type="text" value="${item.keyText.replace(/"/g, '&quot;')}" oninput="updateShortAnswerField(${idx}, 'keyText', this.value)" 
+                        placeholder="Kunci isian no. ${item.number}..." 
+                        class="w-full px-2.5 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs focus:ring-2 focus:ring-teal-500 outline-none">
+                    <button type="button" onclick="removeShortAnswerRow(${idx})" class="w-7 h-7 rounded-lg bg-red-50 hover:bg-red-100 text-red-600 flex items-center justify-center text-xs shrink-0 transition" title="Hapus nomor">
+                        <i class="fa-solid fa-trash-can"></i>
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        function addShortAnswerRow() {
+            const nextNum = appState.shortAnswerKeys.length > 0 
+                ? Math.max(...appState.shortAnswerKeys.map(s => Number(s.number))) + 1 
+                : 1;
+            appState.shortAnswerKeys.push({ number: nextNum, keyText: "" });
+            renderShortAnswerRows();
+        }
+
+        function removeShortAnswerRow(index) {
+            appState.shortAnswerKeys.splice(index, 1);
+            renderShortAnswerRows();
+        }
+
+        function updateShortAnswerField(index, field, value) {
+            if (appState.shortAnswerKeys[index]) {
+                appState.shortAnswerKeys[index][field] = value;
+            }
         }
 
         function renderEssayRows() {
@@ -743,12 +832,42 @@
                 className: document.getElementById('exam-class').value.trim(),
                 kkm: Number(document.getElementById('exam-kkm').value) || 75,
                 weightPG: Number(document.getElementById('weight-pg').value) || 0,
+                weightShort: Number(document.getElementById('weight-short').value) || 0,
                 weightEssay: Number(document.getElementById('weight-essay').value) || 0
             };
 
             saveToLocalStorage();
             renderRecapTable();
             showToast("Kunci jawaban & pengaturan ujian berhasil disimpan!", "success");
+        }
+
+        function loadSampleData() {
+            document.getElementById('exam-subject').value = "Ilmu Pengetahuan Alam (Contoh)";
+            document.getElementById('exam-class').value = "VIII-A";
+            document.getElementById('exam-kkm').value = 75;
+            document.getElementById('weight-pg').value = 50;
+            document.getElementById('weight-short').value = 20;
+            document.getElementById('weight-essay').value = 30;
+            document.getElementById('pg-key-input').value = "1.A, 2.C, 3.B, 4.D, 5.A, 6.B, 7.D, 8.C, 9.A, 10.B";
+
+            appState.shortAnswerKeys = [
+                { number: 1, keyText: "Klorofil / Zat hijau daun" },
+                { number: 2, keyText: "Oksigen (O2)" },
+                { number: 3, keyText: "Alveolus" },
+                { number: 4, keyText: "Jantung" }
+            ];
+
+            appState.essayKeys = [
+                { number: 1, keyText: "Fotosintesis adalah proses tumbuhan hijau mengubah air dan karbon dioksida menjadi glukosa dan oksigen dengan bantuan cahaya matahari dan klorofil.", maxScore: 15 },
+                { number: 2, keyText: "Tiga cara menjaga kesehatan sistem pernapasan: tidak merokok, memakai masker di area berpolusi, dan rutin berolahraga.", maxScore: 15 }
+            ];
+
+            parsePGPreview();
+            renderShortAnswerRows();
+            renderEssayRows();
+            updateWeightValidation();
+            saveAnswerKey();
+            showToast("Contoh soal PG, Isian Singkat & Esai berhasil dimuat!", "info");
         }
 
         function loadSampleData() {
@@ -1029,9 +1148,10 @@
         async function analyzeStudentSheet() {
             parsePGPreview();
             const pgNumbers = Object.keys(appState.pgKeys).map(Number).sort((a, b) => a - b);
+            const validShorts = appState.shortAnswerKeys.filter(s => s.keyText.trim() !== "");
             const validEssays = appState.essayKeys.filter(e => e.keyText.trim() !== "");
 
-            if (pgNumbers.length === 0 && validEssays.length === 0) {
+            if (pgNumbers.length === 0 && validShorts.length === 0 && validEssays.length === 0) {
                 showToast("Kunci jawaban masih kosong! Silakan isi di Tab 1 terlebih dahulu.", "error");
                 switchTab('kunci');
                 return;
@@ -1050,6 +1170,7 @@
 
             // Susun Instruksi Sistem & Rubrik Ketat
             const pgKeyString = pgNumbers.map(n => `Nomor ${n}: ${appState.pgKeys[n]}`).join('\n');
+            const shortKeyString = validShorts.map(s => `Isian Nomor ${s.number}: ${s.keyText}`).join('\n');
             const essayRubricString = validEssays.map(e => 
                 `Esai Nomor ${e.number} (Skor Maksimal: ${e.maxScore}):\nKunci Jawaban/Rubrik: ${e.keyText}`
             ).join('\n\n');
@@ -1057,16 +1178,18 @@
             const manualName = document.getElementById('manual-student-name').value.trim();
 
             const systemInstruction = `Anda adalah sistem korektor ujian SAS (Sumatif Akhir Semester) dengan tingkat ketelitian dan akurasi 100% absolut.
-Tugas Anda adalah membaca foto lembar jawaban siswa, mengekstrak jawaban yang ditulis/dipilih siswa, dan mencocokkannya secara ketat dengan KUNCI JAWABAN resmi.
+Tugas Anda adalah membaca foto lembar jawaban siswa, mengekstrak jawaban yang ditulis/dipilih siswa, dan mencocokkannya secara ketat dengan KUNCI JAWABAN resmi untuk 3 bagian: Pilihan Ganda (PG), Isian Singkat, dan Esai/Uraian.
 
 ATURAN KETAT PEMERIKSAAN (ZERO-ERROR POLICY):
 1. IDENTITAS SISWA: Baca Nama Lengkap dan Kelas/No. Absen siswa dari bagian atas lembar jawaban. Jika tidak terbaca atau kosong, tulis "Tanpa Nama".
 2. PILIHAN GANDA (PG):
-   - Periksa tanda silang (X), lingkaran (O), arsiran, atau huruf jawaban (A/B/C/D/E) yang dipilih siswa untuk setiap nomor soal yang ada di kunci jawaban.
+   - Periksa tanda silang (X), lingkaran (O), arsiran, atau huruf jawaban (A/B/C/D/E) yang dipilih siswa untuk setiap nomor soal pada kunci PG.
    - Jika siswa memilih dua jawaban sekaligus tanpa coretan pembatalan yang jelas, atau membiarkannya kosong, catat jawaban siswa sebagai "KOSONG" atau "GANDA" dan tandai salah.
-   - Jika ada coretan pembatalan (misal tanda = pada silangan lama) dan memilih huruf baru, ambil pilihan yang sah.
-   - JANGAN PERNAH mengubah kunci jawaban. Bandingkan pilihan siswa persis dengan kunci yang diberikan.
-3. ESAI / URAIAN:
+   - Bandingkan pilihan siswa persis dengan kunci PG yang diberikan.
+3. ISIAN SINGKAT:
+   - Baca jawaban singkat yang ditulis siswa pada bagian Isian Singkat untuk setiap nomor pada kunci Isian Singkat. Jika kosong, tulis "KOSONG".
+   - Tandai isCorrect = true HANYA JIKA makna kata, istilah, atau angka jawaban siswa tepat dan sesuai dengan kunci isian singkat (toleransi perbedaan huruf kapital atau typo minor yang tidak mengubah makna istilah/angka). Selain itu tandai isCorrect = false.
+4. ESAI / URAIAN:
    - Transkripsikan tulisan tangan jawaban siswa pada setiap nomor esai secara akurat.
    - Nilai jawaban siswa berdasarkan kesesuaian konsep, langkah pengerjaan, dan kata kunci pada RUBRIK ESAI.
    - Berikan skor numerik antara 0 hingga Skor Maksimal soal tersebut secara adil dan objektif. Jika jawaban kosong atau melenceng jauh, beri skor 0. Jika sebagian konsep benar, beri skor proporsional.
@@ -1074,13 +1197,16 @@ ATURAN KETAT PEMERIKSAAN (ZERO-ERROR POLICY):
 
             const promptText = `Periksa lembar jawaban siswa pada gambar terlampir berdasarkan kunci berikut:
 
-=== KUNCI JAWABAN PILIHAN GANDA (${pgNumbers.length} Soal) ===
+=== BAGIAN A: KUNCI JAWABAN PILIHAN GANDA (${pgNumbers.length} Soal) ===
 ${pgNumbers.length > 0 ? pgKeyString : "Tidak ada soal Pilihan Ganda."}
 
-=== KUNCI & RUBRIK JAWABAN ESAI (${validEssays.length} Soal) ===
+=== BAGIAN B: KUNCI JAWABAN ISIAN SINGKAT (${validShorts.length} Soal) ===
+${validShorts.length > 0 ? shortKeyString : "Tidak ada soal Isian Singkat."}
+
+=== BAGIAN C: KUNCI & RUBRIK JAWABAN ESAI (${validEssays.length} Soal) ===
 ${validEssays.length > 0 ? essayRubricString : "Tidak ada soal Esai."}
 
-Pastikan semua nomor soal pada kunci jawaban diperiksa seluruhnya tanpa ada satu nomor pun yang terlewat.`;
+Pastikan semua nomor soal pada ketiga bagian diperiksa seluruhnya tanpa ada satu nomor pun yang terlewat.`;
 
             // Gabungkan teks prompt dan semua halaman gambar
             const userParts = [{ text: promptText }];
@@ -1119,6 +1245,20 @@ Pastikan semua nomor soal pada kunci jawaban diperiksa seluruhnya tanpa ada satu
                                     required: ["number", "studentAnswer", "correctKey", "isCorrect"]
                                 }
                             },
+                            shortAnswerResults: {
+                                type: "ARRAY",
+                                description: "Daftar hasil per nomor untuk semua soal Isian Singkat pada kunci",
+                                items: {
+                                    type: "OBJECT",
+                                    properties: {
+                                        number: { type: "INTEGER" },
+                                        studentAnswer: { type: "STRING", description: "Teks jawaban isian singkat yang ditulis siswa atau KOSONG" },
+                                        correctKey: { type: "STRING", description: "Kunci jawaban resmi isian singkat" },
+                                        isCorrect: { type: "BOOLEAN" }
+                                    },
+                                    required: ["number", "studentAnswer", "correctKey", "isCorrect"]
+                                }
+                            },
                             essayResults: {
                                 type: "ARRAY",
                                 description: "Daftar hasil per nomor untuk semua soal Esai pada kunci",
@@ -1135,7 +1275,7 @@ Pastikan semua nomor soal pada kunci jawaban diperiksa seluruhnya tanpa ada satu
                                 }
                             }
                         },
-                        required: ["studentName", "studentClass", "generalNotes", "pgResults", "essayResults"]
+                        required: ["studentName", "studentClass", "generalNotes", "pgResults", "shortAnswerResults", "essayResults"]
                     }
                 }
             };
@@ -1153,7 +1293,6 @@ Pastikan semua nomor soal pada kunci jawaban diperiksa seluruhnya tanpa ada satu
 
                 // ==============================================================
                 // LAPISAN VALIDASI DETERMINISTIK (ANTI-KESALAHAN HITUNG)
-                // Memastikan kunci jawaban & status benar/salah PG 100% sesuai kunci guru
                 // ==============================================================
                 const verifiedPG = pgNumbers.map(num => {
                     const officialKey = appState.pgKeys[num];
@@ -1165,6 +1304,18 @@ Pastikan semua nomor soal pada kunci jawaban diperiksa seluruhnya tanpa ada satu
                         studentAnswer: studentAns,
                         correctKey: officialKey,
                         isCorrect: isExactMatch
+                    };
+                });
+
+                const verifiedShort = validShorts.map(sKey => {
+                    const found = (parsedResult.shortAnswerResults || []).find(s => Number(s.number) === Number(sKey.number));
+                    const studentAns = found ? String(found.studentAnswer).trim() : "KOSONG";
+                    const isEmpty = !studentAns || studentAns.toUpperCase() === "KOSONG" || studentAns === "-";
+                    return {
+                        number: Number(sKey.number),
+                        studentAnswer: isEmpty ? "KOSONG" : studentAns,
+                        correctKey: sKey.keyText,
+                        isCorrect: isEmpty ? false : Boolean(found && found.isCorrect)
                     };
                 });
 
@@ -1189,6 +1340,7 @@ Pastikan semua nomor soal pada kunci jawaban diperiksa seluruhnya tanpa ada satu
                     studentClass: parsedResult.studentClass || appState.examInfo.className || "-",
                     generalNotes: parsedResult.generalNotes || "Koreksi berhasil dilakukan.",
                     pgResults: verifiedPG,
+                    shortAnswerResults: verifiedShort,
                     essayResults: verifiedEssay
                 };
 
@@ -1210,35 +1362,48 @@ Pastikan semua nomor soal pada kunci jawaban diperiksa seluruhnya tanpa ada satu
         // ==========================================
         function calculateCurrentScores() {
             const data = appState.currentAnalysis;
-            if (!data) return { pgCorrect: 0, pgTotal: 0, pgWeightedScore: 0, essayEarned: 0, essayMax: 0, essayWeightedScore: 0, finalScore: 0 };
+            if (!data) {
+                return {
+                    pgCorrect: 0, pgTotal: 0, pgWeightedScore: 0,
+                    shortCorrect: 0, shortTotal: 0, shortWeightedScore: 0,
+                    essayEarned: 0, essayMax: 0, essayWeightedScore: 0,
+                    finalScore: 0
+                };
+            }
 
             const pgTotal = data.pgResults.length;
             const pgCorrect = data.pgResults.filter(p => p.isCorrect).length;
-            const weightPG = pgTotal > 0 ? (Number(appState.examInfo.weightPG) || 0) : 0;
+            const rawWeightPG = pgTotal > 0 ? (Number(appState.examInfo.weightPG) || 0) : 0;
+
+            const shortList = data.shortAnswerResults || [];
+            const shortTotal = shortList.length;
+            const shortCorrect = shortList.filter(s => s.isCorrect).length;
+            const rawWeightShort = shortTotal > 0 ? (Number(appState.examInfo.weightShort) || 0) : 0;
 
             const essayMax = data.essayResults.reduce((sum, e) => sum + Number(e.maxScore), 0);
             const essayEarned = data.essayResults.reduce((sum, e) => sum + Number(e.awardedScore), 0);
-            const weightEssay = essayMax > 0 ? (Number(appState.examInfo.weightEssay) || 0) : 0;
+            const rawWeightEssay = essayMax > 0 ? (Number(appState.examInfo.weightEssay) || 0) : 0;
 
-            // Jika hanya salah satu jenis soal yang digunakan, normalisasi ke 100
-            let effectiveWeightPG = weightPG;
-            let effectiveWeightEssay = weightEssay;
-            if (pgTotal > 0 && essayMax === 0) {
-                effectiveWeightPG = 100;
-                effectiveWeightEssay = 0;
-            } else if (pgTotal === 0 && essayMax > 0) {
-                effectiveWeightPG = 0;
-                effectiveWeightEssay = 100;
-            }
+            // Normalisasi otomatis proporsional ke 100 jika hanya sebagian jenis soal yang digunakan
+            const activeWeightSum = rawWeightPG + rawWeightShort + rawWeightEssay;
+            const scaleFactor = activeWeightSum > 0 ? (100 / activeWeightSum) : 0;
+
+            const effectiveWeightPG = rawWeightPG * scaleFactor;
+            const effectiveWeightShort = rawWeightShort * scaleFactor;
+            const effectiveWeightEssay = rawWeightEssay * scaleFactor;
 
             const pgWeightedScore = pgTotal > 0 ? (pgCorrect / pgTotal) * effectiveWeightPG : 0;
+            const shortWeightedScore = shortTotal > 0 ? (shortCorrect / shortTotal) * effectiveWeightShort : 0;
             const essayWeightedScore = essayMax > 0 ? (essayEarned / essayMax) * effectiveWeightEssay : 0;
-            const finalScore = Math.round((pgWeightedScore + essayWeightedScore) * 100) / 100;
+            const finalScore = Math.round((pgWeightedScore + shortWeightedScore + essayWeightedScore) * 100) / 100;
 
             return {
                 pgCorrect,
                 pgTotal,
                 pgWeightedScore: Math.round(pgWeightedScore * 100) / 100,
+                shortCorrect,
+                shortTotal,
+                shortWeightedScore: Math.round(shortWeightedScore * 100) / 100,
                 essayEarned: Math.round(essayEarned * 100) / 100,
                 essayMax,
                 essayWeightedScore: Math.round(essayWeightedScore * 100) / 100,
@@ -1287,6 +1452,35 @@ Pastikan semua nomor soal pada kunci jawaban diperiksa seluruhnya tanpa ada satu
                 `).join('');
             }
 
+            // Render Grid Isian Singkat
+            const shortGrid = document.getElementById('res-short-grid');
+            const shortList = data.shortAnswerResults || [];
+            if (shortList.length === 0) {
+                shortGrid.innerHTML = `<div class="col-span-full text-xs text-slate-400 italic py-2">Tidak ada soal Isian Singkat.</div>`;
+            } else {
+                shortGrid.innerHTML = shortList.map((item, idx) => `
+                    <button type="button" onclick="toggleShortCorrectness(${idx})" title="Klik untuk mengoreksi manual benar/salah"
+                        class="flex items-center justify-between p-2.5 rounded-xl border text-left transition gap-2 ${
+                            item.isCorrect 
+                            ? 'bg-teal-50/80 border-teal-200 hover:bg-teal-100' 
+                            : 'bg-red-50/80 border-red-200 hover:bg-red-100'
+                        }">
+                        <div class="min-w-0 flex-grow">
+                            <div class="text-[10px] font-bold text-slate-500">Isian No. ${item.number}</div>
+                            <div class="text-xs font-extrabold truncate ${item.isCorrect ? 'text-teal-900' : 'text-red-800'}">
+                                "${item.studentAnswer}"
+                            </div>
+                            <div class="text-[10px] text-slate-500 truncate">Kunci: ${item.correctKey}</div>
+                        </div>
+                        <div class="w-5 h-5 rounded-full shrink-0 flex items-center justify-center text-[10px] ${
+                            item.isCorrect ? 'bg-teal-600 text-white' : 'bg-red-600 text-white'
+                        }">
+                            <i class="fa-solid ${item.isCorrect ? 'fa-check' : 'fa-xmark'}"></i>
+                        </div>
+                    </button>
+                `).join('');
+            }
+
             // Render Daftar Esai
             const essayList = document.getElementById('res-essay-list');
             if (data.essayResults.length === 0) {
@@ -1324,9 +1518,11 @@ Pastikan semua nomor soal pada kunci jawaban diperiksa seluruhnya tanpa ada satu
 
             document.getElementById('res-total-score').textContent = scores.finalScore;
             document.getElementById('res-pg-score-summary').textContent = `${scores.pgWeightedScore} (${scores.pgCorrect}/${scores.pgTotal})`;
+            document.getElementById('res-short-score-summary').textContent = `${scores.shortWeightedScore} (${scores.shortCorrect}/${scores.shortTotal})`;
             document.getElementById('res-essay-score-summary').textContent = `${scores.essayWeightedScore} (${scores.essayEarned}/${scores.essayMax})`;
             
             document.getElementById('res-pg-fraction').textContent = `Benar: ${scores.pgCorrect} / ${scores.pgTotal}`;
+            document.getElementById('res-short-fraction').textContent = `Benar: ${scores.shortCorrect} / ${scores.shortTotal}`;
             document.getElementById('res-essay-fraction').textContent = `Poin: ${scores.essayEarned} / ${scores.essayMax}`;
 
             const kkmBadge = document.getElementById('res-kkm-badge');
@@ -1343,6 +1539,12 @@ Pastikan semua nomor soal pada kunci jawaban diperiksa seluruhnya tanpa ada satu
         function togglePGCorrectness(index) {
             if (!appState.currentAnalysis) return;
             appState.currentAnalysis.pgResults[index].isCorrect = !appState.currentAnalysis.pgResults[index].isCorrect;
+            renderAnalysisResult();
+        }
+
+        function toggleShortCorrectness(index) {
+            if (!appState.currentAnalysis || !appState.currentAnalysis.shortAnswerResults) return;
+            appState.currentAnalysis.shortAnswerResults[index].isCorrect = !appState.currentAnalysis.shortAnswerResults[index].isCorrect;
             renderAnalysisResult();
         }
 
@@ -1382,6 +1584,9 @@ Pastikan semua nomor soal pada kunci jawaban diperiksa seluruhnya tanpa ada satu
                 pgCorrect: scores.pgCorrect,
                 pgTotal: scores.pgTotal,
                 pgWeightedScore: scores.pgWeightedScore,
+                shortCorrect: scores.shortCorrect,
+                shortTotal: scores.shortTotal,
+                shortWeightedScore: scores.shortWeightedScore,
                 essayEarned: scores.essayEarned,
                 essayMax: scores.essayMax,
                 essayWeightedScore: scores.essayWeightedScore,
@@ -1431,7 +1636,7 @@ Pastikan semua nomor soal pada kunci jawaban diperiksa seluruhnya tanpa ada satu
             if (totalStudents === 0) {
                 tbody.innerHTML = `
                     <tr>
-                        <td colspan="9" class="py-12 text-center text-slate-400">
+                        <td colspan="11" class="py-12 text-center text-slate-400">
                             <i class="fa-solid fa-folder-open text-3xl mb-2 block text-slate-300"></i>
                             <span class="text-xs font-medium">Belum ada data nilai siswa. Silakan periksa lembar jawaban di Tab 2.</span>
                         </td>
@@ -1447,6 +1652,8 @@ Pastikan semua nomor soal pada kunci jawaban diperiksa seluruhnya tanpa ada satu
                     <td class="py-3 px-4 text-xs text-slate-600">${row.studentClass}</td>
                     <td class="py-3 px-4 text-center text-xs font-mono">${row.pgCorrect}/${row.pgTotal}</td>
                     <td class="py-3 px-4 text-center font-semibold text-slate-700">${row.pgWeightedScore}</td>
+                    <td class="py-3 px-4 text-center text-xs font-mono">${row.shortCorrect ?? 0}/${row.shortTotal ?? 0}</td>
+                    <td class="py-3 px-4 text-center font-semibold text-slate-700">${row.shortWeightedScore ?? 0}</td>
                     <td class="py-3 px-4 text-center font-semibold text-slate-700">${row.essayWeightedScore}</td>
                     <td class="py-3 px-4 text-center">
                         <span class="font-extrabold text-base ${row.isPass ? 'text-primary-700' : 'text-red-600'}">${row.finalScore}</span>
@@ -1476,13 +1683,22 @@ Pastikan semua nomor soal pada kunci jawaban diperiksa seluruhnya tanpa ada satu
 
             document.getElementById('modal-title').textContent = `Detail Koreksi: ${record.studentName} (${record.studentClass})`;
             
-            let pgHtml = record.details.pgResults.map(p => 
+            let pgHtml = (record.details.pgResults || []).map(p => 
                 `<span class="inline-block px-2 py-1 m-0.5 rounded text-[11px] font-mono border ${
                     p.isCorrect ? 'bg-emerald-50 border-emerald-200 text-emerald-800' : 'bg-red-50 border-red-200 text-red-800'
                 }">${p.number}.${p.studentAnswer} ${p.isCorrect ? '✓' : `(✗ Kunci:${p.correctKey})`}</span>`
             ).join('');
 
-            let essayHtml = record.details.essayResults.map(e => `
+            let shortHtml = (record.details.shortAnswerResults || []).map(s => `
+                <div class="p-2 rounded-lg border text-[11px] flex justify-between items-center ${
+                    s.isCorrect ? 'bg-teal-50 border-teal-200 text-teal-900' : 'bg-red-50 border-red-200 text-red-900'
+                }">
+                    <span><strong>No.${s.number}:</strong> "${s.studentAnswer}" <span class="text-slate-500">(Kunci: ${s.correctKey})</span></span>
+                    <span class="font-bold">${s.isCorrect ? '✓ Benar' : '✗ Salah'}</span>
+                </div>
+            `).join('');
+
+            let essayHtml = (record.details.essayResults || []).map(e => `
                 <div class="p-2.5 bg-slate-50 rounded-xl border border-slate-200 space-y-1">
                     <div class="flex justify-between font-bold text-slate-800">
                         <span>Esai No. ${e.number}</span>
@@ -1501,6 +1717,10 @@ Pastikan semua nomor soal pada kunci jawaban diperiksa seluruhnya tanpa ada satu
                 <div>
                     <h4 class="font-bold text-slate-800 mb-1">Pilihan Ganda (${record.pgCorrect}/${record.pgTotal} Benar):</h4>
                     <div>${pgHtml || '-'}</div>
+                </div>
+                <div class="space-y-1.5">
+                    <h4 class="font-bold text-slate-800">Isian Singkat (${record.shortCorrect ?? 0}/${record.shortTotal ?? 0} Benar):</h4>
+                    ${shortHtml || '-'}
                 </div>
                 <div class="space-y-2">
                     <h4 class="font-bold text-slate-800">Esai / Uraian:</h4>
@@ -1570,6 +1790,9 @@ Pastikan semua nomor soal pada kunci jawaban diperiksa seluruhnya tanpa ada satu
                 "PG Benar",
                 "Total Soal PG",
                 "Skor PG",
+                "Isian Benar",
+                "Total Isian",
+                "Skor Isian",
                 "Poin Esai",
                 "Maks Poin Esai",
                 "Skor Esai",
@@ -1588,6 +1811,9 @@ Pastikan semua nomor soal pada kunci jawaban diperiksa seluruhnya tanpa ada satu
                 r.pgCorrect,
                 r.pgTotal,
                 String(r.pgWeightedScore).replace('.', ','),
+                r.shortCorrect ?? 0,
+                r.shortTotal ?? 0,
+                String(r.shortWeightedScore ?? 0).replace('.', ','),
                 String(r.essayEarned).replace('.', ','),
                 r.essayMax,
                 String(r.essayWeightedScore).replace('.', ','),
