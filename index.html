@@ -2,164 +2,224 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SAS Grader AI - Pemeriksa Lembar Jawaban & Rekap Nilai</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>SAS Grader AI — Smart Exam Assessment Suite</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts: Inter -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Google Fonts: Plus Jakarta Sans & Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
     <!-- Font Awesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
+                        display: ['Plus Jakarta Sans', 'sans-serif'],
                     },
                     colors: {
-                        primary: {
-                            50: '#eff6ff',
-                            100: '#dbeafe',
-                            500: '#3b82f6',
-                            600: '#2563eb',
-                            700: '#1d4ed8',
-                            900: '#1e3a8a',
+                        brand: {
+                            50: '#eef2ff',
+                            100: '#e0e7ff',
+                            200: '#c7d2fe',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                            800: '#3730a3',
+                            900: '#312e81',
                         }
+                    },
+                    boxShadow: {
+                        'soft': '0 4px 20px -2px rgba(15, 23, 42, 0.05)',
+                        'card': '0 10px 30px -5px rgba(15, 23, 42, 0.06)',
+                        'glow': '0 8px 25px -4px rgba(79, 70, 229, 0.35)',
                     }
                 }
             }
         }
     </script>
 </head>
-<body class="bg-slate-50 text-slate-800 font-sans antialiased min-h-screen flex flex-col">
+<body class="bg-[#F8FAFC] text-slate-800 font-sans antialiased min-h-screen flex flex-col pb-20 sm:pb-0 selection:bg-brand-100 selection:text-brand-800">
 
-    <!-- Top Navigation Bar -->
-    <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm">
+    <!-- Dekorasi Latar Belakang Halus -->
+    <div class="fixed inset-x-0 top-0 h-64 bg-gradient-to-b from-indigo-50/80 via-slate-50/40 to-transparent pointer-events-none -z-10"></div>
+
+    <!-- Top Navigation Bar (Glassmorphism) -->
+    <header class="bg-white/85 backdrop-blur-md border-b border-slate-200/80 sticky top-0 z-30">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
-                <div class="flex items-center gap-3">
-                    <div class="bg-primary-600 text-white p-2.5 rounded-xl shadow-md">
-                        <i class="fa-solid fa-file-signature text-xl"></i>
+            <div class="flex justify-between items-center h-16 sm:h-[72px]">
+                <!-- Brand Logo & Developer Info -->
+                <div class="flex items-center gap-3.5">
+                    <div class="relative group">
+                        <div class="absolute -inset-0.5 bg-gradient-to-tr from-brand-600 to-cyan-500 rounded-2xl blur opacity-30 group-hover:opacity-50 transition"></div>
+                        <div class="relative bg-gradient-to-br from-brand-600 via-indigo-600 to-blue-600 text-white w-10 h-10 sm:w-11 sm:h-11 rounded-2xl flex items-center justify-center shadow-md">
+                            <i class="fa-solid fa-wand-magic-sparkles text-lg sm:text-xl"></i>
+                        </div>
                     </div>
                     <div>
-                        <h1 class="text-lg sm:text-xl font-bold text-slate-900 leading-tight">SAS Grader <span class="text-primary-600">AI</span></h1>
-                        <p class="text-[11px] text-slate-500 hidden sm:block">Sistem Koreksi Otomatis Umum &bull; Dev: <span class="font-semibold text-slate-700">Asep Jamhur, S.Pd., M.M.</span></p>
+                        <div class="flex items-center gap-2">
+                            <h1 class="font-display text-lg sm:text-xl font-extrabold tracking-tight text-slate-900">
+                                SAS Grader <span class="bg-gradient-to-r from-brand-600 to-cyan-600 bg-clip-text text-transparent">AI</span>
+                            </h1>
+                            <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200/80">
+                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> PRO
+                            </span>
+                        </div>
+                        <p class="text-[11px] text-slate-500 leading-tight mt-0.5">
+                            Oleh: <span class="font-semibold text-slate-700">Asep Jamhur, S.Pd., M.M.</span>
+                        </p>
                     </div>
                 </div>
 
-                <!-- Navigation Tabs -->
-                <nav class="flex space-x-1 sm:space-x-2 bg-slate-100 p-1 rounded-xl">
-                    <button onclick="switchTab('kunci')" id="tab-btn-kunci" class="tab-btn px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all bg-white text-primary-600 shadow-sm flex items-center gap-2">
-                        <i class="fa-solid fa-key"></i>
+                <!-- Desktop Navigation Tabs -->
+                <nav class="hidden sm:flex items-center gap-1.5 bg-slate-100/90 p-1.5 rounded-2xl border border-slate-200/60">
+                    <button onclick="switchTab('kunci')" id="tab-btn-kunci" class="tab-btn px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-200 bg-white text-brand-600 shadow-xs flex items-center gap-2">
+                        <i class="fa-solid fa-key text-xs"></i>
                         <span>1. Kunci & Rubrik</span>
                     </button>
-                    <button onclick="switchTab('periksa')" id="tab-btn-periksa" class="tab-btn px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all text-slate-600 hover:text-slate-900 flex items-center gap-2">
-                        <i class="fa-solid fa-camera"></i>
+                    <button onclick="switchTab('periksa')" id="tab-btn-periksa" class="tab-btn px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-200 text-slate-600 hover:text-slate-900 flex items-center gap-2">
+                        <i class="fa-solid fa-camera text-xs"></i>
                         <span>2. Foto & Koreksi</span>
                     </button>
-                    <button onclick="switchTab('rekap')" id="tab-btn-rekap" class="tab-btn px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all text-slate-600 hover:text-slate-900 flex items-center gap-2">
-                        <i class="fa-solid fa-table-list"></i>
+                    <button onclick="switchTab('rekap')" id="tab-btn-rekap" class="tab-btn px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-200 text-slate-600 hover:text-slate-900 flex items-center gap-2">
+                        <i class="fa-solid fa-chart-pie text-xs"></i>
                         <span>3. Rekap Nilai</span>
-                        <span id="badge-rekap" class="bg-primary-600 text-white text-[10px] px-1.5 py-0.5 rounded-full">0</span>
+                        <span id="badge-rekap" class="bg-brand-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">0</span>
                     </button>
                 </nav>
             </div>
         </div>
     </header>
 
-    <!-- Custom Toast / Notification Banner (Pengganti alert) -->
-    <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 max-w-sm w-full pointer-events-none px-4 sm:px-0"></div>
+    <!-- Mobile Bottom Navigation Bar (Tampilan Seperti Aplikasi HP Asli) -->
+    <nav class="sm:hidden fixed bottom-0 inset-x-0 bg-white/95 backdrop-blur-lg border-t border-slate-200/90 z-40 px-2 py-1.5 shadow-[0_-4px_20px_rgba(0,0,0,0.04)]">
+        <div class="grid grid-cols-3 gap-1">
+            <button onclick="switchTab('kunci')" id="mob-btn-kunci" class="mob-tab-btn flex flex-col items-center justify-center py-1.5 rounded-xl text-brand-600 bg-brand-50/80 font-bold transition">
+                <i class="fa-solid fa-key text-base mb-0.5"></i>
+                <span class="text-[10px]">Kunci & Rubrik</span>
+            </button>
+            <button onclick="switchTab('periksa')" id="mob-btn-periksa" class="mob-tab-btn flex flex-col items-center justify-center py-1.5 rounded-xl text-slate-500 font-medium transition">
+                <i class="fa-solid fa-camera text-base mb-0.5"></i>
+                <span class="text-[10px]">Foto & Koreksi</span>
+            </button>
+            <button onclick="switchTab('rekap')" id="mob-btn-rekap" class="mob-tab-btn relative flex flex-col items-center justify-center py-1.5 rounded-xl text-slate-500 font-medium transition">
+                <span id="mob-badge-rekap" class="absolute top-1 right-6 bg-brand-600 text-white text-[9px] font-bold px-1.5 rounded-full">0</span>
+                <i class="fa-solid fa-table-list text-base mb-0.5"></i>
+                <span class="text-[10px]">Rekap Nilai</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Custom Toast / Notification Banner -->
+    <div id="toast-container" class="fixed top-20 sm:top-auto sm:bottom-6 right-4 left-4 sm:left-auto sm:right-6 z-50 flex flex-col gap-2.5 sm:max-w-sm pointer-events-none"></div>
 
     <!-- Main Content Area -->
-    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
 
         <!-- ========================================== -->
         <!-- TAB 1: PENGATURAN KUNCI JAWABAN & RUBRIK   -->
         <!-- ========================================== -->
         <section id="tab-kunci" class="tab-content space-y-6">
-            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 sm:p-6">
-                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-4 mb-5">
+            <div class="bg-white rounded-3xl shadow-card border border-slate-200/70 p-5 sm:p-7">
+                <!-- Header Card -->
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-100 pb-5 mb-6">
                     <div>
-                        <h2 class="text-lg font-bold text-slate-900 flex items-center gap-2">
-                            <i class="fa-solid fa-sliders text-primary-600"></i> Pengaturan Ujian & Kunci Jawaban
+                        <div class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-brand-600 mb-1">
+                            <span class="w-2 h-2 rounded-full bg-brand-600"></span> Konfigurasi Instrumen Ujian
+                        </div>
+                        <h2 class="font-display text-xl sm:text-2xl font-extrabold text-slate-900">
+                            Kunci Jawaban & Rubrik Penilaian
                         </h2>
-                        <p class="text-sm text-slate-500 mt-0.5">Isi kunci jawaban dengan teliti. Sistem akan mengoreksi 100% berpatokan pada aturan di bawah ini.</p>
+                        <p class="text-xs sm:text-sm text-slate-500 mt-1">Atur kunci Pilihan Ganda, Isian Singkat, dan Esai. Sistem mengoreksi 100% presisi sesuai standar ini.</p>
                     </div>
-                    <div class="flex flex-wrap gap-2">
-                        <button onclick="loadSampleData()" class="px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-semibold transition flex items-center gap-1.5">
-                            <i class="fa-solid fa-wand-magic-sparkles text-amber-500"></i> Isi Contoh Soal
+                    <div class="flex flex-wrap items-center gap-2.5">
+                        <button onclick="loadSampleData()" class="px-3.5 py-2.5 bg-slate-100 hover:bg-slate-200/80 text-slate-700 rounded-xl text-xs font-bold transition flex items-center gap-2 active:scale-95">
+                            <i class="fa-solid fa-sparkles text-amber-500"></i> Muat Contoh Soal
                         </button>
-                        <button onclick="saveAnswerKey()" class="px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-xl text-xs sm:text-sm font-semibold shadow-sm transition flex items-center gap-1.5">
-                            <i class="fa-solid fa-floppy-disk"></i> Simpan Kunci Jawaban
+                        <button onclick="saveAnswerKey()" class="px-5 py-2.5 bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-700 hover:to-indigo-700 text-white rounded-xl text-xs sm:text-sm font-bold shadow-glow transition flex items-center gap-2 active:scale-95">
+                            <i class="fa-solid fa-floppy-disk"></i> Simpan Kunci
                         </button>
                     </div>
                 </div>
 
                 <!-- Identitas Ujian -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5">Nama Guru / Pemeriksa</label>
-                        <input type="text" id="exam-teacher" placeholder="Nama lengkap & gelar guru..." class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition">
+                    <div class="bg-slate-50/70 p-3.5 rounded-2xl border border-slate-200/70 focus-within:border-brand-500 focus-within:bg-white focus-within:ring-4 focus-within:ring-brand-500/10 transition">
+                        <label class="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1">
+                            <i class="fa-solid fa-user-tie text-brand-500 mr-1"></i> Nama Guru / Pemeriksa
+                        </label>
+                        <input type="text" id="exam-teacher" placeholder="Contoh: Drs. Ahmad / Siti, S.Pd." class="w-full bg-transparent text-sm font-semibold text-slate-800 placeholder:font-normal placeholder:text-slate-400 outline-none">
                     </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5">Mata Pelajaran</label>
-                        <input type="text" id="exam-subject" placeholder="Semua Mapel (Contoh: Matematika / B. Indo)" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition">
+                    <div class="bg-slate-50/70 p-3.5 rounded-2xl border border-slate-200/70 focus-within:border-brand-500 focus-within:bg-white focus-within:ring-4 focus-within:ring-brand-500/10 transition">
+                        <label class="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1">
+                            <i class="fa-solid fa-book-open text-brand-500 mr-1"></i> Mata Pelajaran
+                        </label>
+                        <input type="text" id="exam-subject" placeholder="Semua Mapel (Matematika, IPA, dll)" class="w-full bg-transparent text-sm font-semibold text-slate-800 placeholder:font-normal placeholder:text-slate-400 outline-none">
                     </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5">Satuan Pendidikan / Kelas</label>
-                        <input type="text" id="exam-class" placeholder="Contoh: SMPN 1 / Kelas VII-A" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition">
+                    <div class="bg-slate-50/70 p-3.5 rounded-2xl border border-slate-200/70 focus-within:border-brand-500 focus-within:bg-white focus-within:ring-4 focus-within:ring-brand-500/10 transition">
+                        <label class="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1">
+                            <i class="fa-solid fa-school text-brand-500 mr-1"></i> Sekolah / Kelas
+                        </label>
+                        <input type="text" id="exam-class" placeholder="Contoh: SMPN 1 / VII-A" class="w-full bg-transparent text-sm font-semibold text-slate-800 placeholder:font-normal placeholder:text-slate-400 outline-none">
                     </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5">KKM / Kriteria Ketuntasan</label>
-                        <input type="number" id="exam-kkm" value="75" min="0" max="100" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition">
+                    <div class="bg-slate-50/70 p-3.5 rounded-2xl border border-slate-200/70 focus-within:border-brand-500 focus-within:bg-white focus-within:ring-4 focus-within:ring-brand-500/10 transition">
+                        <label class="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1">
+                            <i class="fa-solid fa-award text-brand-500 mr-1"></i> Standar KKM
+                        </label>
+                        <input type="number" id="exam-kkm" value="75" min="0" max="100" class="w-full bg-transparent text-sm font-extrabold text-brand-700 outline-none">
                     </div>
                 </div>
 
                 <!-- Pengaturan Bobot Nilai -->
-                <div class="bg-blue-50/70 border border-blue-100 rounded-xl p-4 mb-6">
-                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
-                        <span class="text-sm font-bold text-blue-900 flex items-center gap-2">
-                            <i class="fa-solid fa-calculator text-blue-600"></i> Konfigurasi Bobot Skor (Total Maksimal: 100 Poin)
+                <div class="bg-gradient-to-r from-indigo-50/90 via-blue-50/70 to-cyan-50/70 border border-indigo-100 rounded-2xl p-4 sm:p-5 mb-7">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3.5">
+                        <span class="text-sm font-bold text-slate-800 flex items-center gap-2">
+                            <span class="w-7 h-7 rounded-lg bg-brand-600 text-white flex items-center justify-center text-xs shadow-xs">
+                                <i class="fa-solid fa-scale-balanced"></i>
+                            </span>
+                            Distribusi Bobot Penilaian (Total 100%)
                         </span>
-                        <span id="weight-status" class="text-xs font-bold px-2.5 py-1 rounded-lg bg-emerald-100 text-emerald-700">Total Bobot: 100%</span>
+                        <span id="weight-status" class="text-xs font-extrabold px-3 py-1 rounded-full bg-emerald-100 text-emerald-700 border border-emerald-200 self-start sm:self-auto">
+                            Total Bobot: 100%
+                        </span>
                     </div>
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                        <div>
-                            <label class="block text-xs font-medium text-slate-700 mb-1">Bobot Pilihan Ganda (%)</label>
-                            <input type="number" id="weight-pg" value="50" min="0" max="100" oninput="updateWeightValidation()" class="w-full px-3 py-2 bg-white border border-blue-200 rounded-lg text-sm font-semibold text-slate-800">
+                    <div class="grid grid-cols-3 gap-3 sm:gap-4">
+                        <div class="bg-white/90 p-3 rounded-xl border border-indigo-100 shadow-2xs">
+                            <label class="block text-[11px] font-semibold text-slate-500 mb-1">Pilihan Ganda (%)</label>
+                            <input type="number" id="weight-pg" value="50" min="0" max="100" oninput="updateWeightValidation()" class="w-full text-base sm:text-lg font-extrabold text-brand-700 outline-none">
                         </div>
-                        <div>
-                            <label class="block text-xs font-medium text-slate-700 mb-1">Bobot Isian Singkat (%)</label>
-                            <input type="number" id="weight-short" value="20" min="0" max="100" oninput="updateWeightValidation()" class="w-full px-3 py-2 bg-white border border-blue-200 rounded-lg text-sm font-semibold text-slate-800">
+                        <div class="bg-white/90 p-3 rounded-xl border border-indigo-100 shadow-2xs">
+                            <label class="block text-[11px] font-semibold text-slate-500 mb-1">Isian Singkat (%)</label>
+                            <input type="number" id="weight-short" value="20" min="0" max="100" oninput="updateWeightValidation()" class="w-full text-base sm:text-lg font-extrabold text-teal-700 outline-none">
                         </div>
-                        <div>
-                            <label class="block text-xs font-medium text-slate-700 mb-1">Bobot Esai / Uraian (%)</label>
-                            <input type="number" id="weight-essay" value="30" min="0" max="100" oninput="updateWeightValidation()" class="w-full px-3 py-2 bg-white border border-blue-200 rounded-lg text-sm font-semibold text-slate-800">
+                        <div class="bg-white/90 p-3 rounded-xl border border-indigo-100 shadow-2xs">
+                            <label class="block text-[11px] font-semibold text-slate-500 mb-1">Esai / Uraian (%)</label>
+                            <input type="number" id="weight-essay" value="30" min="0" max="100" oninput="updateWeightValidation()" class="w-full text-base sm:text-lg font-extrabold text-indigo-700 outline-none">
                         </div>
                     </div>
                 </div>
 
                 <!-- Tiga Kolom: Pilihan Ganda, Isian Singkat & Esai -->
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                     
                     <!-- Kolom A: Pilihan Ganda -->
-                    <div class="border border-slate-200 rounded-2xl p-4 bg-slate-50/50 flex flex-col">
+                    <div class="border border-slate-200/90 rounded-2xl p-4 sm:p-5 bg-slate-50/40 flex flex-col">
                         <div class="flex items-center justify-between mb-3">
-                            <h3 class="font-bold text-slate-800 flex items-center gap-2 text-sm">
-                                <span class="w-6 h-6 rounded-lg bg-primary-100 text-primary-700 flex items-center justify-center text-xs font-bold">A</span>
+                            <h3 class="font-display font-bold text-slate-900 flex items-center gap-2.5 text-sm">
+                                <span class="w-7 h-7 rounded-xl bg-brand-600 text-white flex items-center justify-center text-xs font-extrabold shadow-xs">A</span>
                                 Pilihan Ganda (PG)
                             </h3>
-                            <span id="pg-count-badge" class="text-xs font-semibold bg-slate-200 text-slate-700 px-2.5 py-1 rounded-lg">0 Soal</span>
+                            <span id="pg-count-badge" class="text-xs font-bold bg-brand-50 text-brand-700 border border-brand-200 px-2.5 py-1 rounded-lg">0 Soal</span>
                         </div>
                         
-                        <p class="text-xs text-slate-500 mb-3">Ketik berurutan (Contoh: <code class="bg-white px-1 py-0.5 rounded border text-primary-700 font-mono">1.A, 2.B, 3.C</code> atau <code class="bg-white px-1 py-0.5 rounded border text-primary-700 font-mono">ABCDA...</code>)</p>
+                        <p class="text-xs text-slate-500 mb-3 leading-relaxed">Ketik berurutan (Contoh: <code class="bg-white px-1.5 py-0.5 rounded-md border border-slate-200 text-brand-700 font-mono font-semibold">1.A, 2.B</code> atau <code class="bg-white px-1.5 py-0.5 rounded-md border border-slate-200 text-brand-700 font-mono font-semibold">ABCDA...</code>)</p>
                         
-                        <textarea id="pg-key-input" rows="4" oninput="parsePGPreview()" placeholder="Ketik kunci jawaban PG di sini...&#10;Contoh: 1.A, 2.C, 3.B, 4.D, 5.A&#10;Atau: ACBDA" class="w-full p-3 bg-white border border-slate-300 rounded-xl text-sm font-mono focus:ring-2 focus:ring-primary-500 outline-none mb-3"></textarea>
+                        <textarea id="pg-key-input" rows="4" oninput="parsePGPreview()" placeholder="Ketik kunci jawaban PG di sini...&#10;Contoh: 1.A, 2.C, 3.B, 4.D, 5.A&#10;Atau: ACBDA" class="w-full p-3.5 bg-white border border-slate-200 rounded-xl text-sm font-mono focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none mb-3 shadow-2xs transition"></textarea>
                         
                         <!-- Preview Grid PG -->
-                        <div class="bg-white border border-slate-200 rounded-xl p-3 flex-grow">
-                            <div class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider mb-2">Pratinjau Kunci PG:</div>
+                        <div class="bg-white border border-slate-200/90 rounded-xl p-3.5 flex-grow shadow-2xs">
+                            <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">Pratinjau Kunci Terbaca:</div>
                             <div id="pg-preview-grid" class="flex flex-wrap gap-1.5 max-h-48 overflow-y-auto">
                                 <span class="text-xs text-slate-400 italic">Belum ada kunci PG dimasukkan...</span>
                             </div>
@@ -167,17 +227,17 @@
                     </div>
 
                     <!-- Kolom B: Isian Singkat -->
-                    <div class="border border-slate-200 rounded-2xl p-4 bg-slate-50/50 flex flex-col">
+                    <div class="border border-slate-200/90 rounded-2xl p-4 sm:p-5 bg-slate-50/40 flex flex-col">
                         <div class="flex items-center justify-between mb-3">
-                            <h3 class="font-bold text-slate-800 flex items-center gap-2 text-sm">
-                                <span class="w-6 h-6 rounded-lg bg-teal-100 text-teal-700 flex items-center justify-center text-xs font-bold">B</span>
+                            <h3 class="font-display font-bold text-slate-900 flex items-center gap-2.5 text-sm">
+                                <span class="w-7 h-7 rounded-xl bg-teal-600 text-white flex items-center justify-center text-xs font-extrabold shadow-xs">B</span>
                                 Isian Singkat
                             </h3>
-                            <button type="button" onclick="addShortAnswerRow()" class="px-2.5 py-1.5 bg-teal-600 hover:bg-teal-700 text-white rounded-lg text-xs font-semibold transition flex items-center gap-1">
+                            <button type="button" onclick="addShortAnswerRow()" class="px-3 py-1.5 bg-teal-600 hover:bg-teal-700 text-white rounded-xl text-xs font-bold transition flex items-center gap-1.5 shadow-2xs active:scale-95">
                                 <i class="fa-solid fa-plus"></i> Tambah
                             </button>
                         </div>
-                        <p class="text-xs text-slate-500 mb-3">Tulis kata/angka jawaban pasti tiap nomor (toleransi ejaan/sinonim jelas).</p>
+                        <p class="text-xs text-slate-500 mb-3 leading-relaxed">Tulis kata, istilah, atau angka jawaban pasti tiap nomor.</p>
                         
                         <div id="short-answer-list-container" class="space-y-2.5 max-h-[320px] overflow-y-auto pr-1">
                             <!-- Item isian singkat akan di-render di sini -->
@@ -185,17 +245,17 @@
                     </div>
 
                     <!-- Kolom C: Esai / Uraian -->
-                    <div class="border border-slate-200 rounded-2xl p-4 bg-slate-50/50 flex flex-col">
+                    <div class="border border-slate-200/90 rounded-2xl p-4 sm:p-5 bg-slate-50/40 flex flex-col">
                         <div class="flex items-center justify-between mb-3">
-                            <h3 class="font-bold text-slate-800 flex items-center gap-2 text-sm">
-                                <span class="w-6 h-6 rounded-lg bg-indigo-100 text-indigo-700 flex items-center justify-center text-xs font-bold">C</span>
+                            <h3 class="font-display font-bold text-slate-900 flex items-center gap-2.5 text-sm">
+                                <span class="w-7 h-7 rounded-xl bg-indigo-600 text-white flex items-center justify-center text-xs font-extrabold shadow-xs">C</span>
                                 Esai / Uraian
                             </h3>
-                            <button type="button" onclick="addEssayRow()" class="px-2.5 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-semibold transition flex items-center gap-1">
+                            <button type="button" onclick="addEssayRow()" class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-bold transition flex items-center gap-1.5 shadow-2xs active:scale-95">
                                 <i class="fa-solid fa-plus"></i> Tambah
                             </button>
                         </div>
-                        <p class="text-xs text-slate-500 mb-3">Tuliskan jawaban inti / kata kunci wajib dan skor maksimal tiap nomor uraian.</p>
+                        <p class="text-xs text-slate-500 mb-3 leading-relaxed">Tuliskan poin konsep wajib & bobot skor maksimal tiap nomor uraian.</p>
                         
                         <div id="essay-list-container" class="space-y-3 max-h-[320px] overflow-y-auto pr-1">
                             <!-- Item esai akan di-render di sini -->
@@ -215,53 +275,63 @@
                 
                 <!-- Panel Kiri: Input Foto Lembar Jawaban -->
                 <div class="lg:col-span-5 space-y-4">
-                    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5">
-                        <h2 class="text-base font-bold text-slate-900 mb-1 flex items-center gap-2">
-                            <i class="fa-solid fa-camera-retro text-primary-600"></i> Ambil / Unggah Foto Jawaban
-                        </h2>
-                        <p class="text-xs text-slate-500 mb-4">Pastikan tulisan nama siswa, nomor soal, silangan/lingkaran PG, dan tulisan esai terlihat terang & jelas.</p>
+                    <div class="bg-white rounded-3xl shadow-card border border-slate-200/70 p-5 sm:p-6">
+                        <div class="flex items-center gap-2.5 mb-1.5">
+                            <span class="w-8 h-8 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center text-sm">
+                                <i class="fa-solid fa-expand"></i>
+                            </span>
+                            <h2 class="font-display text-lg font-extrabold text-slate-900">Pindai Lembar Jawaban</h2>
+                        </div>
+                        <p class="text-xs text-slate-500 mb-5 leading-relaxed">Gunakan pencahayaan yang cukup agar nama siswa, silangan PG, isian singkat, dan uraian terbaca sempurna.</p>
 
                         <!-- Tombol Aksi Kamera / Galeri -->
-                        <div class="grid grid-cols-2 gap-3 mb-4">
-                            <button type="button" onclick="openLiveCamera()" class="cursor-pointer flex flex-col items-center justify-center p-4 border-2 border-dashed border-primary-300 bg-primary-50/50 hover:bg-primary-50 rounded-2xl transition text-center group">
-                                <div class="w-10 h-10 rounded-full bg-primary-100 text-primary-600 flex items-center justify-center mb-2 group-hover:scale-110 transition">
+                        <div class="grid grid-cols-2 gap-3.5 mb-5">
+                            <button type="button" onclick="openLiveCamera()" class="cursor-pointer flex flex-col items-center justify-center p-5 border-2 border-dashed border-brand-300 bg-gradient-to-b from-brand-50/70 to-indigo-50/40 hover:from-brand-50 hover:to-indigo-100/50 rounded-2xl transition text-center group active:scale-[0.98]">
+                                <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-brand-600 to-indigo-600 text-white flex items-center justify-center mb-2.5 shadow-md group-hover:scale-105 transition">
                                     <i class="fa-solid fa-camera text-lg"></i>
                                 </div>
-                                <span class="text-xs font-bold text-primary-800">Buka Kamera</span>
-                                <span class="text-[10px] text-primary-600 mt-0.5">Langsung Foto Kertas</span>
+                                <span class="text-xs font-extrabold text-slate-900">Buka Kamera</span>
+                                <span class="text-[10px] text-brand-600 font-medium mt-0.5">Potret Langsung</span>
                             </button>
 
-                            <label for="gallery-input" class="cursor-pointer flex flex-col items-center justify-center p-4 border-2 border-dashed border-slate-300 bg-slate-50 hover:bg-slate-100 rounded-2xl transition text-center group">
-                                <div class="w-10 h-10 rounded-full bg-slate-200 text-slate-700 flex items-center justify-center mb-2 group-hover:scale-110 transition">
+                            <label for="gallery-input" class="cursor-pointer flex flex-col items-center justify-center p-5 border-2 border-dashed border-slate-300 bg-slate-50/70 hover:bg-slate-100/80 rounded-2xl transition text-center group active:scale-[0.98]">
+                                <div class="w-12 h-12 rounded-2xl bg-slate-800 text-white flex items-center justify-center mb-2.5 shadow-md group-hover:scale-105 transition">
                                     <i class="fa-solid fa-images text-lg"></i>
                                 </div>
-                                <span class="text-xs font-bold text-slate-800">Pilih File / Galeri</span>
-                                <span class="text-[10px] text-slate-500 mt-0.5">Bisa Pilih Banyak Halaman</span>
+                                <span class="text-xs font-extrabold text-slate-900">Galeri / File</span>
+                                <span class="text-[10px] text-slate-500 font-medium mt-0.5">Multi-Halaman</span>
                                 <input type="file" id="gallery-input" accept="image/*" multiple class="hidden" onchange="handleImageUpload(event)">
                             </label>
                         </div>
 
-                        <!-- Input Cadangan jika browser memblokir akses WebRTC langsung -->
+                        <!-- Input Cadangan Kamera Bawaan Perangkat -->
                         <input type="file" id="fallback-camera-input" accept="image/*" capture="environment" class="hidden" onchange="handleImageUpload(event)">
-                        <div id="uploaded-images-wrapper" class="hidden space-y-3 mb-4">
+
+                        <!-- Preview Gambar Terunggah -->
+                        <div id="uploaded-images-wrapper" class="hidden space-y-3 mb-5 bg-slate-50 p-3.5 rounded-2xl border border-slate-200/80">
                             <div class="flex items-center justify-between">
-                                <span class="text-xs font-semibold text-slate-700">Foto Lembar Jawaban (<span id="image-count">0</span> Halaman):</span>
-                                <button onclick="clearImages()" class="text-xs text-red-600 hover:underline font-medium">Hapus Semua</button>
+                                <span class="text-xs font-bold text-slate-700 flex items-center gap-1.5">
+                                    <i class="fa-solid fa-file-image text-brand-600"></i> Halaman Siap Diperiksa (<span id="image-count">0</span>)
+                                </span>
+                                <button onclick="clearImages()" class="text-xs text-red-600 hover:text-red-700 font-bold">Hapus Semua</button>
                             </div>
-                            <div id="image-preview-list" class="grid grid-cols-2 gap-2 max-h-60 overflow-y-auto p-1">
+                            <div id="image-preview-list" class="grid grid-cols-2 gap-2.5 max-h-60 overflow-y-auto p-0.5">
                                 <!-- Thumbnail gambar muncul di sini -->
                             </div>
                         </div>
 
-                        <!-- Opsional: Input Manual Nama jika tulisan siswa sulit dibaca -->
-                        <div class="mb-4">
-                            <label class="block text-xs font-semibold text-slate-700 mb-1">Nama Siswa (Opsional - Otomatis dibaca dari foto)</label>
-                            <input type="text" id="manual-student-name" placeholder="Kosongkan agar AI membaca nama di kertas..." class="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs focus:ring-2 focus:ring-primary-500 outline-none">
+                        <!-- Opsional: Input Manual Nama -->
+                        <div class="mb-5">
+                            <label class="block text-xs font-bold text-slate-700 mb-1.5">Nama Siswa <span class="font-normal text-slate-400">(Opsional — Otomatis dibaca AI)</span></label>
+                            <div class="relative">
+                                <i class="fa-solid fa-user-graduate text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 text-xs"></i>
+                                <input type="text" id="manual-student-name" placeholder="Kosongkan agar dibaca otomatis dari foto..." class="w-full pl-9 pr-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium focus:bg-white focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition">
+                            </div>
                         </div>
 
                         <!-- Tombol Mulai Koreksi -->
-                        <button id="btn-analyze" onclick="analyzeStudentSheet()" disabled class="w-full py-3.5 px-4 bg-primary-600 hover:bg-primary-700 disabled:bg-slate-300 disabled:cursor-not-allowed text-white font-bold rounded-xl shadow-md transition flex items-center justify-center gap-2 text-sm">
-                            <i class="fa-solid fa-microchip"></i>
+                        <button id="btn-analyze" onclick="analyzeStudentSheet()" disabled class="w-full py-3.5 px-5 bg-gradient-to-r from-brand-600 via-indigo-600 to-blue-600 hover:from-brand-700 hover:to-blue-700 disabled:from-slate-200 disabled:to-slate-200 disabled:text-slate-400 disabled:shadow-none disabled:cursor-not-allowed text-white font-display font-bold rounded-2xl shadow-glow transition flex items-center justify-center gap-2.5 text-sm active:scale-[0.99]">
+                            <i class="fa-solid fa-bolt"></i>
                             <span>Periksa & Hitung Nilai Sekarang</span>
                         </button>
                     </div>
@@ -269,51 +339,57 @@
 
                 <!-- Panel Kanan: Hasil Koreksi Detail & Verifikasi Guru -->
                 <div class="lg:col-span-7">
-                    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 min-h-[450px] flex flex-col">
+                    <div class="bg-white rounded-3xl shadow-card border border-slate-200/70 p-5 sm:p-6 min-h-[480px] flex flex-col">
                         
                         <!-- State Kosong -->
-                        <div id="result-empty-state" class="flex-grow flex flex-col items-center justify-center text-center p-6">
-                            <div class="w-16 h-16 rounded-2xl bg-slate-100 text-slate-400 flex items-center justify-center mb-3 text-2xl">
-                                <i class="fa-solid fa-magnifying-glass-chart"></i>
+                        <div id="result-empty-state" class="flex-grow flex flex-col items-center justify-center text-center p-8">
+                            <div class="w-20 h-20 rounded-3xl bg-gradient-to-tr from-slate-100 to-indigo-50 text-brand-500 flex items-center justify-center mb-4 text-3xl border border-slate-200/60 shadow-2xs">
+                                <i class="fa-solid fa-file-circle-check"></i>
                             </div>
-                            <h3 class="text-base font-bold text-slate-700">Belum Ada Lembar Diperiksa</h3>
-                            <p class="text-xs text-slate-500 max-w-sm mt-1">Foto atau unggah lembar jawaban siswa di sebelah kiri, lalu klik tombol periksa untuk melihat rincian koreksi PG dan Esai secara presisi.</p>
+                            <h3 class="font-display text-lg font-extrabold text-slate-800">Siap Memeriksa Lembar SAS</h3>
+                            <p class="text-xs sm:text-sm text-slate-500 max-w-md mt-1.5 leading-relaxed">Ambil foto atau unggah lembar jawaban siswa di sebelah kiri, lalu tekan tombol periksa untuk melihat rincian koreksi otomatis.</p>
                         </div>
 
                         <!-- State Loading -->
-                        <div id="result-loading-state" class="hidden flex-grow flex flex-col items-center justify-center text-center p-6">
-                            <div class="relative w-16 h-16 mb-4">
-                                <div class="absolute inset-0 border-4 border-primary-100 rounded-full"></div>
-                                <div class="absolute inset-0 border-4 border-primary-600 rounded-full border-t-transparent animate-spin"></div>
-                                <i class="fa-solid fa-eye text-primary-600 absolute inset-0 flex items-center justify-center text-lg"></i>
+                        <div id="result-loading-state" class="hidden flex-grow flex flex-col items-center justify-center text-center p-8">
+                            <div class="relative w-20 h-20 mb-5">
+                                <div class="absolute inset-0 border-4 border-brand-100 rounded-full"></div>
+                                <div class="absolute inset-0 border-4 border-brand-600 rounded-full border-t-transparent animate-spin"></div>
+                                <div class="absolute inset-2 bg-brand-50 rounded-full flex items-center justify-center text-brand-600 text-xl">
+                                    <i class="fa-solid fa-microchip animate-pulse"></i>
+                                </div>
                             </div>
-                            <h3 class="text-base font-bold text-slate-800">Sedang Memindai & Mengoreksi Jawaban...</h3>
-                            <p class="text-xs text-slate-500 max-w-sm mt-1">AI sedang membaca tulisan tangan, mencocokkan kunci Pilihan Ganda, dan mengevaluasi rubrik Esai secara teliti.</p>
+                            <h3 class="font-display text-lg font-extrabold text-slate-900">AI Sedang Mengoreksi Lembar Jawaban...</h3>
+                            <p class="text-xs sm:text-sm text-slate-500 max-w-md mt-1.5 leading-relaxed">Memindai tulisan tangan, memvalidasi kunci Pilihan Ganda & Isian Singkat, serta mengevaluasi rubrik Esai.</p>
                         </div>
 
                         <!-- State Hasil Koreksi -->
                         <div id="result-content-state" class="hidden space-y-5">
                             
-                            <!-- Header Kartu Nilai Siswa -->
-                            <div class="bg-gradient-to-r from-slate-900 to-slate-800 text-white rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-md">
-                                <div class="space-y-1.5 flex-grow">
-                                    <div class="flex items-center gap-2">
-                                        <span class="text-[10px] uppercase tracking-wider bg-white/15 px-2 py-0.5 rounded font-semibold">Hasil Koreksi Terverifikasi</span>
-                                        <span id="res-kkm-badge" class="text-[10px] uppercase tracking-wider bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2 py-0.5 rounded font-bold">TUNTAS</span>
+                            <!-- Header Kartu Nilai Siswa (Premium Dark Card) -->
+                            <div class="relative overflow-hidden bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 text-white rounded-2xl p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-lg">
+                                <div class="absolute -right-8 -top-8 w-32 h-32 bg-brand-500/20 rounded-full blur-2xl pointer-events-none"></div>
+                                
+                                <div class="space-y-2 flex-grow relative z-10">
+                                    <div class="flex flex-wrap items-center gap-2">
+                                        <span class="text-[10px] uppercase tracking-wider bg-white/10 border border-white/15 px-2.5 py-0.5 rounded-full font-bold text-indigo-200">
+                                            <i class="fa-solid fa-shield-check mr-1"></i> Terverifikasi AI
+                                        </span>
+                                        <span id="res-kkm-badge" class="text-[10px] uppercase tracking-wider bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2.5 py-0.5 rounded-full font-bold">TUNTAS</span>
                                     </div>
-                                    <div class="flex flex-col sm:flex-row sm:items-center gap-2 pt-1">
-                                        <input type="text" id="res-student-name" class="bg-white/10 border border-white/20 rounded-lg px-2.5 py-1 text-base font-bold text-white focus:outline-none focus:border-primary-400" placeholder="Nama Siswa">
-                                        <input type="text" id="res-student-class" class="bg-white/10 border border-white/20 rounded-lg px-2.5 py-1 text-xs text-slate-200 w-32 focus:outline-none focus:border-primary-400" placeholder="Kelas / No. Absen">
+                                    <div class="flex flex-col sm:flex-row sm:items-center gap-2 pt-0.5">
+                                        <input type="text" id="res-student-name" class="bg-white/10 border border-white/20 rounded-xl px-3 py-1.5 text-base font-bold text-white focus:outline-none focus:border-brand-400" placeholder="Nama Siswa">
+                                        <input type="text" id="res-student-class" class="bg-white/10 border border-white/20 rounded-xl px-3 py-1.5 text-xs font-medium text-slate-200 w-32 focus:outline-none focus:border-brand-400" placeholder="Kelas / Absen">
                                     </div>
                                 </div>
 
-                                <div class="flex items-center gap-4 bg-white/10 rounded-xl p-3 border border-white/10">
+                                <div class="flex items-center gap-4 bg-white/10 backdrop-blur-xs rounded-2xl p-3.5 border border-white/15 relative z-10">
                                     <div class="text-right">
-                                        <div class="text-[11px] text-slate-300">Nilai Akhir</div>
-                                        <div id="res-total-score" class="text-3xl font-extrabold text-amber-400 leading-none mt-0.5">0</div>
+                                        <div class="text-[10px] uppercase tracking-wider text-indigo-200 font-semibold">Nilai Akhir</div>
+                                        <div id="res-total-score" class="font-display text-3xl sm:text-4xl font-extrabold text-amber-400 leading-none mt-1">0</div>
                                     </div>
-                                    <div class="h-10 w-[1px] bg-white/20"></div>
-                                    <div class="text-[11px] space-y-0.5 text-slate-200">
+                                    <div class="h-12 w-[1px] bg-white/20"></div>
+                                    <div class="text-[11px] space-y-1 text-slate-200">
                                         <div>PG: <strong id="res-pg-score-summary" class="text-white">0</strong></div>
                                         <div>Isian: <strong id="res-short-score-summary" class="text-white">0</strong></div>
                                         <div>Esai: <strong id="res-essay-score-summary" class="text-white">0</strong></div>
@@ -322,46 +398,46 @@
                             </div>
 
                             <!-- Catatan Koreksi Umum AI -->
-                            <div id="res-general-note" class="bg-amber-50 border border-amber-200 rounded-xl p-3 text-xs text-amber-900 flex items-start gap-2.5">
-                                <i class="fa-solid fa-circle-info text-amber-600 mt-0.5"></i>
-                                <span id="res-general-note-text">Pemeriksaan selesai. Anda dapat mengklik jawaban di bawah ini jika ingin melakukan koreksi manual sebelum menyimpan ke rekap.</span>
+                            <div id="res-general-note" class="bg-amber-50/90 border border-amber-200/80 rounded-2xl p-3.5 text-xs text-amber-950 flex items-start gap-3">
+                                <i class="fa-solid fa-circle-info text-amber-600 mt-0.5 text-sm"></i>
+                                <span id="res-general-note-text" class="leading-relaxed">Pemeriksaan selesai. Anda dapat mengklik jawaban di bawah ini jika ingin melakukan koreksi manual sebelum menyimpan ke rekap.</span>
                             </div>
 
-                            <!-- Rincian Koreksi Pilihan Ganda (Interaktif / Bisa Dikoreksi Manual) -->
-                            <div>
-                                <div class="flex items-center justify-between mb-2">
-                                    <h4 class="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
-                                        <i class="fa-solid fa-list-check text-primary-600"></i> Rincian Pilihan Ganda
-                                        <span class="text-[10px] font-normal text-slate-400">(Klik item untuk ubah benar/salah)</span>
+                            <!-- Rincian Koreksi Pilihan Ganda -->
+                            <div class="bg-slate-50/60 p-4 rounded-2xl border border-slate-200/70">
+                                <div class="flex items-center justify-between mb-3">
+                                    <h4 class="text-xs font-extrabold uppercase tracking-wider text-slate-800 flex items-center gap-2">
+                                        <i class="fa-solid fa-list-check text-brand-600"></i> Rincian Pilihan Ganda
+                                        <span class="text-[10px] font-normal normal-case text-slate-400 hidden sm:inline">(Klik item untuk koreksi manual)</span>
                                     </h4>
-                                    <span id="res-pg-fraction" class="text-xs font-bold text-primary-700 bg-primary-50 px-2.5 py-0.5 rounded-lg">Benar: 0 / 0</span>
+                                    <span id="res-pg-fraction" class="text-xs font-bold text-brand-700 bg-brand-100/80 px-2.5 py-0.5 rounded-lg">Benar: 0 / 0</span>
                                 </div>
-                                <div id="res-pg-grid" class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 gap-2 max-h-56 overflow-y-auto p-1">
+                                <div id="res-pg-grid" class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 gap-2 max-h-56 overflow-y-auto pr-1">
                                     <!-- Item PG rendered here -->
                                 </div>
                             </div>
 
-                            <!-- Rincian Koreksi Isian Singkat (Interaktif / Bisa Dikoreksi Manual) -->
-                            <div>
-                                <div class="flex items-center justify-between mb-2">
-                                    <h4 class="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
+                            <!-- Rincian Koreksi Isian Singkat -->
+                            <div class="bg-slate-50/60 p-4 rounded-2xl border border-slate-200/70">
+                                <div class="flex items-center justify-between mb-3">
+                                    <h4 class="text-xs font-extrabold uppercase tracking-wider text-slate-800 flex items-center gap-2">
                                         <i class="fa-solid fa-spell-check text-teal-600"></i> Rincian Isian Singkat
-                                        <span class="text-[10px] font-normal text-slate-400">(Klik item untuk ubah benar/salah)</span>
+                                        <span class="text-[10px] font-normal normal-case text-slate-400 hidden sm:inline">(Klik item untuk koreksi manual)</span>
                                     </h4>
-                                    <span id="res-short-fraction" class="text-xs font-bold text-teal-700 bg-teal-50 px-2.5 py-0.5 rounded-lg">Benar: 0 / 0</span>
+                                    <span id="res-short-fraction" class="text-xs font-bold text-teal-700 bg-teal-100/80 px-2.5 py-0.5 rounded-lg">Benar: 0 / 0</span>
                                 </div>
-                                <div id="res-short-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-56 overflow-y-auto p-1">
+                                <div id="res-short-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 max-h-56 overflow-y-auto pr-1">
                                     <!-- Item Isian Singkat rendered here -->
                                 </div>
                             </div>
 
-                            <!-- Rincian Koreksi Esai (Dengan Input Override Skor) -->
-                            <div>
-                                <div class="flex items-center justify-between mb-2">
-                                    <h4 class="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
+                            <!-- Rincian Koreksi Esai -->
+                            <div class="bg-slate-50/60 p-4 rounded-2xl border border-slate-200/70">
+                                <div class="flex items-center justify-between mb-3">
+                                    <h4 class="text-xs font-extrabold uppercase tracking-wider text-slate-800 flex items-center gap-2">
                                         <i class="fa-solid fa-pen-nib text-indigo-600"></i> Rincian Penilaian Esai
                                     </h4>
-                                    <span id="res-essay-fraction" class="text-xs font-bold text-indigo-700 bg-indigo-50 px-2.5 py-0.5 rounded-lg">Poin: 0 / 0</span>
+                                    <span id="res-essay-fraction" class="text-xs font-bold text-indigo-700 bg-indigo-100/80 px-2.5 py-0.5 rounded-lg">Poin: 0 / 0</span>
                                 </div>
                                 <div id="res-essay-list" class="space-y-3">
                                     <!-- Item Esai rendered here -->
@@ -369,11 +445,11 @@
                             </div>
 
                             <!-- Tombol Simpan ke Rekap Nilai -->
-                            <div class="pt-3 border-t border-slate-200 flex flex-col sm:flex-row gap-3 justify-end">
-                                <button onclick="resetAnalysisView()" class="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-bold transition">
+                            <div class="pt-4 border-t border-slate-100 flex flex-col sm:flex-row gap-3 justify-end">
+                                <button onclick="resetAnalysisView()" class="px-4 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-bold transition">
                                     Batal / Foto Ulang
                                 </button>
-                                <button onclick="commitResultToRecap()" class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs sm:text-sm font-bold shadow-sm transition flex items-center justify-center gap-2">
+                                <button onclick="commitResultToRecap()" class="px-6 py-3 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white rounded-xl text-xs sm:text-sm font-bold shadow-md transition flex items-center justify-center gap-2 active:scale-[0.99]">
                                     <i class="fa-solid fa-check-double"></i>
                                     <span>Simpan Nilai ke Daftar Rekap</span>
                                 </button>
@@ -391,40 +467,60 @@
         <!-- ========================================== -->
         <section id="tab-rekap" class="tab-content hidden space-y-6">
             
-            <!-- Statistik Ringkas Kelas -->
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
-                    <div class="text-xs text-slate-500 font-medium">Total Siswa Diperiksa</div>
-                    <div id="stat-total-students" class="text-2xl font-extrabold text-slate-900 mt-1">0</div>
+            <!-- Statistik Ringkas Kelas (Modern KPI Cards) -->
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="bg-white p-5 rounded-3xl border border-slate-200/70 shadow-soft flex items-center justify-between">
+                    <div>
+                        <div class="text-xs font-semibold text-slate-500">Siswa Diperiksa</div>
+                        <div id="stat-total-students" class="font-display text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1">0</div>
+                    </div>
+                    <div class="w-11 h-11 rounded-2xl bg-slate-100 text-slate-600 flex items-center justify-center text-lg">
+                        <i class="fa-solid fa-users"></i>
+                    </div>
                 </div>
-                <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
-                    <div class="text-xs text-slate-500 font-medium">Rata-Rata Kelas</div>
-                    <div id="stat-avg-score" class="text-2xl font-extrabold text-primary-600 mt-1">0.0</div>
+                <div class="bg-white p-5 rounded-3xl border border-slate-200/70 shadow-soft flex items-center justify-between">
+                    <div>
+                        <div class="text-xs font-semibold text-slate-500">Rata-Rata Kelas</div>
+                        <div id="stat-avg-score" class="font-display text-2xl sm:text-3xl font-extrabold text-brand-600 mt-1">0.0</div>
+                    </div>
+                    <div class="w-11 h-11 rounded-2xl bg-brand-50 text-brand-600 flex items-center justify-center text-lg">
+                        <i class="fa-solid fa-chart-line"></i>
+                    </div>
                 </div>
-                <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
-                    <div class="text-xs text-slate-500 font-medium">Nilai Tertinggi</div>
-                    <div id="stat-max-score" class="text-2xl font-extrabold text-emerald-600 mt-1">0</div>
+                <div class="bg-white p-5 rounded-3xl border border-slate-200/70 shadow-soft flex items-center justify-between">
+                    <div>
+                        <div class="text-xs font-semibold text-slate-500">Nilai Tertinggi</div>
+                        <div id="stat-max-score" class="font-display text-2xl sm:text-3xl font-extrabold text-emerald-600 mt-1">0</div>
+                    </div>
+                    <div class="w-11 h-11 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-lg">
+                        <i class="fa-solid fa-trophy"></i>
+                    </div>
                 </div>
-                <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
-                    <div class="text-xs text-slate-500 font-medium">Tuntas KKM</div>
-                    <div id="stat-pass-rate" class="text-2xl font-extrabold text-indigo-600 mt-1">0%</div>
+                <div class="bg-white p-5 rounded-3xl border border-slate-200/70 shadow-soft flex items-center justify-between">
+                    <div>
+                        <div class="text-xs font-semibold text-slate-500">Ketuntasan KKM</div>
+                        <div id="stat-pass-rate" class="font-display text-2xl sm:text-3xl font-extrabold text-indigo-600 mt-1">0%</div>
+                    </div>
+                    <div class="w-11 h-11 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-lg">
+                        <i class="fa-solid fa-circle-check"></i>
+                    </div>
                 </div>
             </div>
 
             <!-- Tabel Rekap Nilai -->
-            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
-                <div class="p-5 border-b border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div class="bg-white rounded-3xl shadow-card border border-slate-200/70 overflow-hidden">
+                <div class="p-5 sm:p-6 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                     <div>
-                        <h2 class="text-base font-bold text-slate-900 flex items-center gap-2">
-                            <i class="fa-solid fa-table text-primary-600"></i> Rekapitulasi Nilai SAS Siswa
+                        <h2 class="font-display text-lg font-extrabold text-slate-900 flex items-center gap-2">
+                            <i class="fa-solid fa-table text-brand-600"></i> Rekapitulasi Nilai SAS Siswa
                         </h2>
                         <p id="recap-subtitle" class="text-xs text-slate-500 mt-0.5">Daftar nilai hasil koreksi otomatis yang telah diverifikasi.</p>
                     </div>
-                    <div class="flex flex-wrap gap-2">
-                        <button onclick="exportToCSV()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold shadow-sm transition flex items-center gap-1.5">
-                            <i class="fa-solid fa-file-excel"></i> Unduh Rekap Excel (.CSV)
+                    <div class="flex flex-wrap gap-2.5">
+                        <button onclick="exportToCSV()" class="px-4 py-2.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white rounded-xl text-xs font-bold shadow-sm transition flex items-center gap-2 active:scale-95">
+                            <i class="fa-solid fa-file-excel"></i> Unduh Excel (.CSV)
                         </button>
-                        <button onclick="confirmClearRecap()" class="px-3 py-2 bg-red-50 hover:bg-red-100 text-red-600 rounded-xl text-xs font-semibold transition flex items-center gap-1.5">
+                        <button onclick="confirmClearRecap()" class="px-3.5 py-2.5 bg-red-50 hover:bg-red-100 text-red-600 rounded-xl text-xs font-bold transition flex items-center gap-1.5">
                             <i class="fa-solid fa-trash-can"></i> Hapus Semua
                         </button>
                     </div>
@@ -433,18 +529,18 @@
                 <div class="overflow-x-auto">
                     <table class="w-full text-left border-collapse">
                         <thead>
-                            <tr class="bg-slate-50 border-b border-slate-200 text-[11px] font-bold uppercase tracking-wider text-slate-600">
-                                <th class="py-3 px-4 text-center w-12">No</th>
-                                <th class="py-3 px-4">Nama Siswa</th>
-                                <th class="py-3 px-4">Kelas</th>
-                                <th class="py-3 px-4 text-center">PG Benar</th>
-                                <th class="py-3 px-4 text-center">Skor PG</th>
-                                <th class="py-3 px-4 text-center">Isian Benar</th>
-                                <th class="py-3 px-4 text-center">Skor Isian</th>
-                                <th class="py-3 px-4 text-center">Skor Esai</th>
-                                <th class="py-3 px-4 text-center">Nilai Akhir</th>
-                                <th class="py-3 px-4 text-center">Status</th>
-                                <th class="py-3 px-4 text-right">Aksi</th>
+                            <tr class="bg-slate-50/90 border-b border-slate-200/80 text-[11px] font-extrabold uppercase tracking-wider text-slate-500">
+                                <th class="py-3.5 px-4 text-center w-12">No</th>
+                                <th class="py-3.5 px-4">Nama Siswa</th>
+                                <th class="py-3.5 px-4">Kelas</th>
+                                <th class="py-3.5 px-4 text-center">PG Benar</th>
+                                <th class="py-3.5 px-4 text-center">Skor PG</th>
+                                <th class="py-3.5 px-4 text-center">Isian Benar</th>
+                                <th class="py-3.5 px-4 text-center">Skor Isian</th>
+                                <th class="py-3.5 px-4 text-center">Skor Esai</th>
+                                <th class="py-3.5 px-4 text-center">Nilai Akhir</th>
+                                <th class="py-3.5 px-4 text-center">Status</th>
+                                <th class="py-3.5 px-4 text-right">Aksi</th>
                             </tr>
                         </thead>
                         <tbody id="recap-table-body" class="divide-y divide-slate-100 text-sm">
@@ -458,74 +554,93 @@
     </main>
 
     <!-- Footer Resmi Pengembang -->
-    <footer class="bg-white border-t border-slate-200 py-4 mt-8">
+    <footer class="bg-white border-t border-slate-200/80 py-5 mt-10">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-slate-500">
-            <div>
-                <span class="font-bold text-slate-700">SAS Grader AI</span> &mdash; Aplikasi Pemeriksa Lembar Jawaban Otomatis untuk Umum
+            <div class="flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-brand-600"></span>
+                <span class="font-display font-bold text-slate-800">SAS Grader AI</span>
+                <span>&mdash; Sistem Pemeriksa Ujian Otomatis Universal</span>
             </div>
             <div>
-                Dikembangkan oleh: <span class="font-bold text-primary-700">Asep Jamhur, S.Pd., M.M.</span>
+                Pengembang Aplikasi: <span class="font-bold text-brand-700">Asep Jamhur, S.Pd., M.M.</span>
             </div>
         </div>
     </footer>
 
-    <!-- Modal Kamera Langsung (Live Camera Viewfinder) -->
+    <!-- Modal Kamera Langsung (Live Scanner Viewfinder) -->
     <div id="live-camera-modal" class="fixed inset-0 bg-slate-950/95 z-50 hidden flex-col justify-between p-4">
         <div class="flex items-center justify-between text-white max-w-2xl w-full mx-auto pt-2">
-            <div class="flex items-center gap-2">
-                <i class="fa-solid fa-camera text-primary-400"></i>
-                <span class="text-sm font-bold">Kamera Lembar Jawaban SAS</span>
+            <div class="flex items-center gap-2.5">
+                <span class="w-8 h-8 rounded-xl bg-brand-600/30 border border-brand-400/30 flex items-center justify-center text-brand-300">
+                    <i class="fa-solid fa-expand"></i>
+                </span>
+                <div>
+                    <div class="text-sm font-display font-bold leading-tight">Pemindai Lembar Jawaban</div>
+                    <div class="text-[10px] text-slate-400">SAS Grader AI Vision</div>
+                </div>
             </div>
             <div class="flex items-center gap-2">
-                <button type="button" onclick="switchCameraFacing()" class="px-3 py-1.5 bg-white/15 hover:bg-white/25 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition">
-                    <i class="fa-solid fa-camera-rotate"></i> Ganti Kamera
+                <button type="button" onclick="switchCameraFacing()" class="px-3.5 py-2 bg-white/10 hover:bg-white/20 border border-white/15 rounded-xl text-xs font-bold flex items-center gap-1.5 transition">
+                    <i class="fa-solid fa-camera-rotate"></i> Putar Lensa
                 </button>
-                <button type="button" onclick="closeLiveCamera()" class="w-8 h-8 rounded-lg bg-red-600/80 hover:bg-red-600 flex items-center justify-center text-white transition">
+                <button type="button" onclick="closeLiveCamera()" class="w-9 h-9 rounded-xl bg-red-600/80 hover:bg-red-600 flex items-center justify-center text-white transition">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
         </div>
 
-        <div class="relative max-w-2xl w-full mx-auto my-auto flex items-center justify-center overflow-hidden rounded-2xl border-2 border-white/20 bg-black aspect-[3/4] max-h-[68vh]">
+        <div class="relative max-w-2xl w-full mx-auto my-auto flex items-center justify-center overflow-hidden rounded-3xl border-2 border-white/20 bg-black aspect-[3/4] max-h-[68vh] shadow-2xl">
             <video id="camera-video-stream" autoplay playsinline muted class="w-full h-full object-cover"></video>
             
-            <!-- Indikator Memuat Kamera / Peringatan jika Preview Memblokir Video -->
-            <div id="camera-loading-overlay" class="absolute inset-0 bg-slate-900/90 flex flex-col items-center justify-center text-center p-6 z-10">
-                <div class="w-10 h-10 border-4 border-primary-500 border-t-transparent rounded-full animate-spin mb-3"></div>
-                <p id="camera-status-text" class="text-xs font-semibold text-white">Menghubungkan ke lensa kamera...</p>
-                <p class="text-[11px] text-slate-400 mt-1 max-w-xs">Jika layar tetap gelap (karena pembatasan izin kamera pada browser/preview), gunakan tombol Kamera Bawaan di bawah.</p>
+            <!-- Indikator Memuat Kamera -->
+            <div id="camera-loading-overlay" class="absolute inset-0 bg-slate-900/95 flex flex-col items-center justify-center text-center p-6 z-10">
+                <div class="w-11 h-11 border-4 border-brand-500 border-t-transparent rounded-full animate-spin mb-3"></div>
+                <p id="camera-status-text" class="text-xs font-bold text-white">Menghubungkan ke lensa kamera...</p>
+                <p class="text-[11px] text-slate-400 mt-1.5 max-w-xs leading-relaxed">Jika layar tetap gelap (karena pembatasan izin kamera browser/APK), tekan tombol <strong>Kamera Bawaan HP</strong> di bawah.</p>
             </div>
 
-            <!-- Garis bantu bingkai kertas -->
-            <div class="absolute inset-6 border-2 border-dashed border-primary-400/70 rounded-xl pointer-events-none flex items-end justify-center pb-3 z-20">
-                <span class="bg-slate-900/75 text-white text-[11px] px-3 py-1 rounded-full">Posisikan lembar jawaban di dalam bingkai</span>
+            <!-- Sudut Pemandu Dokumen Modern -->
+            <div class="absolute inset-6 pointer-events-none z-20 flex flex-col justify-between">
+                <div class="flex justify-between">
+                    <div class="w-8 h-8 border-t-4 border-l-4 border-brand-400 rounded-tl-xl"></div>
+                    <div class="w-8 h-8 border-t-4 border-r-4 border-brand-400 rounded-tr-xl"></div>
+                </div>
+                <div class="text-center">
+                    <span class="bg-slate-950/75 backdrop-blur-xs border border-white/10 text-white text-[11px] font-medium px-3.5 py-1.5 rounded-full">
+                        Sejajarkan kertas lembar jawaban di dalam area sudut
+                    </span>
+                </div>
+                <div class="flex justify-between">
+                    <div class="w-8 h-8 border-b-4 border-l-4 border-brand-400 rounded-bl-xl"></div>
+                    <div class="w-8 h-8 border-b-4 border-r-4 border-brand-400 rounded-br-xl"></div>
+                </div>
             </div>
         </div>
 
         <div class="max-w-2xl w-full mx-auto pb-4 flex flex-col items-center gap-3">
             <div class="flex items-center justify-center gap-6">
-                <button type="button" onclick="triggerNativeCamera()" class="px-4 py-2.5 bg-white/15 hover:bg-white/25 text-white rounded-xl text-xs font-bold flex items-center gap-2 border border-white/20 transition">
+                <button type="button" onclick="triggerNativeCamera()" class="px-4 py-3 bg-white/15 hover:bg-white/25 text-white rounded-2xl text-xs font-bold flex items-center gap-2 border border-white/20 transition">
                     <i class="fa-solid fa-mobile-screen-button"></i> Kamera Bawaan HP
                 </button>
-                <button type="button" onclick="capturePhotoFromStream()" class="w-16 h-16 rounded-full bg-white border-4 border-primary-500 shadow-lg flex items-center justify-center active:scale-95 transition">
-                    <div class="w-12 h-12 rounded-full bg-primary-600 flex items-center justify-center text-white">
+                <button type="button" onclick="capturePhotoFromStream()" class="w-16 h-16 rounded-full bg-white p-1 shadow-xl flex items-center justify-center active:scale-90 transition">
+                    <div class="w-full h-full rounded-full bg-gradient-to-tr from-brand-600 to-indigo-500 flex items-center justify-center text-white">
                         <i class="fa-solid fa-camera text-xl"></i>
                     </div>
                 </button>
             </div>
-            <span class="text-xs text-slate-300">Tekan tombol bulat untuk memotret, atau pilih <strong>Kamera Bawaan HP</strong> jika layar gelap</span>
+            <span class="text-[11px] text-slate-400">Ketuk tombol bulat untuk memotret lembar jawaban</span>
         </div>
     </div>
 
     <!-- Modal Detail / Konfirmasi Hapus -->
-    <div id="custom-modal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-xs z-50 hidden items-center justify-center p-4">
-        <div class="bg-white rounded-2xl max-w-lg w-full p-6 shadow-xl border border-slate-200 space-y-4">
-            <div class="flex items-center justify-between border-b border-slate-100 pb-3">
-                <h3 id="modal-title" class="text-base font-bold text-slate-900">Detail Jawaban Siswa</h3>
-                <button onclick="closeModal()" class="text-slate-400 hover:text-slate-700"><i class="fa-solid fa-xmark text-lg"></i></button>
+    <div id="custom-modal" class="fixed inset-0 bg-slate-950/60 backdrop-blur-xs z-50 hidden items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl border border-slate-200/80 space-y-4">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-3.5">
+                <h3 id="modal-title" class="font-display text-base font-extrabold text-slate-900">Detail Jawaban Siswa</h3>
+                <button onclick="closeModal()" class="w-8 h-8 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-500 flex items-center justify-center transition"><i class="fa-solid fa-xmark"></i></button>
             </div>
-            <div id="modal-body" class="text-xs text-slate-600 max-h-96 overflow-y-auto space-y-3"></div>
-            <div id="modal-footer" class="pt-3 border-t border-slate-100 flex justify-end gap-2">
+            <div id="modal-body" class="text-xs text-slate-600 max-h-96 overflow-y-auto space-y-3 pr-1"></div>
+            <div id="modal-footer" class="pt-3.5 border-t border-slate-100 flex justify-end gap-2">
                 <button onclick="closeModal()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-bold">Tutup</button>
             </div>
         </div>
@@ -619,26 +734,41 @@
         }
 
         // ==========================================
-        // NAVIGASI TAB & NOTIFIKASI TOAST
+        // NAVIGASI TAB (DESKTOP & MOBILE APP BAR)
         // ==========================================
         function switchTab(tabName) {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            
+            // Desktop tabs
             document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.classList.remove('bg-white', 'text-primary-600', 'shadow-sm');
+                btn.classList.remove('bg-white', 'text-brand-600', 'shadow-xs');
                 btn.classList.add('text-slate-600');
+            });
+
+            // Mobile bottom tabs
+            document.querySelectorAll('.mob-tab-btn').forEach(btn => {
+                btn.classList.remove('text-brand-600', 'bg-brand-50/80', 'font-bold');
+                btn.classList.add('text-slate-500', 'font-medium');
             });
 
             const targetSection = document.getElementById(`tab-${tabName}`);
             const targetBtn = document.getElementById(`tab-btn-${tabName}`);
+            const targetMobBtn = document.getElementById(`mob-btn-${tabName}`);
+
             if (targetSection) targetSection.classList.remove('hidden');
             if (targetBtn) {
                 targetBtn.classList.remove('text-slate-600');
-                targetBtn.classList.add('bg-white', 'text-primary-600', 'shadow-sm');
+                targetBtn.classList.add('bg-white', 'text-brand-600', 'shadow-xs');
+            }
+            if (targetMobBtn) {
+                targetMobBtn.classList.remove('text-slate-500', 'font-medium');
+                targetMobBtn.classList.add('text-brand-600', 'bg-brand-50/80', 'font-bold');
             }
 
             if (tabName === 'rekap') {
                 renderRecapTable();
             }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         function showToast(message, type = 'info') {
@@ -649,7 +779,7 @@
                 success: 'bg-emerald-600 text-white border-emerald-700',
                 error: 'bg-red-600 text-white border-red-700',
                 warning: 'bg-amber-500 text-white border-amber-600',
-                info: 'bg-slate-800 text-white border-slate-900'
+                info: 'bg-slate-900 text-white border-slate-800'
             };
 
             const icons = {
@@ -659,8 +789,8 @@
                 info: 'fa-circle-info'
             };
 
-            toast.className = `${styles[type] || styles.info} border px-4 py-3 rounded-xl shadow-lg text-xs font-semibold flex items-center gap-2.5 pointer-events-auto transition-all duration-300 transform translate-y-2 opacity-0`;
-            toast.innerHTML = `<i class="fa-solid ${icons[type] || icons.info} text-sm"></i><span>${message}</span>`;
+            toast.className = `${styles[type] || styles.info} border px-4 py-3.5 rounded-2xl shadow-xl text-xs font-bold flex items-center gap-3 pointer-events-auto transition-all duration-300 transform translate-y-2 opacity-0`;
+            toast.innerHTML = `<i class="fa-solid ${icons[type] || icons.info} text-base"></i><span class="leading-snug">${message}</span>`;
 
             container.appendChild(toast);
             requestAnimationFrame(() => {
@@ -685,9 +815,9 @@
 
             badge.textContent = `Total Bobot: ${total}%`;
             if (total === 100) {
-                badge.className = "text-xs font-bold px-2.5 py-1 rounded-lg bg-emerald-100 text-emerald-700";
+                badge.className = "text-xs font-extrabold px-3 py-1 rounded-full bg-emerald-100 text-emerald-700 border border-emerald-200 self-start sm:self-auto";
             } else {
-                badge.className = "text-xs font-bold px-2.5 py-1 rounded-lg bg-amber-100 text-amber-800";
+                badge.className = "text-xs font-extrabold px-3 py-1 rounded-full bg-amber-100 text-amber-800 border border-amber-200 self-start sm:self-auto";
             }
         }
 
@@ -695,7 +825,6 @@
             const rawText = document.getElementById('pg-key-input').value.toUpperCase();
             const parsed = {};
 
-            // Cek pola berpasangan seperti "1.A", "2: B", "3-C", "4) D"
             const pairRegex = /(\d+)\s*[.):\-=\s]\s*([A-E])\b/g;
             let match;
             let foundPairs = false;
@@ -709,7 +838,6 @@
                 }
             }
 
-            // Jika tidak pakai nomor, ambil deretan huruf A-E berurutan (misal: "ABCDABCD")
             if (!foundPairs) {
                 const lettersOnly = rawText.replace(/[^A-E]/g, '');
                 for (let i = 0; i < lettersOnly.length; i++) {
@@ -728,7 +856,7 @@
             }
 
             grid.innerHTML = keys.map(num => `
-                <span class="inline-flex items-center gap-1 px-2 py-1 rounded-lg bg-primary-50 border border-primary-200 text-xs font-mono font-bold text-primary-800">
+                <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-brand-50 border border-brand-200/80 text-xs font-mono font-extrabold text-brand-700">
                     <span class="text-slate-400 font-normal">${num}.</span>${parsed[num]}
                 </span>
             `).join('');
@@ -737,18 +865,18 @@
         function renderShortAnswerRows() {
             const container = document.getElementById('short-answer-list-container');
             if (appState.shortAnswerKeys.length === 0) {
-                container.innerHTML = `<div class="text-xs text-slate-400 italic text-center py-6">Tidak ada isian singkat. Klik "+ Tambah" jika ada.</div>`;
+                container.innerHTML = `<div class="text-xs text-slate-400 italic text-center py-8 bg-white rounded-xl border border-dashed border-slate-200">Tidak ada isian singkat. Klik "+ Tambah" jika ada.</div>`;
                 return;
             }
 
             container.innerHTML = appState.shortAnswerKeys.map((item, idx) => `
-                <div class="bg-white p-2.5 rounded-xl border border-slate-200 shadow-2xs flex items-center gap-2">
-                    <span class="text-xs font-bold text-teal-700 bg-teal-50 px-2 py-1 rounded-lg shrink-0">No.</span>
+                <div class="bg-white p-2.5 rounded-xl border border-slate-200/90 shadow-2xs flex items-center gap-2">
+                    <span class="text-[11px] font-bold text-teal-700 bg-teal-50 px-2 py-1 rounded-lg shrink-0">No.</span>
                     <input type="number" min="1" value="${item.number}" onchange="updateShortAnswerField(${idx}, 'number', Number(this.value))" 
-                        class="w-12 px-1.5 py-1 bg-slate-50 border border-slate-300 rounded-lg text-xs font-bold text-center shrink-0">
+                        class="w-12 px-1.5 py-1 bg-slate-50 border border-slate-200 rounded-lg text-xs font-extrabold text-center shrink-0">
                     <input type="text" value="${item.keyText.replace(/"/g, '&quot;')}" oninput="updateShortAnswerField(${idx}, 'keyText', this.value)" 
                         placeholder="Kunci isian no. ${item.number}..." 
-                        class="w-full px-2.5 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs focus:ring-2 focus:ring-teal-500 outline-none">
+                        class="w-full px-2.5 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs font-medium focus:bg-white focus:ring-2 focus:ring-teal-500 outline-none transition">
                     <button type="button" onclick="removeShortAnswerRow(${idx})" class="w-7 h-7 rounded-lg bg-red-50 hover:bg-red-100 text-red-600 flex items-center justify-center text-xs shrink-0 transition" title="Hapus nomor">
                         <i class="fa-solid fa-trash-can"></i>
                     </button>
@@ -778,29 +906,29 @@
         function renderEssayRows() {
             const container = document.getElementById('essay-list-container');
             if (appState.essayKeys.length === 0) {
-                container.innerHTML = `<div class="text-xs text-slate-400 italic text-center py-6">Tidak ada soal esai. Klik "+ Tambah Esai" jika ada soal uraian.</div>`;
+                container.innerHTML = `<div class="text-xs text-slate-400 italic text-center py-8 bg-white rounded-xl border border-dashed border-slate-200">Tidak ada soal esai. Klik "+ Tambah" jika ada soal uraian.</div>`;
                 return;
             }
 
             container.innerHTML = appState.essayKeys.map((item, idx) => `
-                <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-2xs space-y-2">
+                <div class="bg-white p-3.5 rounded-xl border border-slate-200/90 shadow-2xs space-y-2.5">
                     <div class="flex items-center justify-between gap-2">
-                        <div class="flex items-center gap-2">
-                            <span class="text-xs font-bold text-indigo-700 bg-indigo-50 px-2 py-1 rounded-lg">No.</span>
+                        <div class="flex items-center gap-1.5">
+                            <span class="text-[11px] font-bold text-indigo-700 bg-indigo-50 px-2 py-1 rounded-lg">No.</span>
                             <input type="number" min="1" value="${item.number}" onchange="updateEssayField(${idx}, 'number', Number(this.value))" 
-                                class="w-14 px-2 py-1 bg-slate-50 border border-slate-300 rounded-lg text-xs font-bold text-center">
+                                class="w-12 px-1.5 py-1 bg-slate-50 border border-slate-200 rounded-lg text-xs font-extrabold text-center">
                         </div>
-                        <div class="flex items-center gap-2">
-                            <label class="text-[11px] font-semibold text-slate-600">Skor Maks:</label>
+                        <div class="flex items-center gap-1.5">
+                            <label class="text-[11px] font-semibold text-slate-500">Maks:</label>
                             <input type="number" min="1" max="100" value="${item.maxScore}" onchange="updateEssayField(${idx}, 'maxScore', Number(this.value))" 
-                                class="w-16 px-2 py-1 bg-slate-50 border border-slate-300 rounded-lg text-xs font-bold text-center text-indigo-700">
+                                class="w-14 px-1.5 py-1 bg-indigo-50/70 border border-indigo-200 rounded-lg text-xs font-extrabold text-center text-indigo-700">
                             <button type="button" onclick="removeEssayRow(${idx})" class="w-7 h-7 rounded-lg bg-red-50 hover:bg-red-100 text-red-600 flex items-center justify-center text-xs transition" title="Hapus nomor esai">
                                 <i class="fa-solid fa-trash-can"></i>
                             </button>
                         </div>
                     </div>
-                    <textarea rows="2" oninput="updateEssayField(${idx}, 'keyText', this.value)" placeholder="Tuliskan kunci jawaban / poin penting penilaian esai nomor ${item.number}..." 
-                        class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-xs focus:ring-2 focus:ring-indigo-500 outline-none">${item.keyText}</textarea>
+                    <textarea rows="2" oninput="updateEssayField(${idx}, 'keyText', this.value)" placeholder="Tuliskan kunci jawaban / kata kunci wajib esai nomor ${item.number}..." 
+                        class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg text-xs focus:bg-white focus:ring-2 focus:ring-indigo-500 outline-none transition">${item.keyText}</textarea>
                 </div>
             `).join('');
         }
@@ -870,31 +998,11 @@
             showToast("Contoh soal PG, Isian Singkat & Esai berhasil dimuat!", "info");
         }
 
-        function loadSampleData() {
-            document.getElementById('exam-subject').value = "Ilmu Pengetahuan Alam (Contoh)";
-            document.getElementById('exam-class').value = "VIII-A";
-            document.getElementById('exam-kkm').value = 75;
-            document.getElementById('weight-pg').value = 60;
-            document.getElementById('weight-essay').value = 40;
-            document.getElementById('pg-key-input').value = "1.A, 2.C, 3.B, 4.D, 5.A, 6.B, 7.D, 8.C, 9.A, 10.B";
-
-            appState.essayKeys = [
-                { number: 1, keyText: "Fotosintesis adalah proses tumbuhan hijau mengubah air dan karbon dioksida menjadi glukosa dan oksigen dengan bantuan cahaya matahari dan klorofil.", maxScore: 20 },
-                { number: 2, keyText: "Tiga cara menjaga kesehatan sistem pernapasan: tidak merokok, memakai masker di area berpolusi, dan rutin berolahraga.", maxScore: 20 }
-            ];
-
-            parsePGPreview();
-            renderEssayRows();
-            updateWeightValidation();
-            saveAnswerKey();
-            showToast("Contoh soal & kunci berhasil dimuat!", "info");
-        }
-
         // ==========================================
         // TAB 2: KAMERA LANGSUNG (WEBRTC) & UNGGAH GAMBAR
         // ==========================================
         let activeMediaStream = null;
-        let currentFacingMode = 'environment'; // Default kamera belakang (HP/Tablet)
+        let currentFacingMode = 'environment';
         let cameraCheckTimer = null;
 
         function triggerNativeCamera() {
@@ -908,7 +1016,6 @@
             const loadingOverlay = document.getElementById('camera-loading-overlay');
             const statusText = document.getElementById('camera-status-text');
 
-            // Hentikan stream lama jika masih berjalan
             stopCameraStream();
 
             if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
@@ -917,18 +1024,14 @@
                 return;
             }
 
-            // Tampilkan modal & overlay loading
             loadingOverlay.classList.remove('hidden');
             statusText.textContent = "Menghubungkan ke lensa kamera...";
             modal.classList.remove('hidden');
             modal.classList.add('flex');
 
             try {
-                // Gunakan constraint fleksibel agar tidak gagal di laptop/HP tertentu
                 const constraints = {
-                    video: {
-                        facingMode: currentFacingMode
-                    },
+                    video: { facingMode: currentFacingMode },
                     audio: false
                 };
 
@@ -937,10 +1040,8 @@
                 videoEl.setAttribute('playsinline', '');
                 videoEl.muted = true;
 
-                // Wajib panggil play() secara eksplisit agar video tidak freeze/gelap di Android & iOS
                 await videoEl.play();
 
-                // Sembunyikan overlay loading setelah frame video benar-benar masuk
                 const hideLoadingWhenReady = () => {
                     if (videoEl.videoWidth > 0 && videoEl.videoHeight > 0) {
                         loadingOverlay.classList.add('hidden');
@@ -950,11 +1051,10 @@
                 videoEl.onloadeddata = hideLoadingWhenReady;
                 videoEl.onplaying = hideLoadingWhenReady;
 
-                // Cek setelah 2.5 detik: jika masih gelap (videoWidth === 0), beri pesan jelas
                 cameraCheckTimer = setTimeout(() => {
                     if (videoEl.videoWidth === 0 || videoEl.readyState < 2) {
-                        statusText.textContent = "Layar kamera terblokir oleh jendela pratinjau/iframe.";
-                        showToast("Kamera langsung diblokir jendela pratinjau. Klik 'Kamera Bawaan HP' untuk memotret.", "warning");
+                        statusText.textContent = "Layar kamera terblokir oleh browser/APK.";
+                        showToast("Kamera langsung diblokir. Klik 'Kamera Bawaan HP' untuk memotret.", "warning");
                     } else {
                         loadingOverlay.classList.add('hidden');
                     }
@@ -998,7 +1098,7 @@
         function capturePhotoFromStream() {
             const videoEl = document.getElementById('camera-video-stream');
             if (!videoEl || !videoEl.videoWidth || videoEl.videoWidth === 0) {
-                showToast("Gambar kamera belum muncul. Silakan klik tombol 'Kamera Bawaan HP'.", "warning");
+                showToast("Gambar kamera belum muncul. Silakan klik 'Kamera Bawaan HP'.", "warning");
                 return;
             }
 
@@ -1041,13 +1141,12 @@
             files.forEach(file => {
                 if (!file.type.startsWith('image/')) return;
                 
-                // Kompres/resize gambar di canvas agar cepat diunggah namun tetap tajam & terbaca jelas
                 const reader = new FileReader();
                 reader.onload = function (e) {
                     const img = new Image();
                     img.onload = function () {
                         const canvas = document.createElement('canvas');
-                        const MAX_DIM = 1600; // Resolusi tinggi agar tulisan kecil & tanda silang terbaca presisi
+                        const MAX_DIM = 1600;
                         let width = img.width;
                         let height = img.height;
 
@@ -1079,7 +1178,6 @@
                 reader.readAsDataURL(file);
             });
 
-            // Reset input agar file yang sama bisa dipilih ulang jika diperlukan
             event.target.value = '';
         }
 
@@ -1101,12 +1199,12 @@
             analyzeBtn.disabled = false;
 
             list.innerHTML = appState.uploadedImages.map((img, idx) => `
-                <div class="relative group rounded-xl overflow-hidden border border-slate-200 bg-slate-100 aspect-[3/4]">
+                <div class="relative group rounded-2xl overflow-hidden border border-slate-200 bg-slate-100 aspect-[3/4] shadow-2xs">
                     <img src="${img.previewUrl}" alt="Halaman ${idx + 1}" class="w-full h-full object-cover">
-                    <div class="absolute top-1.5 left-1.5 bg-slate-900/75 text-white text-[10px] font-bold px-2 py-0.5 rounded-md">
+                    <div class="absolute top-2 left-2 bg-slate-950/75 backdrop-blur-xs text-white text-[10px] font-bold px-2.5 py-0.5 rounded-lg">
                         Hal. ${idx + 1}
                     </div>
-                    <button onclick="removeSingleImage(${idx})" class="absolute top-1.5 right-1.5 w-6 h-6 bg-red-600 text-white rounded-full flex items-center justify-center text-xs shadow hover:bg-red-700 transition">
+                    <button onclick="removeSingleImage(${idx})" class="absolute top-2 right-2 w-7 h-7 bg-red-600 text-white rounded-xl flex items-center justify-center text-xs shadow-md hover:bg-red-700 transition">
                         <i class="fa-solid fa-xmark"></i>
                     </button>
                 </div>
@@ -1123,7 +1221,6 @@
             renderUploadedImages();
         }
 
-        // Pemanggilan Gemini API dengan Exponential Backoff & Structured JSON Output
         async function fetchWithBackoff(url, payload, maxRetries = 4) {
             let delay = 1000;
             for (let attempt = 0; attempt <= maxRetries; attempt++) {
@@ -1162,13 +1259,11 @@
                 return;
             }
 
-            // Ubah UI ke Mode Loading
             document.getElementById('result-empty-state').classList.add('hidden');
             document.getElementById('result-content-state').classList.add('hidden');
             document.getElementById('result-loading-state').classList.remove('hidden');
             document.getElementById('btn-analyze').disabled = true;
 
-            // Susun Instruksi Sistem & Rubrik Ketat
             const pgKeyString = pgNumbers.map(n => `Nomor ${n}: ${appState.pgKeys[n]}`).join('\n');
             const shortKeyString = validShorts.map(s => `Isian Nomor ${s.number}: ${s.keyText}`).join('\n');
             const essayRubricString = validEssays.map(e => 
@@ -1208,7 +1303,6 @@ ${validEssays.length > 0 ? essayRubricString : "Tidak ada soal Esai."}
 
 Pastikan semua nomor soal pada ketiga bagian diperiksa seluruhnya tanpa ada satu nomor pun yang terlewat.`;
 
-            // Gabungkan teks prompt dan semua halaman gambar
             const userParts = [{ text: promptText }];
             appState.uploadedImages.forEach(img => {
                 userParts.push({
@@ -1223,23 +1317,22 @@ Pastikan semua nomor soal pada ketiga bagian diperiksa seluruhnya tanpa ada satu
                 contents: [{ role: "user", parts: userParts }],
                 systemInstruction: { parts: [{ text: systemInstruction }] },
                 generationConfig: {
-                    temperature: 0.0, // Nol agar deterministik dan bebas halusinasi
+                    temperature: 0.0,
                     responseMimeType: "application/json",
                     responseSchema: {
                         type: "OBJECT",
                         properties: {
-                            studentName: { type: "STRING", description: "Nama lengkap siswa yang tertulis di lembar jawaban" },
-                            studentClass: { type: "STRING", description: "Kelas atau nomor absen siswa jika tertulis" },
-                            generalNotes: { type: "STRING", description: "Catatan singkat hasil pemeriksaan lembar jawaban" },
+                            studentName: { type: "STRING" },
+                            studentClass: { type: "STRING" },
+                            generalNotes: { type: "STRING" },
                             pgResults: {
                                 type: "ARRAY",
-                                description: "Daftar hasil per nomor untuk semua soal Pilihan Ganda pada kunci",
                                 items: {
                                     type: "OBJECT",
                                     properties: {
                                         number: { type: "INTEGER" },
-                                        studentAnswer: { type: "STRING", description: "Huruf jawaban siswa (A/B/C/D/E) atau KOSONG/GANDA" },
-                                        correctKey: { type: "STRING", description: "Kunci jawaban resmi" },
+                                        studentAnswer: { type: "STRING" },
+                                        correctKey: { type: "STRING" },
                                         isCorrect: { type: "BOOLEAN" }
                                     },
                                     required: ["number", "studentAnswer", "correctKey", "isCorrect"]
@@ -1247,13 +1340,12 @@ Pastikan semua nomor soal pada ketiga bagian diperiksa seluruhnya tanpa ada satu
                             },
                             shortAnswerResults: {
                                 type: "ARRAY",
-                                description: "Daftar hasil per nomor untuk semua soal Isian Singkat pada kunci",
                                 items: {
                                     type: "OBJECT",
                                     properties: {
                                         number: { type: "INTEGER" },
-                                        studentAnswer: { type: "STRING", description: "Teks jawaban isian singkat yang ditulis siswa atau KOSONG" },
-                                        correctKey: { type: "STRING", description: "Kunci jawaban resmi isian singkat" },
+                                        studentAnswer: { type: "STRING" },
+                                        correctKey: { type: "STRING" },
                                         isCorrect: { type: "BOOLEAN" }
                                     },
                                     required: ["number", "studentAnswer", "correctKey", "isCorrect"]
@@ -1261,15 +1353,14 @@ Pastikan semua nomor soal pada ketiga bagian diperiksa seluruhnya tanpa ada satu
                             },
                             essayResults: {
                                 type: "ARRAY",
-                                description: "Daftar hasil per nomor untuk semua soal Esai pada kunci",
                                 items: {
                                     type: "OBJECT",
                                     properties: {
                                         number: { type: "INTEGER" },
-                                        transcribedAnswer: { type: "STRING", description: "Transkripsi teks jawaban tulisan siswa" },
+                                        transcribedAnswer: { type: "STRING" },
                                         maxScore: { type: "NUMBER" },
-                                        awardedScore: { type: "NUMBER", description: "Skor yang diberikan antara 0 sampai maxScore" },
-                                        feedback: { type: "STRING", description: "Alasan penilaian singkat berdasarkan rubrik" }
+                                        awardedScore: { type: "NUMBER" },
+                                        feedback: { type: "STRING" }
                                     },
                                     required: ["number", "transcribedAnswer", "maxScore", "awardedScore", "feedback"]
                                 }
@@ -1291,9 +1382,6 @@ Pastikan semua nomor soal pada ketiga bagian diperiksa seluruhnya tanpa ada satu
 
                 const parsedResult = JSON.parse(rawJsonText);
 
-                // ==============================================================
-                // LAPISAN VALIDASI DETERMINISTIK (ANTI-KESALAHAN HITUNG)
-                // ==============================================================
                 const verifiedPG = pgNumbers.map(num => {
                     const officialKey = appState.pgKeys[num];
                     const found = (parsedResult.pgResults || []).find(p => Number(p.number) === num);
@@ -1322,7 +1410,6 @@ Pastikan semua nomor soal pada ketiga bagian diperiksa seluruhnya tanpa ada satu
                 const verifiedEssay = validEssays.map(rubric => {
                     const found = (parsedResult.essayResults || []).find(e => Number(e.number) === Number(rubric.number));
                     let score = found ? Number(found.awardedScore) : 0;
-                    // Pastikan skor tidak melebihi batas maksimal dan tidak negatif
                     if (isNaN(score) || score < 0) score = 0;
                     if (score > rubric.maxScore) score = rubric.maxScore;
 
@@ -1351,7 +1438,7 @@ Pastikan semua nomor soal pada ketiga bagian diperiksa seluruhnya tanpa ada satu
                 console.error("Error saat memeriksa lembar:", error);
                 document.getElementById('result-loading-state').classList.add('hidden');
                 document.getElementById('result-empty-state').classList.remove('hidden');
-                showToast("Gagal memproses gambar. Pastikan koneksi stabil & foto jelas, lalu coba lagi.", "error");
+                showToast("Gagal memproses gambar. Pastikan koneksi & API Key aktif, lalu coba lagi.", "error");
             } finally {
                 document.getElementById('btn-analyze').disabled = false;
             }
@@ -1384,7 +1471,6 @@ Pastikan semua nomor soal pada ketiga bagian diperiksa seluruhnya tanpa ada satu
             const essayEarned = data.essayResults.reduce((sum, e) => sum + Number(e.awardedScore), 0);
             const rawWeightEssay = essayMax > 0 ? (Number(appState.examInfo.weightEssay) || 0) : 0;
 
-            // Normalisasi otomatis proporsional ke 100 jika hanya sebagian jenis soal yang digunakan
             const activeWeightSum = rawWeightPG + rawWeightShort + rawWeightEssay;
             const scaleFactor = activeWeightSum > 0 ? (100 / activeWeightSum) : 0;
 
@@ -1432,15 +1518,15 @@ Pastikan semua nomor soal pada ketiga bagian diperiksa seluruhnya tanpa ada satu
             } else {
                 pgGrid.innerHTML = data.pgResults.map((item, idx) => `
                     <button type="button" onclick="togglePGCorrectness(${idx})" title="Klik untuk mengoreksi manual benar/salah"
-                        class="flex items-center justify-between p-2 rounded-xl border text-left transition ${
+                        class="flex items-center justify-between p-2.5 rounded-xl border text-left transition shadow-2xs ${
                             item.isCorrect 
-                            ? 'bg-emerald-50/80 border-emerald-200 hover:bg-emerald-100' 
-                            : 'bg-red-50/80 border-red-200 hover:bg-red-100'
+                            ? 'bg-emerald-50 border-emerald-200 hover:bg-emerald-100/80' 
+                            : 'bg-red-50 border-red-200 hover:bg-red-100/80'
                         }">
                         <div>
                             <div class="text-[10px] font-bold text-slate-500">No. ${item.number}</div>
                             <div class="text-xs font-extrabold ${item.isCorrect ? 'text-emerald-800' : 'text-red-800'}">
-                                ${item.studentAnswer} <span class="font-normal text-[10px] text-slate-500">(Kunci: ${item.correctKey})</span>
+                                ${item.studentAnswer} <span class="font-normal text-[10px] text-slate-500">(${item.correctKey})</span>
                             </div>
                         </div>
                         <div class="w-5 h-5 rounded-full flex items-center justify-center text-[10px] ${
@@ -1460,10 +1546,10 @@ Pastikan semua nomor soal pada ketiga bagian diperiksa seluruhnya tanpa ada satu
             } else {
                 shortGrid.innerHTML = shortList.map((item, idx) => `
                     <button type="button" onclick="toggleShortCorrectness(${idx})" title="Klik untuk mengoreksi manual benar/salah"
-                        class="flex items-center justify-between p-2.5 rounded-xl border text-left transition gap-2 ${
+                        class="flex items-center justify-between p-2.5 rounded-xl border text-left transition gap-2 shadow-2xs ${
                             item.isCorrect 
-                            ? 'bg-teal-50/80 border-teal-200 hover:bg-teal-100' 
-                            : 'bg-red-50/80 border-red-200 hover:bg-red-100'
+                            ? 'bg-teal-50 border-teal-200 hover:bg-teal-100/80' 
+                            : 'bg-red-50 border-red-200 hover:bg-red-100/80'
                         }">
                         <div class="min-w-0 flex-grow">
                             <div class="text-[10px] font-bold text-slate-500">Isian No. ${item.number}</div>
@@ -1487,22 +1573,22 @@ Pastikan semua nomor soal pada ketiga bagian diperiksa seluruhnya tanpa ada satu
                 essayList.innerHTML = `<div class="text-xs text-slate-400 italic py-2">Tidak ada soal Esai.</div>`;
             } else {
                 essayList.innerHTML = data.essayResults.map((item, idx) => `
-                    <div class="bg-slate-50 border border-slate-200 rounded-xl p-3.5 space-y-2">
+                    <div class="bg-white border border-slate-200/90 rounded-2xl p-3.5 space-y-2.5 shadow-2xs">
                         <div class="flex flex-wrap items-center justify-between gap-2">
-                            <span class="text-xs font-bold text-indigo-800 bg-indigo-100 px-2.5 py-0.5 rounded-lg">Esai Nomor ${item.number}</span>
-                            <div class="flex items-center gap-1.5 bg-white px-2.5 py-1 rounded-lg border border-slate-200">
+                            <span class="text-xs font-extrabold text-indigo-700 bg-indigo-50 border border-indigo-100 px-2.5 py-1 rounded-lg">Esai Nomor ${item.number}</span>
+                            <div class="flex items-center gap-1.5 bg-slate-50 px-3 py-1 rounded-xl border border-slate-200">
                                 <label class="text-[11px] font-semibold text-slate-600">Skor:</label>
                                 <input type="number" step="0.5" min="0" max="${item.maxScore}" value="${item.awardedScore}" 
                                     onchange="overrideEssayScore(${idx}, this.value)"
-                                    class="w-14 text-center font-extrabold text-xs text-indigo-700 border-b border-indigo-300 focus:outline-none">
-                                <span class="text-xs text-slate-400 font-semibold">/ ${item.maxScore}</span>
+                                    class="w-12 text-center font-extrabold text-xs text-indigo-700 bg-white rounded border border-indigo-200 py-0.5 focus:outline-none">
+                                <span class="text-xs text-slate-400 font-bold">/ ${item.maxScore}</span>
                             </div>
                         </div>
-                        <div class="bg-white p-2.5 rounded-lg border border-slate-200/80 text-xs text-slate-700">
+                        <div class="bg-slate-50/80 p-2.5 rounded-xl border border-slate-200/60 text-xs text-slate-700">
                             <span class="text-[10px] font-bold uppercase text-slate-400 block mb-0.5">Jawaban Terbaca di Kertas:</span>
                             "${item.transcribedAnswer}"
                         </div>
-                        <div class="text-[11px] text-slate-600 flex items-start gap-1.5">
+                        <div class="text-[11px] text-slate-600 flex items-start gap-2">
                             <i class="fa-solid fa-comment-dots text-indigo-500 mt-0.5"></i>
                             <span><strong>Analisis:</strong> ${item.feedback}</span>
                         </div>
@@ -1528,14 +1614,13 @@ Pastikan semua nomor soal pada ketiga bagian diperiksa seluruhnya tanpa ada satu
             const kkmBadge = document.getElementById('res-kkm-badge');
             if (isPass) {
                 kkmBadge.textContent = `TUNTAS (KKM ${kkm})`;
-                kkmBadge.className = "text-[10px] uppercase tracking-wider bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2 py-0.5 rounded font-bold";
+                kkmBadge.className = "text-[10px] uppercase tracking-wider bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2.5 py-0.5 rounded-full font-bold";
             } else {
                 kkmBadge.textContent = `REMEDIAL (KKM ${kkm})`;
-                kkmBadge.className = "text-[10px] uppercase tracking-wider bg-red-500/20 text-red-300 border border-red-500/30 px-2 py-0.5 rounded font-bold";
+                kkmBadge.className = "text-[10px] uppercase tracking-wider bg-red-500/20 text-red-300 border border-red-500/30 px-2.5 py-0.5 rounded-full font-bold";
             }
         }
 
-        // Fitur Koreksi Manual Guru (Jika guru ingin menyesuaikan hasil AI)
         function togglePGCorrectness(index) {
             if (!appState.currentAnalysis) return;
             appState.currentAnalysis.pgResults[index].isCorrect = !appState.currentAnalysis.pgResults[index].isCorrect;
@@ -1567,7 +1652,6 @@ Pastikan semua nomor soal pada ketiga bagian diperiksa seluruhnya tanpa ada satu
             document.getElementById('result-empty-state').classList.remove('hidden');
         }
 
-        // Simpan ke Daftar Rekap Nilai
         function commitResultToRecap() {
             if (!appState.currentAnalysis) return;
 
@@ -1609,14 +1693,14 @@ Pastikan semua nomor soal pada ketiga bagian diperiksa seluruhnya tanpa ada satu
         function renderRecapTable() {
             const list = appState.recapList;
             document.getElementById('badge-rekap').textContent = list.length;
+            const mobBadge = document.getElementById('mob-badge-rekap');
+            if (mobBadge) mobBadge.textContent = list.length;
 
-            // Update Subtitle
             const teacherLabel = appState.examInfo.teacherName && appState.examInfo.teacherName !== "-" ? `Guru: ${appState.examInfo.teacherName} | ` : "";
             const subjectLabel = appState.examInfo.subject || "Umum";
             const classLabel = appState.examInfo.className || "-";
             document.getElementById('recap-subtitle').textContent = `${teacherLabel}Mapel: ${subjectLabel} | Kelas: ${classLabel} | KKM: ${appState.examInfo.kkm}`;
 
-            // Hitung Statistik
             const totalStudents = list.length;
             const avgScore = totalStudents > 0 
                 ? (list.reduce((sum, r) => sum + r.finalScore, 0) / totalStudents).toFixed(1) 
@@ -1636,9 +1720,12 @@ Pastikan semua nomor soal pada ketiga bagian diperiksa seluruhnya tanpa ada satu
             if (totalStudents === 0) {
                 tbody.innerHTML = `
                     <tr>
-                        <td colspan="11" class="py-12 text-center text-slate-400">
-                            <i class="fa-solid fa-folder-open text-3xl mb-2 block text-slate-300"></i>
-                            <span class="text-xs font-medium">Belum ada data nilai siswa. Silakan periksa lembar jawaban di Tab 2.</span>
+                        <td colspan="11" class="py-14 text-center text-slate-400">
+                            <div class="w-14 h-14 rounded-2xl bg-slate-100 text-slate-300 flex items-center justify-center mx-auto mb-3 text-2xl">
+                                <i class="fa-solid fa-folder-open"></i>
+                            </div>
+                            <span class="text-xs font-semibold block">Belum ada data nilai siswa</span>
+                            <span class="text-[11px] text-slate-400">Silakan pindai lembar jawaban siswa pada menu Foto & Koreksi.</span>
                         </td>
                     </tr>
                 `;
@@ -1646,30 +1733,30 @@ Pastikan semua nomor soal pada ketiga bagian diperiksa seluruhnya tanpa ada satu
             }
 
             tbody.innerHTML = list.map((row, idx) => `
-                <tr class="hover:bg-slate-50/80 transition">
-                    <td class="py-3 px-4 text-center font-semibold text-slate-500">${idx + 1}</td>
-                    <td class="py-3 px-4 font-bold text-slate-900">${row.studentName}</td>
-                    <td class="py-3 px-4 text-xs text-slate-600">${row.studentClass}</td>
-                    <td class="py-3 px-4 text-center text-xs font-mono">${row.pgCorrect}/${row.pgTotal}</td>
-                    <td class="py-3 px-4 text-center font-semibold text-slate-700">${row.pgWeightedScore}</td>
-                    <td class="py-3 px-4 text-center text-xs font-mono">${row.shortCorrect ?? 0}/${row.shortTotal ?? 0}</td>
-                    <td class="py-3 px-4 text-center font-semibold text-slate-700">${row.shortWeightedScore ?? 0}</td>
-                    <td class="py-3 px-4 text-center font-semibold text-slate-700">${row.essayWeightedScore}</td>
-                    <td class="py-3 px-4 text-center">
-                        <span class="font-extrabold text-base ${row.isPass ? 'text-primary-700' : 'text-red-600'}">${row.finalScore}</span>
+                <tr class="hover:bg-slate-50/90 transition">
+                    <td class="py-3.5 px-4 text-center font-bold text-slate-400 text-xs">${idx + 1}</td>
+                    <td class="py-3.5 px-4 font-bold text-slate-900">${row.studentName}</td>
+                    <td class="py-3.5 px-4 text-xs font-medium text-slate-600">${row.studentClass}</td>
+                    <td class="py-3.5 px-4 text-center text-xs font-mono text-slate-600">${row.pgCorrect}/${row.pgTotal}</td>
+                    <td class="py-3.5 px-4 text-center font-semibold text-slate-700">${row.pgWeightedScore}</td>
+                    <td class="py-3.5 px-4 text-center text-xs font-mono text-slate-600">${row.shortCorrect ?? 0}/${row.shortTotal ?? 0}</td>
+                    <td class="py-3.5 px-4 text-center font-semibold text-slate-700">${row.shortWeightedScore ?? 0}</td>
+                    <td class="py-3.5 px-4 text-center font-semibold text-slate-700">${row.essayWeightedScore}</td>
+                    <td class="py-3.5 px-4 text-center">
+                        <span class="font-display font-extrabold text-base ${row.isPass ? 'text-brand-700' : 'text-red-600'}">${row.finalScore}</span>
                     </td>
-                    <td class="py-3 px-4 text-center">
-                        <span class="px-2.5 py-1 rounded-full text-[10px] font-bold ${
+                    <td class="py-3.5 px-4 text-center">
+                        <span class="px-2.5 py-1 rounded-full text-[10px] font-extrabold ${
                             row.isPass ? 'bg-emerald-100 text-emerald-700' : 'bg-red-100 text-red-700'
                         }">
                             ${row.isPass ? 'TUNTAS' : 'REMEDIAL'}
                         </span>
                     </td>
-                    <td class="py-3 px-4 text-right space-x-1">
-                        <button onclick="viewStudentDetail(${row.id})" class="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-semibold" title="Lihat Detail Jawaban">
+                    <td class="py-3.5 px-4 text-right space-x-1 whitespace-nowrap">
+                        <button onclick="viewStudentDetail(${row.id})" class="px-2.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-bold transition" title="Lihat Detail Jawaban">
                             <i class="fa-solid fa-eye"></i>
                         </button>
-                        <button onclick="deleteRecapRow(${row.id})" class="px-2.5 py-1 bg-red-50 hover:bg-red-100 text-red-600 rounded-lg text-xs font-semibold" title="Hapus Data">
+                        <button onclick="deleteRecapRow(${row.id})" class="px-2.5 py-1.5 bg-red-50 hover:bg-red-100 text-red-600 rounded-xl text-xs font-bold transition" title="Hapus Data">
                             <i class="fa-solid fa-trash"></i>
                         </button>
                     </td>
@@ -1684,13 +1771,13 @@ Pastikan semua nomor soal pada ketiga bagian diperiksa seluruhnya tanpa ada satu
             document.getElementById('modal-title').textContent = `Detail Koreksi: ${record.studentName} (${record.studentClass})`;
             
             let pgHtml = (record.details.pgResults || []).map(p => 
-                `<span class="inline-block px-2 py-1 m-0.5 rounded text-[11px] font-mono border ${
+                `<span class="inline-block px-2 py-1 m-0.5 rounded-lg text-[11px] font-mono border ${
                     p.isCorrect ? 'bg-emerald-50 border-emerald-200 text-emerald-800' : 'bg-red-50 border-red-200 text-red-800'
                 }">${p.number}.${p.studentAnswer} ${p.isCorrect ? '✓' : `(✗ Kunci:${p.correctKey})`}</span>`
             ).join('');
 
             let shortHtml = (record.details.shortAnswerResults || []).map(s => `
-                <div class="p-2 rounded-lg border text-[11px] flex justify-between items-center ${
+                <div class="p-2.5 rounded-xl border text-[11px] flex justify-between items-center ${
                     s.isCorrect ? 'bg-teal-50 border-teal-200 text-teal-900' : 'bg-red-50 border-red-200 text-red-900'
                 }">
                     <span><strong>No.${s.number}:</strong> "${s.studentAnswer}" <span class="text-slate-500">(Kunci: ${s.correctKey})</span></span>
@@ -1699,7 +1786,7 @@ Pastikan semua nomor soal pada ketiga bagian diperiksa seluruhnya tanpa ada satu
             `).join('');
 
             let essayHtml = (record.details.essayResults || []).map(e => `
-                <div class="p-2.5 bg-slate-50 rounded-xl border border-slate-200 space-y-1">
+                <div class="p-3 bg-slate-50 rounded-2xl border border-slate-200/80 space-y-1">
                     <div class="flex justify-between font-bold text-slate-800">
                         <span>Esai No. ${e.number}</span>
                         <span class="text-indigo-600">Skor: ${e.awardedScore} / ${e.maxScore}</span>
@@ -1710,8 +1797,8 @@ Pastikan semua nomor soal pada ketiga bagian diperiksa seluruhnya tanpa ada satu
             `).join('');
 
             document.getElementById('modal-body').innerHTML = `
-                <div class="bg-slate-900 text-white p-3 rounded-xl flex justify-between items-center">
-                    <span>Nilai Akhir: <strong class="text-amber-400 text-lg">${record.finalScore}</strong></span>
+                <div class="bg-slate-900 text-white p-3.5 rounded-2xl flex justify-between items-center">
+                    <span>Nilai Akhir: <strong class="font-display text-amber-400 text-lg">${record.finalScore}</strong></span>
                     <span class="text-[11px] text-slate-300">Diperiksa: ${record.timestamp}</span>
                 </div>
                 <div>
@@ -1729,7 +1816,7 @@ Pastikan semua nomor soal pada ketiga bagian diperiksa seluruhnya tanpa ada satu
             `;
 
             document.getElementById('modal-footer').innerHTML = `
-                <button onclick="closeModal()" class="px-4 py-2 bg-slate-800 text-white rounded-xl text-xs font-bold">Tutup</button>
+                <button onclick="closeModal()" class="px-4 py-2 bg-slate-900 text-white rounded-xl text-xs font-bold">Tutup</button>
             `;
 
             const modal = document.getElementById('custom-modal');
@@ -1755,7 +1842,7 @@ Pastikan semua nomor soal pada ketiga bagian diperiksa seluruhnya tanpa ada satu
 
             document.getElementById('modal-title').textContent = "Konfirmasi Hapus Semua Rekap";
             document.getElementById('modal-body').innerHTML = `
-                <p class="text-sm text-slate-700">Apakah Anda yakin ingin menghapus seluruh <strong>${appState.recapList.length} data nilai siswa</strong> dari daftar rekap? Tindakan ini tidak dapat dibatalkan.</p>
+                <p class="text-sm text-slate-700 leading-relaxed">Apakah Anda yakin ingin menghapus seluruh <strong>${appState.recapList.length} data nilai siswa</strong> dari daftar rekap? Tindakan ini tidak dapat dibatalkan.</p>
             `;
             document.getElementById('modal-footer').innerHTML = `
                 <button onclick="closeModal()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-bold">Batal</button>
@@ -1780,7 +1867,6 @@ Pastikan semua nomor soal pada ketiga bagian diperiksa seluruhnya tanpa ada satu
                 return;
             }
 
-            // Header CSV dengan pemisah titik koma (;) agar langsung rapi saat dibuka di Microsoft Excel Indonesia
             const headers = [
                 "No",
                 "Nama Siswa",
@@ -1823,10 +1909,8 @@ Pastikan semua nomor soal pada ketiga bagian diperiksa seluruhnya tanpa ada satu
                 `"${r.timestamp}"`
             ]);
 
-            // Tambahkan catatan pengembang pada baris paling bawah file Excel
             const footerNote = ["", `"Dicetak melalui SAS Grader AI - Pengembang: Asep Jamhur, S.Pd., M.M."`];
 
-            // Tambahkan BOM UTF-8 agar karakter terbaca sempurna di Excel
             const csvContent = "\uFEFF" + [headers.join(";"), ...rows.map(e => e.join(";")), "", footerNote.join(";")].join("\n");
             const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
             const url = URL.createObjectURL(blob);
