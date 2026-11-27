@@ -51,7 +51,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16 sm:h-[72px]">
                 <!-- Brand Logo & Developer Info -->
-                <div class="flex items-center gap-3.5">
+                <div class="flex items-center gap-3">
                     <div class="relative group">
                         <div class="absolute -inset-0.5 bg-gradient-to-tr from-brand-600 to-cyan-500 rounded-2xl blur opacity-30 group-hover:opacity-50 transition"></div>
                         <div class="relative bg-gradient-to-br from-brand-600 via-indigo-600 to-blue-600 text-white w-10 h-10 sm:w-11 sm:h-11 rounded-2xl flex items-center justify-center shadow-md">
@@ -73,22 +73,30 @@
                     </div>
                 </div>
 
-                <!-- Desktop Navigation Tabs -->
-                <nav class="hidden sm:flex items-center gap-1.5 bg-slate-100/90 p-1.5 rounded-2xl border border-slate-200/60">
-                    <button type="button" onclick="switchTab('kunci')" id="tab-btn-kunci" class="tab-btn px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-200 bg-white text-brand-600 shadow-xs flex items-center gap-2">
-                        <i class="fa-solid fa-key text-xs"></i>
-                        <span>1. Kunci & Rubrik</span>
+                <!-- Right Controls: API Key Button & Desktop Tabs -->
+                <div class="flex items-center gap-2.5">
+                    <button type="button" onclick="openApiKeyModal()" id="btn-api-status" class="px-3 py-2 rounded-xl text-xs font-bold border transition flex items-center gap-1.5 shadow-2xs active:scale-95 bg-amber-50 text-amber-800 border-amber-200 hover:bg-amber-100" title="Atur Kunci Mesin AI (Gemini API Key)">
+                        <i class="fa-solid fa-gear"></i>
+                        <span id="api-status-label">Atur API Key</span>
                     </button>
-                    <button type="button" onclick="switchTab('periksa')" id="tab-btn-periksa" class="tab-btn px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-200 text-slate-600 hover:text-slate-900 flex items-center gap-2">
-                        <i class="fa-solid fa-camera text-xs"></i>
-                        <span>2. Foto & Koreksi</span>
-                    </button>
-                    <button type="button" onclick="switchTab('rekap')" id="tab-btn-rekap" class="tab-btn px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-200 text-slate-600 hover:text-slate-900 flex items-center gap-2">
-                        <i class="fa-solid fa-chart-pie text-xs"></i>
-                        <span>3. Rekap Nilai</span>
-                        <span id="badge-rekap" class="bg-brand-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">0</span>
-                    </button>
-                </nav>
+
+                    <!-- Desktop Navigation Tabs -->
+                    <nav class="hidden sm:flex items-center gap-1.5 bg-slate-100/90 p-1.5 rounded-2xl border border-slate-200/60">
+                        <button type="button" onclick="switchTab('kunci')" id="tab-btn-kunci" class="tab-btn px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-200 bg-white text-brand-600 shadow-xs flex items-center gap-2">
+                            <i class="fa-solid fa-key text-xs"></i>
+                            <span>1. Kunci & Rubrik</span>
+                        </button>
+                        <button type="button" onclick="switchTab('periksa')" id="tab-btn-periksa" class="tab-btn px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-200 text-slate-600 hover:text-slate-900 flex items-center gap-2">
+                            <i class="fa-solid fa-camera text-xs"></i>
+                            <span>2. Foto & Koreksi</span>
+                        </button>
+                        <button type="button" onclick="switchTab('rekap')" id="tab-btn-rekap" class="tab-btn px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-200 text-slate-600 hover:text-slate-900 flex items-center gap-2">
+                            <i class="fa-solid fa-chart-pie text-xs"></i>
+                            <span>3. Rekap Nilai</span>
+                            <span id="badge-rekap" class="bg-brand-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">0</span>
+                        </button>
+                    </nav>
+                </div>
             </div>
         </div>
     </header>
@@ -583,6 +591,49 @@
         </div>
     </footer>
 
+    <!-- Modal Pengaturan API Key (Tersimpan Permanen di Browser/HP) -->
+    <div id="api-key-modal" class="fixed inset-0 bg-slate-950/60 backdrop-blur-xs z-50 hidden items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-200/80 space-y-4">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-3.5">
+                <div class="flex items-center gap-2.5">
+                    <span class="w-8 h-8 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center text-sm">
+                        <i class="fa-solid fa-key"></i>
+                    </span>
+                    <div>
+                        <h3 class="font-display text-base font-extrabold text-slate-900">Pengaturan Gemini API Key</h3>
+                        <p class="text-[11px] text-slate-500">Tersimpan otomatis & aman di perangkat Anda</p>
+                    </div>
+                </div>
+                <button type="button" onclick="closeApiKeyModal()" class="w-8 h-8 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-500 flex items-center justify-center transition"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+
+            <div class="space-y-3 text-xs text-slate-600">
+                <p class="leading-relaxed">Agar fitur pembacaan foto AI bekerja di GitHub maupun APK HP, masukkan kode <strong>Google Gemini API Key</strong> Anda di bawah ini (cukup 1 kali saja, otomatis tersimpan):</p>
+                
+                <div>
+                    <label class="block text-[11px] font-bold text-slate-700 mb-1">Kode Gemini API Key:</label>
+                    <input type="password" id="input-user-api-key" placeholder="AIzaSy..." class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-mono focus:bg-white focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none">
+                </div>
+
+                <div class="flex items-center justify-between text-[11px]">
+                    <button type="button" onclick="toggleShowApiKey()" class="text-brand-600 font-semibold hover:underline">
+                        <i class="fa-solid fa-eye mr-1"></i> Tampilkan / Sembunyikan Kode
+                    </button>
+                    <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener" class="text-emerald-700 font-bold hover:underline">
+                        Dapatkan API Key Gratis <i class="fa-solid fa-arrow-up-right-from-square ml-0.5"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="pt-3 border-t border-slate-100 flex justify-end gap-2">
+                <button type="button" onclick="closeApiKeyModal()" class="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-bold">Tutup</button>
+                <button type="button" onclick="saveUserApiKey()" class="px-5 py-2.5 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-xs font-bold shadow-sm transition">
+                    <i class="fa-solid fa-check mr-1"></i> Simpan API Key
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- Modal Kamera Langsung (Live Scanner Viewfinder) -->
     <div id="live-camera-modal" class="fixed inset-0 bg-slate-950/95 z-50 hidden flex-col justify-between p-4">
         <div class="flex items-center justify-between text-white max-w-2xl w-full mx-auto pt-2">
@@ -720,10 +771,11 @@
         // ==========================================
         // STATE & KONFIGURASI APLIKASI
         // ==========================================
-        const apiKey = ""; // Disediakan otomatis oleh runtime
-        const GEMINI_MODEL = "gemini-3-flash-preview";
+        const DEFAULT_EMBEDDED_API_KEY = ""; // Opsional: isi di sini jika ingin ditanam langsung di kode
+        const GEMINI_MODEL = "gemini-2.5-flash";
 
         let appState = {
+            userApiKey: "",
             teacherName: "",
             subject: "",
             className: "",
@@ -744,13 +796,13 @@
         let cameraStream = null;
         let currentFacingMode = 'environment';
         let cameraCheckTimeout = null;
-        let activeCameraPurpose = 'student'; // 'student' | 'key'
 
         // ==========================================
         // INISIALISASI & PENYIMPANAN LOKAL
         // ==========================================
         window.addEventListener('DOMContentLoaded', () => {
             loadFromLocalStorage();
+            updateApiStatusBadge();
             updateWeightValidation();
             parsePGPreview();
             renderShortAnswerRows();
@@ -758,9 +810,61 @@
             renderRecapTable();
         });
 
+        function getActiveApiKey() {
+            const savedKey = (appState.userApiKey || "").trim();
+            if (savedKey) return savedKey;
+            return (DEFAULT_EMBEDDED_API_KEY || "").trim();
+        }
+
+        function updateApiStatusBadge() {
+            const btn = document.getElementById('btn-api-status');
+            const label = document.getElementById('api-status-label');
+            if (!btn || !label) return;
+
+            if (getActiveApiKey()) {
+                btn.className = "px-3 py-2 rounded-xl text-xs font-bold border transition flex items-center gap-1.5 shadow-2xs active:scale-95 bg-emerald-50 text-emerald-700 border-emerald-200 hover:bg-emerald-100";
+                label.textContent = "AI Aktif";
+            } else {
+                btn.className = "px-3 py-2 rounded-xl text-xs font-bold border transition flex items-center gap-1.5 shadow-2xs active:scale-95 bg-amber-50 text-amber-800 border-amber-200 hover:bg-amber-100";
+                label.textContent = "Atur API Key";
+            }
+        }
+
+        function openApiKeyModal() {
+            document.getElementById('input-user-api-key').value = appState.userApiKey || DEFAULT_EMBEDDED_API_KEY || "";
+            const modal = document.getElementById('api-key-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeApiKeyModal() {
+            const modal = document.getElementById('api-key-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function toggleShowApiKey() {
+            const inp = document.getElementById('input-user-api-key');
+            inp.type = inp.type === 'password' ? 'text' : 'password';
+        }
+
+        function saveUserApiKey() {
+            const val = document.getElementById('input-user-api-key').value.trim();
+            appState.userApiKey = val;
+            saveToLocalStorage();
+            updateApiStatusBadge();
+            closeApiKeyModal();
+            if (val) {
+                showToast("Gemini API Key berhasil disimpan di perangkat!", "success");
+            } else {
+                showToast("API Key dikosongkan.", "info");
+            }
+        }
+
         function saveToLocalStorage() {
             try {
                 const toSave = {
+                    userApiKey: appState.userApiKey,
                     teacherName: appState.teacherName,
                     subject: appState.subject,
                     className: appState.className,
@@ -773,7 +877,7 @@
                     essayKeys: appState.essayKeys,
                     recapList: appState.recapList
                 };
-                localStorage.setItem('sas_grader_ai_data_v2', JSON.stringify(toSave));
+                localStorage.setItem('sas_grader_ai_data_v3', JSON.stringify(toSave));
             } catch (e) {
                 console.warn("Gagal menyimpan ke penyimpanan lokal:", e);
             }
@@ -781,13 +885,14 @@
 
         function loadFromLocalStorage() {
             try {
-                const raw = localStorage.getItem('sas_grader_ai_data_v2');
+                const raw = localStorage.getItem('sas_grader_ai_data_v3') || localStorage.getItem('sas_grader_ai_data_v2');
                 if (!raw) {
                     appState.shortAnswerKeys = [{ number: 1, keyText: "" }];
                     appState.essayKeys = [{ number: 1, keyText: "", maxScore: 10 }];
                     return;
                 }
                 const saved = JSON.parse(raw);
+                appState.userApiKey = saved.userApiKey || "";
                 appState.teacherName = saved.teacherName || "";
                 appState.subject = saved.subject || "";
                 appState.className = saved.className || "";
@@ -878,7 +983,7 @@
                 toast.style.opacity = '0';
                 toast.style.transform = 'translateY(8px)';
                 setTimeout(() => toast.remove(), 300);
-            }, 3200);
+            }, 3500);
         }
 
         // ==========================================
@@ -1091,6 +1196,12 @@
         // SCAN / UPLOAD FOTO KUNCI JAWABAN (AI OCR)
         // ==========================================
         function openKeyScanModal(target = 'all') {
+            if (!getActiveApiKey()) {
+                showToast("Masukkan Gemini API Key terlebih dahulu agar AI dapat membaca foto!", "warning");
+                openApiKeyModal();
+                return;
+            }
+
             appState.keyScanTarget = target;
             appState.keyScanImages = [];
             renderKeyScanPreviews();
@@ -1187,15 +1298,15 @@
             try {
                 const target = appState.keyScanTarget;
                 const focusPrompt = target === 'pg'
-                    ? "Fokus ekstrak hanya bagian Pilihan Ganda (nomor dan huruf A-E)."
+                    ? "Fokus ekstrak hanya bagian Pilihan Ganda (nomor soal dan huruf kunci A/B/C/D/E)."
                     : target === 'short'
-                    ? "Fokus ekstrak hanya bagian Isian Singkat (nomor dan jawaban singkat)."
+                    ? "Fokus ekstrak hanya bagian Isian Singkat (nomor soal dan jawaban singkat)."
                     : target === 'essay'
-                    ? "Fokus ekstrak hanya bagian Esai/Uraian (nomor, kunci pembahasan, dan skor maksimal jika tercantum, default 10)."
+                    ? "Fokus ekstrak hanya bagian Esai/Uraian (nomor soal, kunci pembahasan, dan skor maksimal jika tercantum, default 10)."
                     : "Ekstrak seluruh bagian kunci jawaban yang terlihat (Pilihan Ganda, Isian Singkat, dan Esai).";
 
                 const userParts = [{
-                    text: `Baca gambar lembar kunci jawaban guru ini dengan sangat teliti. ${focusPrompt} Kembalikan dalam format JSON terstruktur.`
+                    text: `Baca gambar lembar kunci jawaban guru ini dengan sangat teliti. Jika orientasi foto miring atau terbalik 180 derajat, baca teksnya dengan benar sesuai arah tulisan. ${focusPrompt} Kembalikan dalam format JSON terstruktur.`
                 }];
 
                 appState.keyScanImages.forEach(img => {
@@ -1256,6 +1367,7 @@
                 };
 
                 const extracted = await fetchGeminiWithRetry(payload);
+                let foundCount = 0;
 
                 if ((target === 'pg' || target === 'all') && extracted.pgItems && extracted.pgItems.length > 0) {
                     const formattedPG = extracted.pgItems
@@ -1263,8 +1375,11 @@
                         .map(i => `${i.number}.${String(i.answer).toUpperCase().replace(/[^A-E]/g, '')}`)
                         .filter(s => s.length >= 3)
                         .join(', ');
-                    document.getElementById('pg-key-input').value = formattedPG;
-                    parsePGPreview();
+                    if (formattedPG) {
+                        document.getElementById('pg-key-input').value = formattedPG;
+                        parsePGPreview();
+                        foundCount += extracted.pgItems.length;
+                    }
                 }
 
                 if ((target === 'short' || target === 'all') && extracted.shortItems && extracted.shortItems.length > 0) {
@@ -1275,6 +1390,7 @@
                             keyText: i.keyText || ""
                         }));
                     renderShortAnswerRows();
+                    foundCount += extracted.shortItems.length;
                 }
 
                 if ((target === 'essay' || target === 'all') && extracted.essayItems && extracted.essayItems.length > 0) {
@@ -1286,11 +1402,17 @@
                             maxScore: Number(i.maxScore) > 0 ? Number(i.maxScore) : 10
                         }));
                     renderEssayRows();
+                    foundCount += extracted.essayItems.length;
                 }
 
                 saveToLocalStorage();
                 closeKeyScanModal();
-                showToast("Kunci jawaban berhasil diekstrak dari foto!", "success");
+
+                if (foundCount > 0) {
+                    showToast(`Berhasil membaca ${foundCount} butir kunci jawaban dari foto!`, "success");
+                } else {
+                    showToast("Tulisan pada foto kurang jelas terbaca. Coba foto lebih dekat dan tegak.", "warning");
+                }
             } catch (err) {
                 console.error("Gagal ekstrak kunci:", err);
                 showToast(`Gagal membaca foto kunci: ${err.message}`, "error");
@@ -1303,8 +1425,7 @@
         // ==========================================
         // KAMERA LANGSUNG (WEBRTC) & UNGGAH GAMBAR
         // ==========================================
-        async function openLiveCamera(purpose = 'student') {
-            activeCameraPurpose = purpose;
+        async function openLiveCamera() {
             const modal = document.getElementById('live-camera-modal');
             const loadingOverlay = document.getElementById('camera-loading-overlay');
             const statusText = document.getElementById('camera-status-text');
@@ -1391,13 +1512,8 @@
 
         function triggerNativeCamera() {
             closeLiveCamera();
-            if (activeCameraPurpose === 'key') {
-                const fallbackKeyInput = document.getElementById('fallback-key-camera-input');
-                if (fallbackKeyInput) fallbackKeyInput.click();
-            } else {
-                const fallbackInput = document.getElementById('fallback-camera-input');
-                if (fallbackInput) fallbackInput.click();
-            }
+            const fallbackInput = document.getElementById('fallback-camera-input');
+            if (fallbackInput) fallbackInput.click();
         }
 
         function capturePhotoFromStream() {
@@ -1432,25 +1548,14 @@
                 const dataUrl = canvas.toDataURL('image/jpeg', 0.88);
                 const base64 = dataUrl.split(',')[1];
 
-                if (activeCameraPurpose === 'key') {
-                    appState.keyScanImages.push({
-                        base64,
-                        mimeType: 'image/jpeg',
-                        previewUrl: dataUrl
-                    });
-                    renderKeyScanPreviews();
-                    closeLiveCamera();
-                    showToast("Foto kunci jawaban berhasil diambil!", "success");
-                } else {
-                    appState.uploadedImages.push({
-                        base64,
-                        mimeType: 'image/jpeg',
-                        previewUrl: dataUrl
-                    });
-                    renderImagePreviews();
-                    closeLiveCamera();
-                    showToast("Foto lembar jawaban berhasil diambil!", "success");
-                }
+                appState.uploadedImages.push({
+                    base64,
+                    mimeType: 'image/jpeg',
+                    previewUrl: dataUrl
+                });
+                renderImagePreviews();
+                closeLiveCamera();
+                showToast("Foto lembar jawaban berhasil diambil!", "success");
             } catch (err) {
                 console.error("Gagal mengambil gambar:", err);
                 showToast("Gagal memotret dari layar. Menggunakan Kamera Bawaan HP...", "warning");
@@ -1554,6 +1659,12 @@
         // ANALISIS AI & VALIDASI DETERMINISTIK KETAT
         // ==========================================
         async function analyzeStudentSheet() {
+            if (!getActiveApiKey()) {
+                showToast("Masukkan Gemini API Key terlebih dahulu!", "warning");
+                openApiKeyModal();
+                return;
+            }
+
             if (Object.keys(appState.pgKeys).length === 0 && appState.shortAnswerKeys.length === 0 && appState.essayKeys.length === 0) {
                 showToast("Atur dan simpan Kunci Jawaban terlebih dahulu di Tab 1!", "warning");
                 switchTab('kunci');
@@ -1575,7 +1686,7 @@
                 const shortList = appState.shortAnswerKeys;
                 const essayRubricList = appState.essayKeys;
 
-                const systemInstruction = `Anda adalah sistem OCR dan pemeriksa lembar ujian SAS (Sumatif Akhir Semester) yang sangat teliti dan objektif.
+                const systemInstruction = `Anda adalah sistem OCR dan pemeriksa lembar ujian SAS (Sumatif Akhir Semester) yang sangat teliti dan objektif. Jika gambar terfoto miring atau terbalik 180 derajat, baca teksnya secara normal mengikuti orientasi tulisan.
 Tugas Anda:
 1. Baca identitas siswa (Nama Lengkap dan Kelas/No Absen) yang tertulis di lembar jawaban. Jika tidak terbaca, isi "Siswa Tanpa Nama".
 2. Untuk Pilihan Ganda (nomor: ${pgNumbers.join(', ') || 'tidak ada'}):
@@ -1671,7 +1782,6 @@ ${essayRubricList.length > 0 ? essayRubricList.map(e => `  Nomor ${e.number} (Sk
                 const finalStudentName = manualName || aiData.studentName || "Siswa Tanpa Nama";
                 const finalStudentClass = aiData.studentClass || appState.className || "-";
 
-                // 1. Validasi Ketat Pilihan Ganda
                 const aiPgMap = {};
                 (aiData.pgAnswers || []).forEach(item => {
                     aiPgMap[item.number] = String(item.studentAnswer || "-").toUpperCase().trim();
@@ -1685,7 +1795,6 @@ ${essayRubricList.length > 0 ? essayRubricList.map(e => `  Nomor ${e.number} (Sk
                     return { number: num, keyAnswer: keyAns, studentAnswer: studAns, isCorrect };
                 });
 
-                // 2. Validasi Ketat Isian Singkat
                 const aiShortMap = {};
                 (aiData.shortAnswers || []).forEach(item => {
                     aiShortMap[item.number] = item;
@@ -1702,7 +1811,6 @@ ${essayRubricList.length > 0 ? essayRubricList.map(e => `  Nomor ${e.number} (Sk
                     };
                 });
 
-                // 3. Validasi Ketat Esai
                 const aiEssayMap = {};
                 (aiData.essayAnswers || []).forEach(item => {
                     aiEssayMap[item.number] = item;
@@ -1740,14 +1848,19 @@ ${essayRubricList.length > 0 ? essayRubricList.map(e => `  Nomor ${e.number} (Sk
                 console.error("Error saat analisis:", error);
                 document.getElementById('result-loading-state').classList.add('hidden');
                 document.getElementById('result-empty-state').classList.remove('hidden');
-                showToast(`Terjadi kendala saat memeriksa gambar: ${error.message}`, "error");
+                showToast(`Gagal memeriksa gambar: ${error.message}`, "error");
             } finally {
                 document.getElementById('btn-analyze').disabled = false;
             }
         }
 
-        async function fetchGeminiWithRetry(payload, maxRetries = 4) {
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${apiKey}`;
+        async function fetchGeminiWithRetry(payload, maxRetries = 2) {
+            const activeKey = getActiveApiKey();
+            if (!activeKey) {
+                throw new Error("API Key belum diisi. Tekan tombol 'Atur API Key' di pojok kanan atas.");
+            }
+
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${encodeURIComponent(activeKey)}`;
             let delay = 1000;
 
             for (let attempt = 0; attempt <= maxRetries; attempt++) {
@@ -1759,8 +1872,12 @@ ${essayRubricList.length > 0 ? essayRubricList.map(e => `  Nomor ${e.number} (Sk
                     });
 
                     if (!response.ok) {
-                        const errBody = await response.text();
-                        throw new Error(`HTTP ${response.status}: ${errBody}`);
+                        const errData = await response.json().catch(() => ({}));
+                        const errMsg = errData?.error?.message || `HTTP ${response.status}`;
+                        if (response.status === 400 || response.status === 403) {
+                            throw new Error(`API Key tidak valid / ditolak (${errMsg})`);
+                        }
+                        throw new Error(errMsg);
                     }
 
                     const result = await response.json();
@@ -1769,7 +1886,7 @@ ${essayRubricList.length > 0 ? essayRubricList.map(e => `  Nomor ${e.number} (Sk
 
                     return JSON.parse(textContent);
                 } catch (err) {
-                    if (attempt === maxRetries) throw err;
+                    if (attempt === maxRetries || err.message.includes("API Key")) throw err;
                     await new Promise(res => setTimeout(res, delay));
                     delay *= 2;
                 }
