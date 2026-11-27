@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -168,7 +169,7 @@
                 </div>
             </div>
 
-            <!-- 3 Kolom Input Kunci Jawaban -->
+            <!-- 3 Kolom Kunci Jawaban (Tampilan Semula yang Bersih & Masing-masing Punya Tombol Foto) -->
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
                 <!-- Kolom A: Pilihan Ganda -->
                 <div class="bg-white border border-slate-200/90 rounded-3xl p-4 sm:p-5 shadow-xs flex flex-col">
@@ -178,21 +179,21 @@
                             <span>Pilihan Ganda (PG)</span>
                         </h3>
                         <div class="flex items-center gap-1.5">
-                            <button type="button" onclick="openKeyScanModal('pg')" class="px-2.5 py-1.5 bg-amber-500 hover:bg-amber-600 text-white rounded-xl text-[11px] font-bold transition flex items-center gap-1 shadow-2xs active:scale-95 cursor-pointer">
+                            <button type="button" onclick="openKeyScanModal('pg')" class="px-2.5 py-1.5 bg-amber-500 hover:bg-amber-600 text-white rounded-xl text-[11px] font-bold transition flex items-center gap-1 shadow-2xs cursor-pointer">
                                 <i class="fa-solid fa-camera"></i> Foto / Upload
                             </button>
-                            <span id="pg-count-badge" class="text-[11px] font-bold bg-brand-50 text-brand-700 border border-brand-200 px-2 py-1 rounded-lg">0 Soal</span>
+                            <span id="pg-count-badge" class="text-[11px] font-bold bg-brand-50 text-brand-700 border border-brand-200 px-2.5 py-1 rounded-lg">0 Soal</span>
                         </div>
                     </div>
                     
                     <p class="text-xs text-slate-500 mb-3 leading-relaxed">Ketik berurutan (Contoh: <code class="bg-slate-50 px-1.5 py-0.5 rounded-md border border-slate-200 text-brand-700 font-mono font-semibold">1.A, 2.B</code>) atau tekan <strong>Foto / Upload</strong> di atas.</p>
                     
-                    <textarea id="pg-key-input" rows="4" oninput="parsePGPreview()" placeholder="Ketik kunci jawaban PG di sini atau gunakan tombol Foto / Upload di atas...&#10;Contoh: 1.A, 2.C, 3.B, 4.D, 5.A" class="w-full p-3.5 bg-slate-50/60 border border-slate-200 rounded-xl text-sm font-mono focus:bg-white focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none mb-3 shadow-2xs transition"></textarea>
+                    <textarea id="pg-key-input" rows="4" oninput="parsePGPreview()" placeholder="Ketik kunci jawaban PG di sini atau gunakan tombol Foto / Upload di atas..." class="w-full p-3.5 bg-slate-50/60 border border-slate-200 rounded-xl text-sm font-mono focus:bg-white focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none mb-3 shadow-2xs transition"></textarea>
                     
                     <!-- Preview Grid PG -->
                     <div class="bg-slate-50/60 border border-slate-200/90 rounded-xl p-3.5 flex-grow">
                         <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">Pratinjau Kunci Terbaca:</div>
-                        <div id="pg-preview-grid" class="flex flex-wrap gap-1.5 max-h-48 overflow-y-auto">
+                        <div id="pg-preview-grid" class="flex flex-wrap gap-1.5 max-h-60 overflow-y-auto">
                             <span class="text-xs text-slate-400 italic">Belum ada kunci PG dimasukkan...</span>
                         </div>
                     </div>
@@ -206,7 +207,7 @@
                             <span>Isian Singkat</span>
                         </h3>
                         <div class="flex items-center gap-1.5">
-                            <button type="button" onclick="openKeyScanModal('short')" class="px-2.5 py-1.5 bg-amber-500 hover:bg-amber-600 text-white rounded-xl text-[11px] font-bold transition flex items-center gap-1 shadow-2xs active:scale-95 cursor-pointer">
+                            <button type="button" onclick="openKeyScanModal('short')" class="px-2.5 py-1.5 bg-amber-500 hover:bg-amber-600 text-white rounded-xl text-[11px] font-bold transition flex items-center gap-1 shadow-2xs cursor-pointer">
                                 <i class="fa-solid fa-camera"></i> Foto
                             </button>
                             <button type="button" onclick="addShortAnswerRow()" class="px-2.5 py-1.5 bg-teal-600 hover:bg-teal-700 text-white rounded-xl text-[11px] font-bold transition flex items-center gap-1 shadow-2xs cursor-pointer">
@@ -215,7 +216,8 @@
                         </div>
                     </div>
                     <p class="text-xs text-slate-500 mb-3 leading-relaxed">Tulis kata/angka jawaban pasti atau potret lembar kunci isian.</p>
-                    <div id="short-answer-list-container" class="space-y-2 max-h-72 overflow-y-auto flex-grow pr-0.5"></div>
+                    <textarea id="short-key-quick-input" rows="3" oninput="parseShortBulkInput()" placeholder="Ketik berurutan (Contoh: 21. 1 Juni, 22. Ir. Soekarno) atau isi daftar di bawah..." class="w-full p-3 bg-slate-50/60 border border-slate-200 rounded-xl text-xs font-mono focus:bg-white focus:ring-2 focus:ring-teal-500 focus:border-teal-500 outline-none mb-3 shadow-2xs transition"></textarea>
+                    <div id="short-answer-list-container" class="space-y-2 max-h-80 overflow-y-auto flex-grow pr-0.5"></div>
                 </div>
 
                 <!-- Kolom C: Esai / Uraian -->
@@ -226,7 +228,7 @@
                             <span>Esai / Uraian</span>
                         </h3>
                         <div class="flex items-center gap-1.5">
-                            <button type="button" onclick="openKeyScanModal('essay')" class="px-2.5 py-1.5 bg-amber-500 hover:bg-amber-600 text-white rounded-xl text-[11px] font-bold transition flex items-center gap-1 shadow-2xs active:scale-95 cursor-pointer">
+                            <button type="button" onclick="openKeyScanModal('essay')" class="px-2.5 py-1.5 bg-amber-500 hover:bg-amber-600 text-white rounded-xl text-[11px] font-bold transition flex items-center gap-1 shadow-2xs cursor-pointer">
                                 <i class="fa-solid fa-camera"></i> Foto
                             </button>
                             <button type="button" onclick="addEssayRow()" class="px-2.5 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-[11px] font-bold transition flex items-center gap-1 shadow-2xs cursor-pointer">
@@ -234,8 +236,9 @@
                             </button>
                         </div>
                     </div>
-                    <p class="text-xs text-slate-500 mb-3 leading-relaxed">Tuliskan poin konsep wajib atau potret rubrik kunci uraian.</p>
-                    <div id="essay-list-container" class="space-y-2.5 max-h-72 overflow-y-auto flex-grow pr-0.5"></div>
+                    <p class="text-xs text-slate-500 mb-3 leading-relaxed">Tulis poin kunci/rubrik atau potret lembar kunci uraian.</p>
+                    <textarea id="essay-key-quick-input" rows="3" oninput="parseEssayBulkInput()" placeholder="Ketik berurutan tiap nomor di baris baru (Contoh: 31. Menjelaskan proses fotosintesis...) atau isi daftar di bawah..." class="w-full p-3 bg-slate-50/60 border border-slate-200 rounded-xl text-xs font-mono focus:bg-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none mb-3 shadow-2xs transition"></textarea>
+                    <div id="essay-list-container" class="space-y-2.5 max-h-80 overflow-y-auto flex-grow pr-0.5"></div>
                 </div>
             </div>
         </section>
@@ -493,9 +496,13 @@
             <div id="key-images-wrapper" class="hidden space-y-2">
                 <div class="flex items-center justify-between">
                     <span class="text-xs font-bold text-slate-700">Foto Kunci Terpilih (<span id="key-image-count">0</span>)</span>
-                    <button type="button" onclick="clearKeyImages()" class="text-xs font-bold text-red-600">Hapus</button>
+                    <div class="flex items-center gap-2.5">
+                        <button type="button" onclick="rotateAllKeyImages()" class="text-xs font-bold text-amber-600 hover:underline flex items-center gap-1"><i class="fa-solid fa-rotate-right"></i> Putar 90°</button>
+                        <button type="button" onclick="clearKeyImages()" class="text-xs font-bold text-red-600">Hapus</button>
+                    </div>
                 </div>
-                <div id="key-image-preview-list" class="grid grid-cols-3 gap-2 max-h-36 overflow-y-auto"></div>
+                <div id="key-image-preview-list" class="grid grid-cols-3 gap-2 max-h-40 overflow-y-auto"></div>
+                <p class="text-[11px] text-slate-500">Tip: Jika posisi tulisan pada foto terlihat miring/terbalik, tekan <strong>Putar 90°</strong> dulu agar terbaca 100% utuh.</p>
             </div>
 
             <!-- Loading State -->
@@ -560,7 +567,7 @@
         // ==========================================
         // STATE & KONFIGURASI APLIKASI
         // ==========================================
-        const apiKey = "AQ.Ab8RN6Lpt6gIkiYsvmB0dGZ5Q9WFqsar4JFmf45k_lAuPpclOw";
+        const apiKey = "";
         const GEMINI_MODELS = ["gemini-2.5-flash", "gemini-2.5-flash-preview-09-2025"];
 
         let appState = {
@@ -617,6 +624,8 @@
                         .sort((a, b) => Number(a[0]) - Number(b[0]))
                         .map(([num, ans]) => `${num}.${ans}`);
                     document.getElementById('pg-key-input').value = pgEntries.join(', ');
+                    syncShortQuickInputFromState();
+                    syncEssayQuickInputFromState();
                 }
 
                 const savedRecap = localStorage.getItem('sas_grader_recap_v3');
@@ -727,7 +736,7 @@
             const raw = document.getElementById('pg-key-input').value.toUpperCase();
             const parsed = {};
 
-            const pairRegex = /(\d+)\s*[\.\:\-\)\=]?\s*([A-E])\b/g;
+            const pairRegex = /(\d+)\s*[\.\:\-\)\=\|]?\s*([A-E])(?![A-Z])/g;
             let match;
             let foundPairs = false;
             while ((match = pairRegex.exec(raw)) !== null) {
@@ -763,24 +772,137 @@
             const nextNum = number || (appState.shortAnswerKeys.length + 1);
             appState.shortAnswerKeys.push({ number: nextNum, answer: answer });
             renderShortAnswerRows();
+            syncShortQuickInputFromState();
         }
 
         function removeShortAnswerRow(index) {
             appState.shortAnswerKeys.splice(index, 1);
             renderShortAnswerRows();
+            syncShortQuickInputFromState();
+        }
+
+        function syncShortQuickInputFromState() {
+            const box = document.getElementById('short-key-quick-input');
+            if (!box) return;
+            box.value = appState.shortAnswerKeys
+                .map(item => `${item.number}. ${item.answer}`)
+                .join('\n');
+        }
+
+        function parseShortBulkInput() {
+            const raw = document.getElementById('short-key-quick-input').value;
+            const parsed = [];
+            const regex = /(?:^|[\n,;])\s*(\d{1,3})\s*[\.\)\:\-]\s*([^\n,;]+)/g;
+            let m;
+            while ((m = regex.exec(raw)) !== null) {
+                const ans = m[2].trim();
+                if (ans) parsed.push({ number: Number(m[1]), answer: ans });
+            }
+            if (parsed.length === 0 && raw.trim()) {
+                raw.split(/\r?\n/).map(l => l.trim()).filter(Boolean).forEach((line, idx) => {
+                    const numMatch = line.match(/^(\d{1,3})\s*[\.\)\:\-]\s*(.+)$/);
+                    if (numMatch) {
+                        parsed.push({ number: Number(numMatch[1]), answer: numMatch[2].trim() });
+                    } else {
+                        parsed.push({ number: idx + 1, answer: line });
+                    }
+                });
+            }
+            appState.shortAnswerKeys = parsed;
+            renderShortAnswerRows();
         }
 
         function renderShortAnswerRows() {
             const container = document.getElementById('short-answer-list-container');
+            const badge = document.getElementById('short-count-badge');
+            if (badge) badge.textContent = `${appState.shortAnswerKeys.length} Soal`;
             if (appState.shortAnswerKeys.length === 0) {
-                container.innerHTML = `<div class="text-center py-6 px-3 bg-slate-50/70 rounded-xl border border-dashed border-slate-200 text-xs text-slate-400">Belum ada soal Isian Singkat. Klik <strong>+ Tambah</strong> atau <strong>Foto</strong>.</div>`;
+                container.innerHTML = `<div class="text-center py-6 px-3 bg-slate-50/70 rounded-xl border border-dashed border-slate-200 text-xs text-slate-400">Belum ada soal Isian Singkat. Ketik di atas, klik <strong>+ Tambah</strong>, atau <strong>Foto</strong>.</div>`;
                 return;
             }
             container.innerHTML = appState.shortAnswerKeys.map((item, idx) => `
                 <div class="flex items-center gap-2 bg-slate-50/70 p-2 rounded-xl border border-slate-200 shadow-2xs">
-                    <input type="number" value="${item.number}" onchange="appState.shortAnswerKeys[${idx}].number = Number(this.value)" class="w-12 text-center py-1.5 bg-teal-50 text-teal-800 font-bold text-xs rounded-lg border border-teal-200 outline-none" title="Nomor Soal">
-                    <input type="text" value="${item.answer.replace(/"/g, '&quot;')}" oninput="appState.shortAnswerKeys[${idx}].answer = this.value" placeholder="Jawaban pasti..." class="flex-grow py-1.5 px-2.5 text-xs font-medium text-slate-800 bg-white rounded-lg border border-slate-200 focus:border-teal-500 outline-none">
+                    <input type="number" value="${item.number}" onchange="appState.shortAnswerKeys[${idx}].number = Number(this.value); syncShortQuickInputFromState();" class="w-12 text-center py-1.5 bg-teal-50 text-teal-800 font-bold text-xs rounded-lg border border-teal-200 outline-none" title="Nomor Soal">
+                    <input type="text" value="${item.answer.replace(/"/g, '&quot;')}" oninput="appState.shortAnswerKeys[${idx}].answer = this.value; syncShortQuickInputFromState();" placeholder="Jawaban pasti..." class="flex-grow py-1.5 px-2.5 text-xs font-medium text-slate-800 bg-white rounded-lg border border-slate-200 focus:border-teal-500 outline-none">
                     <button type="button" onclick="removeShortAnswerRow(${idx})" class="w-7 h-7 rounded-lg text-slate-400 hover:text-red-600 hover:bg-red-50 flex items-center justify-center transition"><i class="fa-solid fa-trash-can text-xs"></i></button>
+                </div>
+            `).join('');
+        }
+
+        function addEssayRow(number = null, rubric = "", maxScore = 10) {
+            const nextNum = number || (appState.essayKeys.length + 1);
+            appState.essayKeys.push({ number: nextNum, rubric: rubric, maxScore: maxScore });
+            renderEssayRows();
+            syncEssayQuickInputFromState();
+        }
+
+        function removeEssayRow(index) {
+            appState.essayKeys.splice(index, 1);
+            renderEssayRows();
+            syncEssayQuickInputFromState();
+        }
+
+        function syncEssayQuickInputFromState() {
+            const box = document.getElementById('essay-key-quick-input');
+            if (!box) return;
+            box.value = appState.essayKeys
+                .map(item => `${item.number}. ${item.rubric}`)
+                .join('\n');
+        }
+
+        function parseEssayBulkInput() {
+            const raw = document.getElementById('essay-key-quick-input').value;
+            const prevScoreMap = new Map(appState.essayKeys.map(k => [k.number, k.maxScore]));
+            const parsed = [];
+            const lines = raw.split(/\r?\n/).map(l => l.trim()).filter(Boolean);
+
+            lines.forEach((line, idx) => {
+                const numMatch = line.match(/^(\d{1,3})\s*[\.\)\:\-]\s*(.+)$/);
+                if (numMatch) {
+                    const num = Number(numMatch[1]);
+                    parsed.push({
+                        number: num,
+                        rubric: numMatch[2].trim(),
+                        maxScore: prevScoreMap.get(num) || 10
+                    });
+                } else if (parsed.length > 0) {
+                    parsed[parsed.length - 1].rubric += " " + line;
+                } else {
+                    const num = idx + 1;
+                    parsed.push({
+                        number: num,
+                        rubric: line,
+                        maxScore: prevScoreMap.get(num) || 10
+                    });
+                }
+            });
+
+            appState.essayKeys = parsed;
+            renderEssayRows();
+        }
+
+        function renderEssayRows() {
+            const container = document.getElementById('essay-list-container');
+            const badge = document.getElementById('essay-count-badge');
+            if (badge) badge.textContent = `${appState.essayKeys.length} Soal`;
+            if (appState.essayKeys.length === 0) {
+                container.innerHTML = `<div class="text-center py-6 px-3 bg-slate-50/70 rounded-xl border border-dashed border-slate-200 text-xs text-slate-400">Belum ada soal Esai. Ketik di atas, klik <strong>+ Tambah</strong>, atau <strong>Foto</strong>.</div>`;
+                return;
+            }
+            container.innerHTML = appState.essayKeys.map((item, idx) => `
+                <div class="bg-slate-50/70 p-3 rounded-xl border border-slate-200 shadow-2xs space-y-2">
+                    <div class="flex items-center justify-between gap-2">
+                        <div class="flex items-center gap-1.5">
+                            <span class="text-[11px] font-bold text-slate-500">No.</span>
+                            <input type="number" value="${item.number}" onchange="appState.essayKeys[${idx}].number = Number(this.value); syncEssayQuickInputFromState();" class="w-12 text-center py-1 bg-indigo-50 text-indigo-800 font-bold text-xs rounded-lg border border-indigo-200 outline-none">
+                        </div>
+                        <div class="flex items-center gap-1.5">
+                            <span class="text-[11px] font-bold text-slate-500">Skor Maks:</span>
+                            <input type="number" value="${item.maxScore}" onchange="appState.essayKeys[${idx}].maxScore = Number(this.value)" class="w-14 text-center py-1 bg-white text-slate-800 font-bold text-xs rounded-lg border border-slate-200 outline-none">
+                            <button type="button" onclick="removeEssayRow(${idx})" class="w-7 h-7 rounded-lg text-slate-400 hover:text-red-600 hover:bg-red-50 flex items-center justify-center transition"><i class="fa-solid fa-trash-can text-xs"></i></button>
+                        </div>
+                    </div>
+                    <textarea rows="2" oninput="appState.essayKeys[${idx}].rubric = this.value; syncEssayQuickInputFromState();" placeholder="Tuliskan kunci jawaban / poin wajib esai..." class="w-full p-2 text-xs text-slate-800 bg-white rounded-lg border border-slate-200 focus:border-indigo-500 outline-none">${item.rubric}</textarea>
                 </div>
             `).join('');
         }
@@ -798,6 +920,8 @@
 
         function renderEssayRows() {
             const container = document.getElementById('essay-list-container');
+            const badge = document.getElementById('essay-count-badge');
+            if (badge) badge.textContent = `${appState.essayKeys.length} Soal`;
             if (appState.essayKeys.length === 0) {
                 container.innerHTML = `<div class="text-center py-6 px-3 bg-slate-50/70 rounded-xl border border-dashed border-slate-200 text-xs text-slate-400">Belum ada soal Esai. Klik <strong>+ Tambah</strong> atau <strong>Foto</strong>.</div>`;
                 return;
@@ -862,7 +986,9 @@
 
             parsePGPreview();
             renderShortAnswerRows();
+            syncShortQuickInputFromState();
             renderEssayRows();
+            syncEssayQuickInputFromState();
             updateWeightValidation();
             saveAnswerKey();
         }
@@ -943,7 +1069,7 @@
 
             for (const file of files) {
                 try {
-                    const compressed = await compressImageFile(file, 1400);
+                    const compressed = await compressImageFile(file, 1800);
                     appState.keyScanImages.push(compressed);
                 } catch (err) {
                     console.error("Gagal membaca foto kunci:", err);
@@ -960,6 +1086,16 @@
 
         function removeKeyImage(index) {
             appState.keyScanImages.splice(index, 1);
+            renderKeyScanPreviews();
+        }
+
+        async function rotateAllKeyImages() {
+            if (appState.keyScanImages.length === 0) return;
+            for (let i = 0; i < appState.keyScanImages.length; i++) {
+                const rotatedUrl = await rotateDataUrl(appState.keyScanImages[i].dataUrl, 90);
+                appState.keyScanImages[i].dataUrl = rotatedUrl;
+                appState.keyScanImages[i].base64 = rotatedUrl.split(',')[1];
+            }
             renderKeyScanPreviews();
         }
 
@@ -1017,10 +1153,25 @@
             const shortList = [];
             const essayList = [];
             const lines = rawText.split(/\r?\n/).map(l => l.trim()).filter(Boolean);
+            let currentSection = 'auto';
 
             for (const line of lines) {
+                const upper = line.toUpperCase();
+                if (/^(I\.|BAGIAN\s*I|A\.|PILIHAN\s*GANDA|\bPG\b|\bPGB\b)/.test(upper)) {
+                    currentSection = 'pg';
+                    continue;
+                }
+                if (/^(II\.|BAGIAN\s*II|B\.|ISIAN)/.test(upper)) {
+                    currentSection = 'short';
+                    continue;
+                }
+                if (/^(III\.|BAGIAN\s*III|C\.|ESAI|URAIAN)/.test(upper)) {
+                    currentSection = 'essay';
+                    continue;
+                }
+
                 const pgMatches = [...line.matchAll(/(?:^|\s)(\d{1,3})\s*[\.\)\:\-\=]?\s*([A-Ea-e])(?=\s|$|,|\.|;|\))/g)];
-                if (pgMatches.length > 0 && (target === 'pg' || target === 'all')) {
+                if (pgMatches.length > 0 && currentSection !== 'short' && currentSection !== 'essay' && (target === 'pg' || target === 'all')) {
                     for (const m of pgMatches) {
                         pgList.push({ number: Number(m[1]), answer: m[2].toUpperCase() });
                     }
@@ -1031,12 +1182,12 @@
                 if (numLine) {
                     const num = Number(numLine[1]);
                     const text = numLine[2].trim();
-                    if (target === 'short') {
+                    if (currentSection === 'short' || target === 'short') {
                         shortList.push({ number: num, answer: text });
-                    } else if (target === 'essay') {
+                    } else if (currentSection === 'essay' || target === 'essay') {
                         essayList.push({ number: num, rubric: text, maxScore: 10 });
                     } else if (target === 'all') {
-                        if (text.length <= 35) {
+                        if (text.length <= 45) {
                             shortList.push({ number: num, answer: text });
                         } else {
                             essayList.push({ number: num, rubric: text, maxScore: 10 });
@@ -1090,16 +1241,20 @@
                 }));
 
                 const prompt = `Anda adalah asisten OCR dokumen kunci jawaban ujian sekolah yang sangat teliti.
-PERHATIAN PENTING:
-1. Foto dokumen bisa saja dalam posisi MIRING 90 derajat, 270 derajat, atau terbalik 180 derajat. Putar pembacaan Anda secara mental hingga teks tegak lurus sebelum mengekstrak.
-2. Kunci Pilihan Ganda (PG / PGB) sering disusun dalam BEBERAPA KOLOM sejajar (misal Kolom 1: 1-5, Kolom 2: 6-10, Kolom 3: 11-15, Kolom 4: 16-20). Pastikan Anda membaca SEMUA KOLOM dari nomor pertama hingga nomor terakhir, JANGAN berhenti di kolom pertama saja!
-3. Fokus utama ekstraksi saat ini: ${target === 'pg' ? 'Hanya Pilihan Ganda (seluruh nomor soal PG & huruf A/B/C/D/E)' : target === 'short' ? 'Hanya Isian Singkat (nomor & jawaban singkat)' : target === 'essay' ? 'Hanya Esai/Uraian (nomor, rubrik/poin jawaban, dan skor maksimal)' : 'Semua bagian yang ada (Pilihan Ganda, Isian Singkat, dan Esai)'}.
+Dokumen ini berisi kunci jawaban ujian (misal I. Pilihan Ganda, II. Isian, III. Essay). JANGAN PERNAH MEMBATASI JUMLAH SOAL — baca SELURUH soal dari nomor pertama sampai nomor terakhir yang tertera pada gambar.
+
+ATURAN KHUSUS UNTUK TABEL PILIHAN GANDA (SANGAT PENTING!):
+1. Bagian I. Pilihan Ganda sering dicetak dalam bentuk TABEL BERKOLOM (misalnya 8 kolom bersebelahan: kolom No 1 disusul kolom huruf C, kolom No 6 disusul huruf A, kolom No 11 disusul huruf B, kolom No 16 disusul huruf B, dst.) atau daftar menyamping.
+2. Pasangkan setiap sel Nomor (1, 2, 3, ... 20, dst.) dengan sel Huruf Jawaban (A, B, C, D, atau E) tepat di sebelahnya, lalu masukkan SEMUANYA ke dalam array "pg"! Jangan pernah meninggalkan array "pg" kosong jika ada tabel/daftar nomor dengan huruf A-E di gambar.
+3. Foto bisa dalam posisi miring 90°/270° atau terbalik 180°. Baca semua baris dan kolom dari ujung ke ujung tanpa terlewat.
+4. Bagian II. Isian / Isian Singkat: masukkan SEMUA nomor isian beserta jawabannya ke array "shortAnswer" sesuai nomor aslinya.
+5. Bagian III. Essay / Uraian: masukkan SEMUA nomor uraian beserta kunci jawabannya ke array "essay" sesuai nomor aslinya (maxScore default 10).
 
 Kembalikan HANYA JSON murni sesuai skema berikut:
 {
-  "pg": [ { "number": 1, "answer": "B" }, { "number": 2, "answer": "C" } ],
+  "pg": [ { "number": 1, "answer": "C" }, { "number": 2, "answer": "B" } ],
   "shortAnswer": [ { "number": 21, "answer": "teks jawaban" } ],
-  "essay": [ { "number": 26, "rubric": "poin kunci jawaban uraian", "maxScore": 10 } ]
+  "essay": [ { "number": 31, "rubric": "poin kunci jawaban uraian", "maxScore": 10 } ]
 }`;
 
                 const payload = {
@@ -1113,15 +1268,18 @@ Kembalikan HANYA JSON murni sesuai skema berikut:
                     }
                 };
 
-                extracted = await fetchGeminiWithRetry(payload, 1);
+                const responseText = await callGeminiWithFallback(payload);
+                const cleanedJson = responseText.replace(/```json\s*/gi, '').replace(/```\s*/g, '').trim();
+                extracted = JSON.parse(cleanedJson);
             } catch (aiErr) {
-                console.warn("Beralih ke mesin OCR lokal otomatis:", aiErr.message);
+                console.warn("AI Key Scan fallback ke OCR lokal:", aiErr);
                 try {
                     extracted = await extractKeysViaLocalOCR(appState.keyScanImages, target);
                 } catch (ocrErr) {
+                    console.error("OCR lokal gagal:", ocrErr);
+                    showToast("Gagal membaca foto kunci. Pastikan foto jelas dan coba lagi.", "error");
                     loadingEl.classList.add('hidden');
                     btn.disabled = false;
-                    showToast("Gagal membaca gambar kunci. Pastikan tulisan jelas & tidak buram.", "error");
                     return;
                 }
             }
@@ -1129,112 +1287,189 @@ Kembalikan HANYA JSON murni sesuai skema berikut:
             try {
                 let totalFound = 0;
 
-                if ((target === 'pg' || target === 'all') && Array.isArray(extracted?.pg) && extracted.pg.length > 0) {
-                    const merged = { ...appState.pgKeys };
-                    for (const item of extracted.pg) {
-                        const num = Number(item.number);
-                        const ans = String(item.answer || "").trim().toUpperCase().replace(/[^A-E]/g, '').charAt(0);
-                        if (num > 0 && ans) {
-                            merged[num] = ans;
-                            totalFound++;
+                // Normalisasi berbagai kemungkinan bentuk respons PG dari AI (Array, Object map, atau String)
+                let normalizedPG = [];
+                const rawPG = extracted.pg || extracted.PG || extracted.pilihanGanda || extracted.multipleChoice;
+                if (Array.isArray(rawPG)) {
+                    normalizedPG = rawPG.map(item => {
+                        if (typeof item === 'string') {
+                            const m = item.match(/(\d+)\s*[\.\:\-\)\=]?\s*([A-Ea-e])/);
+                            return m ? { number: Number(m[1]), answer: m[2].toUpperCase() } : null;
                         }
-                    }
-                    const formatted = Object.keys(merged)
-                        .sort((a, b) => Number(a) - Number(b))
-                        .map(k => `${k}.${merged[k]}`)
-                        .join(', ');
-                    document.getElementById('pg-key-input').value = formatted;
-                    parsePGPreview();
+                        if (item && typeof item === 'object') {
+                            const num = Number(String(item.number ?? item.no ?? item.nomor ?? '').replace(/\D/g, ''));
+                            const ans = String(item.answer ?? item.jawaban ?? item.kunci ?? '').trim().replace(/[\.\)\]]+$/, '').toUpperCase();
+                            return (num && /^[A-E]$/.test(ans)) ? { number: num, answer: ans } : null;
+                        }
+                        return null;
+                    }).filter(Boolean);
+                } else if (rawPG && typeof rawPG === 'object') {
+                    normalizedPG = Object.entries(rawPG).map(([k, v]) => {
+                        const num = Number(String(k).replace(/\D/g, ''));
+                        const ans = String(v).trim().replace(/[\.\)\]]+$/, '').toUpperCase();
+                        return (num && /^[A-E]$/.test(ans)) ? { number: num, answer: ans } : null;
+                    }).filter(Boolean);
+                } else if (typeof rawPG === 'string') {
+                    const matches = [...rawPG.matchAll(/(\d+)\s*[\.\:\-\)\=\|]?\s*([A-Ea-e])(?![A-Za-z])/g)];
+                    normalizedPG = matches.map(m => ({ number: Number(m[1]), answer: m[2].toUpperCase() }));
                 }
 
-                if ((target === 'short' || target === 'all') && Array.isArray(extracted?.shortAnswer) && extracted.shortAnswer.length > 0) {
+                // Salvage: jika AI menaruh jawaban 1 huruf A-E ke dalam shortAnswer, pindahkan otomatis ke PG
+                const remainingShort = [];
+                if (Array.isArray(extracted.shortAnswer)) {
                     for (const item of extracted.shortAnswer) {
-                        if (item.answer && String(item.answer).trim()) {
-                            appState.shortAnswerKeys.push({
-                                number: Number(item.number) || (appState.shortAnswerKeys.length + 1),
-                                answer: String(item.answer).trim()
-                            });
-                            totalFound++;
+                        if (!item || !item.answer) continue;
+                        const cleanAns = String(item.answer).trim().replace(/[\.\)\]]+$/, '').toUpperCase();
+                        const num = Number(String(item.number ?? '').replace(/\D/g, ''));
+                        if (num && /^[A-E]$/.test(cleanAns) && (target === 'pg' || target === 'all')) {
+                            if (!normalizedPG.some(p => p.number === num)) {
+                                normalizedPG.push({ number: num, answer: cleanAns });
+                            }
+                        } else {
+                            remainingShort.push(item);
                         }
                     }
-                    renderShortAnswerRows();
                 }
 
-                if ((target === 'essay' || target === 'all') && Array.isArray(extracted?.essay) && extracted.essay.length > 0) {
-                    for (const item of extracted.essay) {
-                        if (item.rubric && String(item.rubric).trim()) {
-                            appState.essayKeys.push({
-                                number: Number(item.number) || (appState.essayKeys.length + 1),
-                                rubric: String(item.rubric).trim(),
-                                maxScore: Number(item.maxScore) || 10
-                            });
-                            totalFound++;
-                        }
+                if (normalizedPG.length > 0 && (target === 'pg' || target === 'all')) {
+                    const sortedPG = normalizedPG.sort((a, b) => a.number - b.number);
+                    const pgText = sortedPG.map(item => `${item.number}.${item.answer}`).join(', ');
+                    document.getElementById('pg-key-input').value = pgText;
+                    parsePGPreview();
+                    totalFound += sortedPG.length;
+                }
+
+                if (remainingShort.length > 0 && (target === 'short' || target === 'all')) {
+                    const validShort = remainingShort
+                        .sort((a, b) => Number(a.number || 0) - Number(b.number || 0));
+                    if (validShort.length > 0) {
+                        appState.shortAnswerKeys = validShort.map((item, idx) => ({
+                            number: Number(item.number) || (idx + 1),
+                            answer: String(item.answer).trim()
+                        }));
+                        renderShortAnswerRows();
+                        syncShortQuickInputFromState();
+                        totalFound += validShort.length;
                     }
-                    renderEssayRows();
                 }
 
-                loadingEl.classList.add('hidden');
-                btn.disabled = false;
+                if (Array.isArray(extracted.essay) && extracted.essay.length > 0 && (target === 'essay' || target === 'all')) {
+                    const validEssay = extracted.essay
+                        .filter(item => item && item.rubric)
+                        .sort((a, b) => Number(a.number || 0) - Number(b.number || 0));
+                    if (validEssay.length > 0) {
+                        appState.essayKeys = validEssay.map((item, idx) => ({
+                            number: Number(item.number) || (idx + 1),
+                            rubric: String(item.rubric).trim(),
+                            maxScore: Number(item.maxScore) || 10
+                        }));
+                        renderEssayRows();
+                        syncEssayQuickInputFromState();
+                        totalFound += validEssay.length;
+                    }
+                }
 
-                if (totalFound === 0) {
-                    showToast("Teks kunci tidak terdeteksi jelas. Coba foto lebih dekat & tegak lurus.", "warning");
+                closeKeyScanModal();
+                if (totalFound > 0) {
+                    saveAnswerKey();
+                    showToast(`Berhasil mengekstrak ${totalFound} nomor kunci jawaban dari foto!`, "success");
                 } else {
-                    saveStateToStorage();
-                    closeKeyScanModal();
-                    showToast(`Berhasil mendeteksi ${totalFound} item kunci jawaban!`, "success");
+                    showToast("Tidak ada nomor kunci yang terbaca jelas. Coba putar/perjelas foto.", "warning");
                 }
-            } catch (err) {
+            } catch (applyErr) {
+                console.error("Gagal menerapkan hasil kunci:", applyErr);
+                showToast("Terjadi kesalahan saat menyusun hasil kunci jawaban.", "error");
+            } finally {
                 loadingEl.classList.add('hidden');
                 btn.disabled = false;
-                showToast("Terjadi kesalahan saat menyusun kunci jawaban.", "error");
             }
         }
 
         // ==========================================
-        // KAMERA LANGSUNG & UNGGAH LEMBAR SISWA
+        // PEMANGGIL API GEMINI DENGAN FALLBACK MODEL
+        // ==========================================
+        async function callGeminiWithFallback(payload) {
+            const cleanKey = (typeof apiKey === 'string' ? apiKey : '').trim();
+            if (!cleanKey && typeof window !== 'undefined' && !window.location.hostname.includes('googleusercontent') && !window.location.hostname.includes('localhost')) {
+                throw new Error("API Key kosong di lingkungan eksternal.");
+            }
+
+            let lastError = null;
+            for (const model of GEMINI_MODELS) {
+                try {
+                    const url = cleanKey
+                        ? `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${encodeURIComponent(cleanKey)}`
+                        : `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`;
+
+                    const headers = { 'Content-Type': 'application/json' };
+                    if (cleanKey) {
+                        headers['x-goog-api-key'] = cleanKey;
+                    }
+
+                    const res = await fetch(url, {
+                        method: 'POST',
+                        headers: headers,
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (!res.ok) {
+                        const errText = await res.text();
+                        throw new Error(`HTTP ${res.status}: ${errText}`);
+                    }
+
+                    const data = await res.json();
+                    const text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+                    if (!text) {
+                        throw new Error("Respons AI kosong.");
+                    }
+                    return text;
+                } catch (err) {
+                    lastError = err;
+                }
+            }
+            throw lastError || new Error("Gagal terhubung ke layanan AI.");
+        }
+
+        // ==========================================
+        // KAMERA LANGSUNG & UNGGAH LEMBAR JAWABAN SISWA
         // ==========================================
         let cameraStream = null;
         let currentFacingMode = 'environment';
 
         async function openLiveCamera() {
             const modal = document.getElementById('live-camera-modal');
+            const overlay = document.getElementById('camera-loading-overlay');
+            const statusText = document.getElementById('camera-status-text');
+
             modal.classList.remove('hidden');
             modal.classList.add('flex');
-            await startCameraStream();
-        }
-
-        async function startCameraStream() {
-            const video = document.getElementById('camera-video-stream');
-            const loadingOverlay = document.getElementById('camera-loading-overlay');
-            loadingOverlay.classList.remove('hidden');
-
-            if (cameraStream) {
-                cameraStream.getTracks().forEach(t => t.stop());
-                cameraStream = null;
-            }
+            overlay.classList.remove('hidden');
+            statusText.textContent = "Menyiapkan lensa kamera...";
 
             try {
                 if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
                     throw new Error("Browser tidak mendukung akses kamera langsung.");
                 }
+                if (cameraStream) {
+                    cameraStream.getTracks().forEach(t => t.stop());
+                }
                 cameraStream = await navigator.mediaDevices.getUserMedia({
-                    video: { facingMode: { ideal: currentFacingMode }, width: { ideal: 1280 }, height: { ideal: 1706 } },
+                    video: { facingMode: { ideal: currentFacingMode }, width: { ideal: 1920 }, height: { ideal: 1080 } },
                     audio: false
                 });
+                const video = document.getElementById('camera-video-stream');
                 video.srcObject = cameraStream;
-                video.onloadedmetadata = () => {
-                    video.play();
-                    loadingOverlay.classList.add('hidden');
-                };
+                await video.play();
+                overlay.classList.add('hidden');
             } catch (err) {
-                document.getElementById('camera-status-text').textContent = "Kamera langsung dibatasi browser/APK.";
+                console.warn("Kamera langsung tidak tersedia:", err);
+                statusText.textContent = "Kamera browser dibatasi. Silakan gunakan tombol Kamera Bawaan HP di bawah.";
             }
         }
 
         function switchCameraFacing() {
             currentFacingMode = currentFacingMode === 'environment' ? 'user' : 'environment';
-            startCameraStream();
+            openLiveCamera();
         }
 
         function closeLiveCamera() {
@@ -1259,17 +1494,29 @@ Kembalikan HANYA JSON murni sesuai skema berikut:
                 return;
             }
             const canvas = document.createElement('canvas');
-            canvas.width = video.videoWidth;
-            canvas.height = video.videoHeight;
-            canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+            const maxDim = 1400;
+            let w = video.videoWidth;
+            let h = video.videoHeight;
+            if (w > maxDim || h > maxDim) {
+                if (w > h) {
+                    h = Math.round((h * maxDim) / w);
+                    w = maxDim;
+                } else {
+                    w = Math.round((w * maxDim) / h);
+                    h = maxDim;
+                }
+            }
+            canvas.width = w;
+            canvas.height = h;
+            canvas.getContext('2d').drawImage(video, 0, 0, w, h);
             const dataUrl = canvas.toDataURL('image/jpeg', 0.85);
+
             appState.uploadedImages.push({
                 dataUrl: dataUrl,
                 base64: dataUrl.split(',')[1],
                 mimeType: 'image/jpeg'
             });
             renderUploadedImages();
-            closeLiveCamera();
             showToast("Foto lembar jawaban berhasil diambil!", "success");
         }
 
@@ -1281,11 +1528,16 @@ Kembalikan HANYA JSON murni sesuai skema berikut:
                 try {
                     const compressed = await compressImageFile(file, 1400);
                     appState.uploadedImages.push(compressed);
-                } catch (e) {
-                    console.error("Gagal memuat foto:", e);
+                } catch (err) {
+                    console.error("Gagal memproses gambar:", err);
                 }
             }
             event.target.value = "";
+            renderUploadedImages();
+        }
+
+        function removeUploadedImage(index) {
+            appState.uploadedImages.splice(index, 1);
             renderUploadedImages();
         }
 
@@ -1294,19 +1546,14 @@ Kembalikan HANYA JSON murni sesuai skema berikut:
             renderUploadedImages();
         }
 
-        function removeImage(index) {
-            appState.uploadedImages.splice(index, 1);
-            renderUploadedImages();
-        }
-
         function renderUploadedImages() {
             const wrapper = document.getElementById('uploaded-images-wrapper');
             const list = document.getElementById('image-preview-list');
             const countEl = document.getElementById('image-count');
-            const btnAnalyze = document.getElementById('btn-analyze');
+            const btn = document.getElementById('btn-analyze');
 
             countEl.textContent = appState.uploadedImages.length;
-            btnAnalyze.disabled = appState.uploadedImages.length === 0;
+            btn.disabled = appState.uploadedImages.length === 0;
 
             if (appState.uploadedImages.length === 0) {
                 wrapper.classList.add('hidden');
@@ -1316,28 +1563,32 @@ Kembalikan HANYA JSON murni sesuai skema berikut:
 
             wrapper.classList.remove('hidden');
             list.innerHTML = appState.uploadedImages.map((img, idx) => `
-                <div class="relative rounded-xl overflow-hidden border border-slate-200 aspect-[3/4] bg-slate-100">
-                    <img src="${img.dataUrl}" class="w-full h-full object-cover" alt="Lembar ${idx + 1}">
-                    <button type="button" onclick="removeImage(${idx})" class="absolute top-1.5 right-1.5 w-6 h-6 rounded-full bg-red-600 text-white text-xs flex items-center justify-center shadow-md">
+                <div class="relative rounded-xl overflow-hidden border border-slate-200 aspect-square bg-slate-100">
+                    <img src="${img.dataUrl}" class="w-full h-full object-cover" alt="Halaman ${idx + 1}">
+                    <button type="button" onclick="removeUploadedImage(${idx})" class="absolute top-1 right-1 w-6 h-6 rounded-full bg-red-600 text-white text-xs flex items-center justify-center shadow-md">
                         <i class="fa-solid fa-xmark"></i>
                     </button>
-                    <span class="absolute bottom-1.5 left-1.5 bg-slate-900/75 text-white text-[10px] font-bold px-2 py-0.5 rounded-md">Hal ${idx + 1}</span>
                 </div>
             `).join('');
         }
 
         // ==========================================
-        // ANALISIS AI & VALIDASI DETERMINISTIK KETAT
+        // ANALISIS & PENILAIAN LEMBAR JAWABAN SISWA
         // ==========================================
         async function analyzeStudentSheet() {
-            if (Object.keys(appState.pgKeys).length === 0 && appState.shortAnswerKeys.length === 0 && appState.essayKeys.length === 0) {
-                showToast("Atur dan simpan Kunci Jawaban terlebih dahulu di Tab 1!", "warning");
-                switchTab('kunci');
+            if (appState.uploadedImages.length === 0) {
+                showToast("Unggah atau foto lembar jawaban siswa terlebih dahulu!", "warning");
                 return;
             }
 
-            if (appState.uploadedImages.length === 0) {
-                showToast("Ambil foto atau unggah lembar jawaban siswa terlebih dahulu!", "warning");
+            parsePGPreview();
+            const pgKeysCount = Object.keys(appState.pgKeys).length;
+            const shortKeysCount = appState.shortAnswerKeys.length;
+            const essayKeysCount = appState.essayKeys.length;
+
+            if (pgKeysCount === 0 && shortKeysCount === 0 && essayKeysCount === 0) {
+                showToast("Kunci jawaban masih kosong! Isi kunci jawaban di Tab 1 terlebih dahulu.", "error");
+                switchTab('kunci');
                 return;
             }
 
@@ -1346,312 +1597,334 @@ Kembalikan HANYA JSON murni sesuai skema berikut:
             document.getElementById('result-loading-state').classList.remove('hidden');
             document.getElementById('btn-analyze').disabled = true;
 
-            const manualName = document.getElementById('manual-student-name').value.trim();
-            const imageParts = appState.uploadedImages.map(img => ({
-                inlineData: { mimeType: img.mimeType, data: img.base64 }
-            }));
+            try {
+                const imageParts = appState.uploadedImages.map(img => ({
+                    inlineData: { mimeType: img.mimeType, data: img.base64 }
+                }));
 
-            const prompt = `Anda adalah sistem korektor ujian sekolah yang sangat presisi.
-Periksa foto lembar jawaban siswa berikut berdasarkan KUNCI JAWABAN resmi ini:
-- Kunci Pilihan Ganda: ${JSON.stringify(appState.pgKeys)}
-- Kunci Isian Singkat: ${JSON.stringify(appState.shortAnswerKeys)}
-- Rubrik Esai: ${JSON.stringify(appState.essayKeys)}
+                const keyReference = {
+                    pg: appState.pgKeys,
+                    shortAnswer: appState.shortAnswerKeys,
+                    essay: appState.essayKeys
+                };
 
-Tugas Anda:
-1. Baca Nama Siswa dan Kelas dari lembar jawaban (jika kosong/tidak terbaca, isi "Siswa Tanpa Nama" dan "${appState.className || '-'}").
-2. Baca jawaban PG siswa untuk setiap nomor kunci (huruf A/B/C/D/E atau "-" jika kosong).
-3. Baca jawaban Isian Singkat siswa dan tentukan apakah benar (true/false) secara makna/ejaan wajar sesuai kunci.
-4. Baca jawaban Esai siswa dan beri skor antara 0 sampai maxScore sesuai kelengkapan konsep pada rubrik, beserta catatan singkat.
+                const prompt = `Anda adalah sistem korektor ujian sekolah yang sangat teliti dan objektif.
+Tugas Anda adalah membaca lembar jawaban siswa pada gambar terlampir (bisa 1 atau beberapa halaman, dan posisi bisa tegak atau miring) lalu mencocokkannya dengan Kunci Jawaban & Rubrik berikut:
+${JSON.stringify(keyReference)}
 
-Kembalikan HANYA JSON valid dengan format:
+ATURAN KOREKSI:
+1. Baca Nama Siswa dan Kelas yang tertulis di bagian atas lembar jawaban (jika tidak terbaca, isi "Siswa Tanpa Nama" dan "-").
+2. Pilihan Ganda (pg): Periksa setiap nomor yang ada pada kunci PG. Tentukan huruf jawaban yang dipilih siswa (silang/lingkar/tulis) dan tentukan apakah benar (isCorrect: true/false).
+3. Isian Singkat (shortAnswer): Bandingkan jawaban siswa dengan kunci jawaban (toleransi perbedaan huruf besar/kecil atau ejaan minor yang bermakna sama).
+4. Esai / Uraian (essay): Nilai jawaban siswa secara proporsional dari 0 hingga maxScore berdasarkan kelengkapan poin kunci pada rubrik, lalu berikan catatan singkat alasan skor.
+5. Berikan catatan evaluasi umum (generalNote) dalam Bahasa Indonesia yang singkat dan membangun.
+
+Kembalikan HANYA JSON valid sesuai format berikut:
 {
   "studentName": "Nama Siswa",
   "studentClass": "Kelas",
-  "generalNote": "Catatan ringkas hasil pemeriksaan",
-  "pgAnswers": [ { "number": 1, "studentAnswer": "A" } ],
-  "shortAnswers": [ { "number": 1, "studentAnswer": "teks siswa", "isCorrect": true } ],
-  "essayAnswers": [ { "number": 1, "studentAnswer": "ringkasan jawaban siswa", "score": 10, "feedback": "alasan skor" } ]
+  "generalNote": "Catatan evaluasi singkat",
+  "pgResults": [
+    { "number": 1, "studentAnswer": "A", "correctAnswer": "A", "isCorrect": true }
+  ],
+  "shortResults": [
+    { "number": 1, "studentAnswer": "jawaban siswa", "correctAnswer": "kunci", "isCorrect": true }
+  ],
+  "essayResults": [
+    { "number": 1, "studentAnswer": "jawaban uraian siswa", "score": 8, "maxScore": 10, "feedback": "alasan penilaian" }
+  ]
 }`;
 
-            try {
                 const payload = {
-                    contents: [{ role: "user", parts: [{ text: prompt }, ...imageParts] }],
-                    generationConfig: { responseMimeType: "application/json", temperature: 0.1 }
+                    contents: [{
+                        role: "user",
+                        parts: [{ text: prompt }, ...imageParts]
+                    }],
+                    generationConfig: {
+                        responseMimeType: "application/json",
+                        temperature: 0.1
+                    }
                 };
 
-                const aiData = await fetchGeminiWithRetry(payload, 1);
-                buildDeterministicResult(aiData, manualName);
+                const responseText = await callGeminiWithFallback(payload);
+                const cleanedJson = responseText.replace(/```json\s*/gi, '').replace(/```\s*/g, '').trim();
+                const parsedResult = JSON.parse(cleanedJson);
+
+                const manualName = document.getElementById('manual-student-name').value.trim();
+                if (manualName) {
+                    parsedResult.studentName = manualName;
+                }
+
+                appState.currentAnalysis = parsedResult;
+                recalculateAndRenderResult();
+                showToast("Lembar jawaban berhasil dikoreksi!", "success");
             } catch (err) {
-                console.error("Gagal mengoreksi lembar siswa:", err);
+                console.error("Gagal mengoreksi lembar jawaban:", err);
                 document.getElementById('result-loading-state').classList.add('hidden');
                 document.getElementById('result-empty-state').classList.remove('hidden');
+                showToast("Gagal memproses koreksi AI. Pastikan API Key aktif dan koneksi internet stabil.", "error");
+            } finally {
                 document.getElementById('btn-analyze').disabled = false;
-                showToast("Koneksi AI gagal saat memeriksa lembar jawaban. Coba ulangi beberapa saat lagi.", "error");
             }
         }
 
-        function buildDeterministicResult(aiData, manualName) {
-            const pgDetails = Object.keys(appState.pgKeys)
-                .sort((a, b) => Number(a) - Number(b))
-                .map(numStr => {
-                    const num = Number(numStr);
-                    const keyAns = appState.pgKeys[num];
-                    const found = (aiData.pgAnswers || []).find(p => Number(p.number) === num);
-                    const stuAns = found ? String(found.studentAnswer || "-").trim().toUpperCase().charAt(0) || "-" : "-";
-                    return {
-                        number: num,
-                        keyAnswer: keyAns,
-                        studentAnswer: stuAns,
-                        isCorrect: stuAns === keyAns
-                    };
-                });
-
-            const shortDetails = appState.shortAnswerKeys.map(k => {
-                const found = (aiData.shortAnswers || []).find(s => Number(s.number) === Number(k.number));
-                const stuAns = found ? String(found.studentAnswer || "-") : "-";
-                const autoMatch = stuAns.trim().toLowerCase() === String(k.answer).trim().toLowerCase();
-                return {
-                    number: Number(k.number),
-                    keyAnswer: k.answer,
-                    studentAnswer: stuAns,
-                    isCorrect: found ? Boolean(found.isCorrect) : autoMatch
-                };
-            });
-
-            const essayDetails = appState.essayKeys.map(k => {
-                const found = (aiData.essayAnswers || []).find(e => Number(e.number) === Number(k.number));
-                const maxS = Number(k.maxScore) || 10;
-                const rawS = found ? Number(found.score) || 0 : 0;
-                return {
-                    number: Number(k.number),
-                    rubric: k.rubric,
-                    maxScore: maxS,
-                    studentAnswer: found ? String(found.studentAnswer || "-") : "-",
-                    score: Math.min(Math.max(0, rawS), maxS),
-                    feedback: found ? String(found.feedback || "") : ""
-                };
-            });
-
-            appState.currentAnalysis = {
-                studentName: manualName || aiData.studentName || "Siswa",
-                studentClass: aiData.studentClass || appState.className || "-",
-                generalNote: aiData.generalNote || "Pemeriksaan selesai. Klik item jika ingin mengubah koreksi secara manual.",
-                pgDetails,
-                shortDetails,
-                essayDetails
-            };
+        function recalculateAndRenderResult() {
+            const res = appState.currentAnalysis;
+            if (!res) return;
 
             document.getElementById('result-loading-state').classList.add('hidden');
+            document.getElementById('result-empty-state').classList.add('hidden');
             document.getElementById('result-content-state').classList.remove('hidden');
-            document.getElementById('btn-analyze').disabled = false;
 
-            recalculateAndRenderAnalysis();
-            showToast("Lembar jawaban selesai dikoreksi!", "success");
-        }
+            document.getElementById('res-student-name').value = res.studentName || "Siswa";
+            document.getElementById('res-student-class').value = res.studentClass || appState.className || "-";
+            document.getElementById('res-general-note-text').textContent = res.generalNote || "Koreksi selesai sesuai kunci jawaban & rubrik.";
 
-        function recalculateAndRenderAnalysis() {
-            const cur = appState.currentAnalysis;
-            if (!cur) return;
+            const pgList = Array.isArray(res.pgResults) ? res.pgResults : [];
+            const shortList = Array.isArray(res.shortResults) ? res.shortResults : [];
+            const essayList = Array.isArray(res.essayResults) ? res.essayResults : [];
 
-            document.getElementById('res-student-name').value = cur.studentName;
-            document.getElementById('res-student-class').value = cur.studentClass;
-            document.getElementById('res-general-note-text').textContent = cur.generalNote;
+            const pgCorrect = pgList.filter(i => i.isCorrect).length;
+            const pgTotal = pgList.length;
+            const pgRawPct = pgTotal > 0 ? (pgCorrect / pgTotal) * 100 : 0;
 
-            const pgTotal = cur.pgDetails.length;
-            const pgCorrect = cur.pgDetails.filter(x => x.isCorrect).length;
-            const pgScore = pgTotal > 0 ? (pgCorrect / pgTotal) * appState.weights.pg : 0;
+            const shortCorrect = shortList.filter(i => i.isCorrect).length;
+            const shortTotal = shortList.length;
+            const shortRawPct = shortTotal > 0 ? (shortCorrect / shortTotal) * 100 : 0;
 
-            const shTotal = cur.shortDetails.length;
-            const shCorrect = cur.shortDetails.filter(x => x.isCorrect).length;
-            const shScore = shTotal > 0 ? (shCorrect / shTotal) * appState.weights.short : 0;
+            const essayEarned = essayList.reduce((acc, i) => acc + (Number(i.score) || 0), 0);
+            const essayMax = essayList.reduce((acc, i) => acc + (Number(i.maxScore) || 10), 0);
+            const essayRawPct = essayMax > 0 ? (essayEarned / essayMax) * 100 : 0;
 
-            const esMaxTotal = cur.essayDetails.reduce((acc, x) => acc + x.maxScore, 0);
-            const esEarnedTotal = cur.essayDetails.reduce((acc, x) => acc + x.score, 0);
-            const esScore = esMaxTotal > 0 ? (esEarnedTotal / esMaxTotal) * appState.weights.essay : 0;
+            // Hitung bobot dinamis hanya dari bagian soal yang benar-benar ada
+            let activeWeightSum = 0;
+            let weightedPoints = 0;
+            if (pgTotal > 0) {
+                activeWeightSum += appState.weights.pg;
+                weightedPoints += pgRawPct * appState.weights.pg;
+            }
+            if (shortTotal > 0) {
+                activeWeightSum += appState.weights.short;
+                weightedPoints += shortRawPct * appState.weights.short;
+            }
+            if (essayTotalCount(essayList) > 0) {
+                activeWeightSum += appState.weights.essay;
+                weightedPoints += essayRawPct * appState.weights.essay;
+            }
 
-            const finalScore = Math.round((pgScore + shScore + esScore) * 10) / 10;
-            const isPass = finalScore >= appState.kkm;
+            const finalScore = activeWeightSum > 0 ? Math.round((weightedPoints / activeWeightSum) * 10) / 10 : 0;
+            const kkm = Number(document.getElementById('exam-kkm').value) || appState.kkm || 75;
+            const isPassed = finalScore >= kkm;
 
-            cur.computed = { pgCorrect, pgTotal, pgScore: Math.round(pgScore * 10) / 10, shCorrect, shTotal, shScore: Math.round(shScore * 10) / 10, esEarnedTotal, esMaxTotal, esScore: Math.round(esScore * 10) / 10, finalScore, isPass };
+            res.computed = {
+                pgCorrect, pgTotal,
+                pgScore: Math.round(pgRawPct * 10) / 10,
+                shortCorrect, shortTotal,
+                shortScore: Math.round(shortRawPct * 10) / 10,
+                essayEarned, essayMax,
+                essayScore: Math.round(essayRawPct * 10) / 10,
+                finalScore, isPassed
+            };
 
             document.getElementById('res-total-score').textContent = finalScore;
-            document.getElementById('res-pg-score-summary').textContent = cur.computed.pgScore;
-            document.getElementById('res-short-score-summary').textContent = cur.computed.shScore;
-            document.getElementById('res-essay-score-summary').textContent = cur.computed.esScore;
+            document.getElementById('res-pg-score-summary').textContent = res.computed.pgScore;
+            document.getElementById('res-short-score-summary').textContent = res.computed.shortScore;
+            document.getElementById('res-essay-score-summary').textContent = res.computed.essayScore;
 
             const kkmBadge = document.getElementById('res-kkm-badge');
-            if (isPass) {
+            if (isPassed) {
                 kkmBadge.className = "text-[10px] uppercase tracking-wider bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2.5 py-0.5 rounded-full font-bold";
-                kkmBadge.textContent = "TUNTAS KKM";
+                kkmBadge.textContent = `TUNTAS KKM (${kkm})`;
             } else {
                 kkmBadge.className = "text-[10px] uppercase tracking-wider bg-red-500/20 text-red-300 border border-red-500/30 px-2.5 py-0.5 rounded-full font-bold";
-                kkmBadge.textContent = "REMEDIAL";
+                kkmBadge.textContent = `REMEDIAL (< ${kkm})`;
             }
 
             document.getElementById('res-pg-fraction').textContent = `Benar: ${pgCorrect} / ${pgTotal}`;
-            document.getElementById('res-pg-grid').innerHTML = cur.pgDetails.map((item, idx) => `
-                <button type="button" onclick="togglePGCorrect(${idx})" class="p-2 rounded-xl border text-left transition flex items-center justify-between ${item.isCorrect ? 'bg-emerald-50 border-emerald-200 text-emerald-900' : 'bg-red-50 border-red-200 text-red-900'}">
-                    <span class="text-xs font-mono font-bold">${item.number}. ${item.studentAnswer} <span class="text-[10px] opacity-65">(${item.keyAnswer})</span></span>
-                    <i class="fa-solid ${item.isCorrect ? 'fa-check text-emerald-600' : 'fa-xmark text-red-600'} text-xs"></i>
-                </button>
-            `).join('') || `<span class="text-xs text-slate-400 col-span-full">Tidak ada soal PG.</span>`;
+            document.getElementById('res-pg-grid').innerHTML = pgList.length === 0
+                ? `<div class="col-span-full text-xs text-slate-400 italic">Tidak ada soal PG.</div>`
+                : pgList.map((item, idx) => `
+                    <button type="button" onclick="togglePGCorrect(${idx})" class="p-2 rounded-xl border text-left transition flex items-center justify-between ${item.isCorrect ? 'bg-emerald-50 border-emerald-200 text-emerald-900' : 'bg-red-50 border-red-200 text-red-900'}">
+                        <span class="text-xs font-extrabold">${item.number}. ${item.studentAnswer || '-'}</span>
+                        <span class="text-[10px] font-bold px-1.5 py-0.5 rounded ${item.isCorrect ? 'bg-emerald-200/70' : 'bg-red-200/70'}">Kunci: ${item.correctAnswer}</span>
+                    </button>
+                `).join('');
 
-            document.getElementById('res-short-fraction').textContent = `Benar: ${shCorrect} / ${shTotal}`;
-            document.getElementById('res-short-grid').innerHTML = cur.shortDetails.map((item, idx) => `
-                <button type="button" onclick="toggleShortCorrect(${idx})" class="p-2.5 rounded-xl border text-left transition flex items-start justify-between gap-2 ${item.isCorrect ? 'bg-emerald-50 border-emerald-200 text-emerald-900' : 'bg-red-50 border-red-200 text-red-900'}">
-                    <div class="text-xs">
-                        <div class="font-bold">No. ${item.number}: ${item.studentAnswer}</div>
-                        <div class="text-[10px] opacity-75">Kunci: ${item.keyAnswer}</div>
-                    </div>
-                    <i class="fa-solid ${item.isCorrect ? 'fa-circle-check text-emerald-600' : 'fa-circle-xmark text-red-600'} mt-0.5"></i>
-                </button>
-            `).join('') || `<span class="text-xs text-slate-400 col-span-full">Tidak ada soal Isian Singkat.</span>`;
-
-            document.getElementById('res-essay-fraction').textContent = `Poin: ${esEarnedTotal} / ${esMaxTotal}`;
-            document.getElementById('res-essay-list').innerHTML = cur.essayDetails.map((item, idx) => `
-                <div class="p-3 bg-slate-50/70 rounded-xl border border-slate-200 space-y-1.5">
-                    <div class="flex items-center justify-between">
-                        <span class="text-xs font-bold text-slate-800">Esai No. ${item.number}</span>
-                        <div class="flex items-center gap-1.5">
-                            <span class="text-[11px] text-slate-500">Skor:</span>
-                            <input type="number" min="0" max="${item.maxScore}" value="${item.score}" onchange="updateEssayManualScore(${idx}, this.value)" class="w-14 text-center py-1 bg-indigo-50 text-indigo-800 font-bold text-xs rounded-lg border border-indigo-200 outline-none">
-                            <span class="text-[11px] text-slate-500">/ ${item.maxScore}</span>
+            document.getElementById('res-short-fraction').textContent = `Benar: ${shortCorrect} / ${shortTotal}`;
+            document.getElementById('res-short-grid').innerHTML = shortList.length === 0
+                ? `<div class="col-span-full text-xs text-slate-400 italic">Tidak ada soal Isian Singkat.</div>`
+                : shortList.map((item, idx) => `
+                    <div onclick="toggleShortCorrect(${idx})" class="p-2.5 rounded-xl border cursor-pointer transition ${item.isCorrect ? 'bg-emerald-50/80 border-emerald-200' : 'bg-red-50/80 border-red-200'}">
+                        <div class="flex items-center justify-between text-xs font-bold mb-1">
+                            <span>No. ${item.number}</span>
+                            <span class="${item.isCorrect ? 'text-emerald-700' : 'text-red-700'}">${item.isCorrect ? 'Benar' : 'Salah'}</span>
                         </div>
+                        <div class="text-[11px] text-slate-700">Siswa: <strong>${item.studentAnswer || '-'}</strong></div>
+                        <div class="text-[11px] text-slate-500">Kunci: ${item.correctAnswer}</div>
                     </div>
-                    <p class="text-xs text-slate-600"><strong>Jawaban Siswa:</strong> ${item.studentAnswer}</p>
-                    ${item.feedback ? `<p class="text-[11px] text-indigo-600 italic">${item.feedback}</p>` : ''}
-                </div>
-            `).join('') || `<span class="text-xs text-slate-400">Tidak ada soal Esai.</span>`;
+                `).join('');
+
+            document.getElementById('res-essay-fraction').textContent = `Poin: ${essayEarned} / ${essayMax}`;
+            document.getElementById('res-essay-list').innerHTML = essayList.length === 0
+                ? `<div class="text-xs text-slate-400 italic">Tidak ada soal Esai / Uraian.</div>`
+                : essayList.map((item, idx) => `
+                    <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 space-y-1.5">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-extrabold text-indigo-700">Soal Esai No. ${item.number}</span>
+                            <div class="flex items-center gap-1 text-xs font-bold">
+                                <span>Skor:</span>
+                                <input type="number" min="0" max="${item.maxScore || 10}" value="${item.score || 0}" onchange="updateEssayScore(${idx}, this.value)" class="w-12 text-center py-0.5 bg-white border border-slate-300 rounded font-extrabold text-slate-800">
+                                <span class="text-slate-400">/ ${item.maxScore || 10}</span>
+                            </div>
+                        </div>
+                        <p class="text-[11px] text-slate-700"><strong>Jawaban Siswa:</strong> ${item.studentAnswer || '-'}</p>
+                        <p class="text-[11px] text-slate-500 italic">${item.feedback || ''}</p>
+                    </div>
+                `).join('');
+        }
+
+        function essayTotalCount(list) {
+            return Array.isArray(list) ? list.length : 0;
         }
 
         function togglePGCorrect(idx) {
-            appState.currentAnalysis.pgDetails[idx].isCorrect = !appState.currentAnalysis.pgDetails[idx].isCorrect;
-            recalculateAndRenderAnalysis();
+            if (!appState.currentAnalysis?.pgResults?.[idx]) return;
+            appState.currentAnalysis.pgResults[idx].isCorrect = !appState.currentAnalysis.pgResults[idx].isCorrect;
+            recalculateAndRenderResult();
         }
 
         function toggleShortCorrect(idx) {
-            appState.currentAnalysis.shortDetails[idx].isCorrect = !appState.currentAnalysis.shortDetails[idx].isCorrect;
-            recalculateAndRenderAnalysis();
+            if (!appState.currentAnalysis?.shortResults?.[idx]) return;
+            appState.currentAnalysis.shortResults[idx].isCorrect = !appState.currentAnalysis.shortResults[idx].isCorrect;
+            recalculateAndRenderResult();
         }
 
-        function updateEssayManualScore(idx, val) {
-            const item = appState.currentAnalysis.essayDetails[idx];
-            item.score = Math.min(Math.max(0, Number(val) || 0), item.maxScore);
-            recalculateAndRenderAnalysis();
+        function updateEssayScore(idx, val) {
+            if (!appState.currentAnalysis?.essayResults?.[idx]) return;
+            const max = Number(appState.currentAnalysis.essayResults[idx].maxScore) || 10;
+            appState.currentAnalysis.essayResults[idx].score = Math.max(0, Math.min(max, Number(val) || 0));
+            recalculateAndRenderResult();
         }
 
         function resetAnalysisView() {
             appState.currentAnalysis = null;
-            clearImages();
-            document.getElementById('manual-student-name').value = "";
             document.getElementById('result-content-state').classList.add('hidden');
             document.getElementById('result-loading-state').classList.add('hidden');
             document.getElementById('result-empty-state').classList.remove('hidden');
         }
 
         function commitResultToRecap() {
-            const cur = appState.currentAnalysis;
-            if (!cur) return;
+            const res = appState.currentAnalysis;
+            if (!res || !res.computed) return;
 
-            cur.studentName = document.getElementById('res-student-name').value.trim() || "Siswa";
-            cur.studentClass = document.getElementById('res-student-class').value.trim() || "-";
+            const studentName = document.getElementById('res-student-name').value.trim() || "Siswa";
+            const studentClass = document.getElementById('res-student-class').value.trim() || "-";
 
             appState.recapList.push({
                 id: Date.now(),
-                name: cur.studentName,
-                className: cur.studentClass,
-                ...cur.computed
+                name: studentName,
+                className: studentClass,
+                pgCorrect: res.computed.pgCorrect,
+                pgTotal: res.computed.pgTotal,
+                pgScore: res.computed.pgScore,
+                shortCorrect: res.computed.shortCorrect,
+                shortTotal: res.computed.shortTotal,
+                shortScore: res.computed.shortScore,
+                essayScore: res.computed.essayScore,
+                finalScore: res.computed.finalScore,
+                isPassed: res.computed.isPassed
             });
 
             saveStateToStorage();
             renderRecapTable();
+            clearImages();
+            document.getElementById('manual-student-name').value = "";
             resetAnalysisView();
-            showToast(`Nilai ${cur.studentName} berhasil disimpan ke Rekap!`, "success");
+            showToast(`Nilai ${studentName} (${res.computed.finalScore}) disimpan ke Rekap!`, "success");
         }
 
         // ==========================================
-        // TABEL REKAPITULASI & EKSPOR EXCEL (.CSV)
+        // REKAPITULASI NILAI & EKSPOR CSV / EXCEL
         // ==========================================
         function renderRecapTable() {
-            const count = appState.recapList.length;
-            document.getElementById('badge-rekap').textContent = count;
-            document.getElementById('mob-badge-rekap').textContent = count;
-            document.getElementById('stat-total-students').textContent = count;
-
             const tbody = document.getElementById('recap-table-body');
-            if (count === 0) {
+            const total = appState.recapList.length;
+
+            document.getElementById('badge-rekap').textContent = total;
+            document.getElementById('mob-badge-rekap').textContent = total;
+            document.getElementById('stat-total-students').textContent = total;
+
+            if (total === 0) {
                 document.getElementById('stat-avg-score').textContent = "0.0";
                 document.getElementById('stat-max-score').textContent = "0";
                 document.getElementById('stat-pass-rate').textContent = "0%";
-                tbody.innerHTML = `<tr><td colspan="11" class="py-10 text-center text-xs text-slate-400">Belum ada data nilai siswa. Silakan periksa lembar jawaban di Tab <strong>2. Foto & Koreksi</strong>.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="11" class="py-10 text-center text-xs text-slate-400">Belum ada data nilai siswa tersimpan.</td></tr>`;
                 return;
             }
 
-            const scores = appState.recapList.map(r => r.finalScore);
-            const avg = (scores.reduce((a, b) => a + b, 0) / count).toFixed(1);
-            const max = Math.max(...scores);
-            const passed = appState.recapList.filter(r => r.isPass).length;
-            const passRate = Math.round((passed / count) * 100);
+            const sumScore = appState.recapList.reduce((acc, s) => acc + s.finalScore, 0);
+            const maxScore = Math.max(...appState.recapList.map(s => s.finalScore));
+            const passedCount = appState.recapList.filter(s => s.isPassed).length;
 
-            document.getElementById('stat-avg-score').textContent = avg;
-            document.getElementById('stat-max-score').textContent = max;
-            document.getElementById('stat-pass-rate').textContent = `${passRate}%`;
+            document.getElementById('stat-avg-score').textContent = (sumScore / total).toFixed(1);
+            document.getElementById('stat-max-score').textContent = maxScore;
+            document.getElementById('stat-pass-rate').textContent = `${Math.round((passedCount / total) * 100)}%`;
 
-            tbody.innerHTML = appState.recapList.map((row, idx) => `
-                <tr class="hover:bg-slate-50/80 transition">
-                    <td class="py-3 px-4 text-center text-xs font-bold text-slate-500">${idx + 1}</td>
-                    <td class="py-3 px-4 text-xs font-bold text-slate-900">${row.name}</td>
-                    <td class="py-3 px-4 text-xs text-slate-600">${row.className}</td>
-                    <td class="py-3 px-4 text-center text-xs font-mono">${row.pgCorrect}/${row.pgTotal}</td>
-                    <td class="py-3 px-4 text-center text-xs font-semibold">${row.pgScore}</td>
-                    <td class="py-3 px-4 text-center text-xs font-mono">${row.shCorrect}/${row.shTotal}</td>
-                    <td class="py-3 px-4 text-center text-xs font-semibold">${row.shScore}</td>
-                    <td class="py-3 px-4 text-center text-xs font-semibold">${row.esScore}</td>
-                    <td class="py-3 px-4 text-center text-sm font-extrabold text-brand-700">${row.finalScore}</td>
+            tbody.innerHTML = appState.recapList.map((s, idx) => `
+                <tr class="hover:bg-slate-50/80 text-xs">
+                    <td class="py-3 px-4 text-center font-bold text-slate-500">${idx + 1}</td>
+                    <td class="py-3 px-4 font-bold text-slate-800">${s.name}</td>
+                    <td class="py-3 px-4 text-slate-600">${s.className}</td>
+                    <td class="py-3 px-4 text-center font-mono">${s.pgCorrect}/${s.pgTotal}</td>
+                    <td class="py-3 px-4 text-center font-semibold">${s.pgScore}</td>
+                    <td class="py-3 px-4 text-center font-mono">${s.shortCorrect}/${s.shortTotal}</td>
+                    <td class="py-3 px-4 text-center font-semibold">${s.shortScore}</td>
+                    <td class="py-3 px-4 text-center font-semibold">${s.essayScore}</td>
+                    <td class="py-3 px-4 text-center font-extrabold text-brand-700 text-sm">${s.finalScore}</td>
                     <td class="py-3 px-4 text-center">
-                        <span class="px-2 py-0.5 rounded-full text-[10px] font-bold ${row.isPass ? 'bg-emerald-100 text-emerald-700' : 'bg-red-100 text-red-700'}">
-                            ${row.isPass ? 'TUNTAS' : 'REMEDIAL'}
+                        <span class="px-2 py-0.5 rounded-full text-[10px] font-bold ${s.isPassed ? 'bg-emerald-100 text-emerald-700' : 'bg-red-100 text-red-700'}">
+                            ${s.isPassed ? 'TUNTAS' : 'REMEDIAL'}
                         </span>
                     </td>
                     <td class="py-3 px-4 text-right">
-                        <button type="button" onclick="deleteRecapRow(${idx})" class="text-slate-400 hover:text-red-600 p-1.5 transition"><i class="fa-solid fa-trash-can text-xs"></i></button>
+                        <button type="button" onclick="deleteRecapItem(${idx})" class="text-slate-400 hover:text-red-600 p-1"><i class="fa-solid fa-trash-can"></i></button>
                     </td>
                 </tr>
             `).join('');
         }
 
-        function deleteRecapRow(idx) {
+        function deleteRecapItem(idx) {
             appState.recapList.splice(idx, 1);
             saveStateToStorage();
             renderRecapTable();
-            showToast("Data siswa dihapus dari rekap.", "info");
+            showToast("Baris nilai dihapus.", "info");
         }
 
         function confirmClearRecap() {
             if (appState.recapList.length === 0) return;
-            document.getElementById('modal-title').textContent = "Konfirmasi Hapus Semua Data";
-            document.getElementById('modal-body').innerHTML = `<p>Apakah Anda yakin ingin menghapus seluruh <strong>${appState.recapList.length}</strong> data nilai siswa dari daftar rekap?</p>`;
-            document.getElementById('modal-footer').innerHTML = `
-                <button type="button" onclick="closeModal()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-bold">Batal</button>
-                <button type="button" onclick="clearAllRecap()" class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-xl text-xs font-bold">Ya, Hapus Semua</button>
-            `;
             const modal = document.getElementById('custom-modal');
+            document.getElementById('modal-title').textContent = "Hapus Semua Rekap Nilai?";
+            document.getElementById('modal-body').textContent = "Seluruh daftar nilai siswa pada tabel rekap akan dihapus permanen.";
+            document.getElementById('modal-footer').innerHTML = `
+                <button type="button" onclick="closeCustomModal()" class="px-4 py-2 bg-slate-100 rounded-xl text-xs font-bold text-slate-700">Batal</button>
+                <button type="button" onclick="clearAllRecap()" class="px-4 py-2 bg-red-600 rounded-xl text-xs font-bold text-white">Ya, Hapus Semua</button>
+            `;
             modal.classList.remove('hidden');
             modal.classList.add('flex');
+        }
+
+        function closeCustomModal() {
+            const modal = document.getElementById('custom-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
         }
 
         function clearAllRecap() {
             appState.recapList = [];
             saveStateToStorage();
             renderRecapTable();
-            closeModal();
-            showToast("Seluruh data rekap berhasil dikosongkan.", "info");
-        }
-
-        function closeModal() {
-            const modal = document.getElementById('custom-modal');
-            modal.classList.add('hidden');
-            modal.classList.remove('flex');
+            closeCustomModal();
+            showToast("Semua data rekap berhasil dikosongkan.", "info");
         }
 
         function exportToCSV() {
@@ -1659,67 +1932,37 @@ Kembalikan HANYA JSON valid dengan format:
                 showToast("Belum ada data nilai untuk diunduh!", "warning");
                 return;
             }
+
             const headers = ["No", "Nama Siswa", "Kelas", "PG Benar", "Total PG", "Skor PG", "Isian Benar", "Total Isian", "Skor Isian", "Skor Esai", "Nilai Akhir", "Status"];
-            const rows = appState.recapList.map((r, i) => [
-                i + 1, `"${r.name}"`, `"${r.className}"`, r.pgCorrect, r.pgTotal, r.pgScore, r.shCorrect, r.shTotal, r.shScore, r.esScore, r.finalScore, r.isPass ? "TUNTAS" : "REMEDIAL"
+            const rows = appState.recapList.map((s, idx) => [
+                idx + 1,
+                `"${String(s.name).replace(/"/g, '""')}"`,
+                `"${String(s.className).replace(/"/g, '""')}"`,
+                s.pgCorrect,
+                s.pgTotal,
+                s.pgScore,
+                s.shortCorrect,
+                s.shortTotal,
+                s.shortScore,
+                s.essayScore,
+                s.finalScore,
+                s.isPassed ? "TUNTAS" : "REMEDIAL"
             ]);
-            const csv = "\uFEFF" + [headers.join(","), ...rows.map(e => e.join(","))].join("\n");
-            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+
+            const csvContent = "\uFEFF" + [headers.join(","), ...rows.map(r => r.join(","))].join("\n");
+            const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+            const url = URL.createObjectURL(blob);
             const link = document.createElement("a");
-            link.href = URL.createObjectURL(blob);
-            link.download = `Rekap_Nilai_SAS_${(appState.subject || "Ujian").replace(/\s+/g, '_')}.csv`;
+            link.href = url;
+            const subjectSlug = (appState.subject || "SAS").replace(/[^a-zA-Z0-9]/g, "_");
+            link.download = `Rekap_Nilai_${subjectSlug}_${new Date().toISOString().slice(0, 10)}.csv`;
+            document.body.appendChild(link);
             link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
             showToast("File Excel (.CSV) berhasil diunduh!", "success");
-        }
-
-        // ==========================================
-        // KOMUNIKASI API GEMINI DENGAN RETRY
-        // ==========================================
-        async function fetchGeminiWithRetry(payload, maxRetries = 1) {
-            let lastError = new Error("Gagal terhubung ke server AI.");
-
-            for (const modelName of GEMINI_MODELS) {
-                const url = `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${encodeURIComponent(apiKey)}`;
-                let delay = 800;
-
-                for (let attempt = 0; attempt <= maxRetries; attempt++) {
-                    try {
-                        const headers = { 'Content-Type': 'application/json' };
-                        if (apiKey) headers['x-goog-api-key'] = apiKey;
-
-                        const response = await fetch(url, {
-                            method: 'POST',
-                            headers: headers,
-                            body: JSON.stringify(payload)
-                        });
-
-                        if (!response.ok) {
-                            const errData = await response.json().catch(() => ({}));
-                            const errMsg = errData?.error?.message || `HTTP ${response.status}`;
-                            if (response.status === 404 || response.status === 400 || response.status === 403) {
-                                lastError = new Error(errMsg);
-                                break;
-                            }
-                            throw new Error(errMsg);
-                        }
-
-                        const result = await response.json();
-                        const textContent = result?.candidates?.[0]?.content?.parts?.[0]?.text;
-                        if (!textContent) throw new Error("Respons AI kosong.");
-
-                        const cleanedJson = textContent.replace(/^```json\s*/i, '').replace(/```\s*$/i, '').trim();
-                        return JSON.parse(cleanedJson);
-                    } catch (err) {
-                        lastError = err;
-                        if (attempt === maxRetries) break;
-                        await new Promise(res => setTimeout(res, delay));
-                        delay *= 2;
-                    }
-                }
-            }
-
-            throw lastError;
         }
     </script>
 </body>
 </html>
+```
