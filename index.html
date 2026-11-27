@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -40,7 +41,7 @@
         }
     </script>
 </head>
-<body class="bg-[#F8FAFC] text-slate-800 font-sans antialiased min-h-screen flex flex-col pb-20 sm:pb-0 selection:bg-brand-100 selection:text-brand-800">
+<body class="bg-[#F8FAFC] text-slate-800 font-sans antialiased min-h-screen flex flex-col pb-24 sm:pb-0 selection:bg-brand-100 selection:text-brand-800">
 
     <!-- Dekorasi Latar Belakang Halus -->
     <div class="fixed inset-x-0 top-0 h-64 bg-gradient-to-b from-indigo-50/80 via-slate-50/40 to-transparent pointer-events-none -z-10"></div>
@@ -74,15 +75,15 @@
 
                 <!-- Desktop Navigation Tabs -->
                 <nav class="hidden sm:flex items-center gap-1.5 bg-slate-100/90 p-1.5 rounded-2xl border border-slate-200/60">
-                    <button onclick="switchTab('kunci')" id="tab-btn-kunci" class="tab-btn px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-200 bg-white text-brand-600 shadow-xs flex items-center gap-2">
+                    <button type="button" onclick="switchTab('kunci')" id="tab-btn-kunci" class="tab-btn px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-200 bg-white text-brand-600 shadow-xs flex items-center gap-2">
                         <i class="fa-solid fa-key text-xs"></i>
                         <span>1. Kunci & Rubrik</span>
                     </button>
-                    <button onclick="switchTab('periksa')" id="tab-btn-periksa" class="tab-btn px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-200 text-slate-600 hover:text-slate-900 flex items-center gap-2">
+                    <button type="button" onclick="switchTab('periksa')" id="tab-btn-periksa" class="tab-btn px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-200 text-slate-600 hover:text-slate-900 flex items-center gap-2">
                         <i class="fa-solid fa-camera text-xs"></i>
                         <span>2. Foto & Koreksi</span>
                     </button>
-                    <button onclick="switchTab('rekap')" id="tab-btn-rekap" class="tab-btn px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-200 text-slate-600 hover:text-slate-900 flex items-center gap-2">
+                    <button type="button" onclick="switchTab('rekap')" id="tab-btn-rekap" class="tab-btn px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-200 text-slate-600 hover:text-slate-900 flex items-center gap-2">
                         <i class="fa-solid fa-chart-pie text-xs"></i>
                         <span>3. Rekap Nilai</span>
                         <span id="badge-rekap" class="bg-brand-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">0</span>
@@ -92,18 +93,18 @@
         </div>
     </header>
 
-    <!-- Mobile Bottom Navigation Bar (Tampilan Seperti Aplikasi HP Asli) -->
+    <!-- Mobile Bottom Navigation Bar -->
     <nav class="sm:hidden fixed bottom-0 inset-x-0 bg-white/95 backdrop-blur-lg border-t border-slate-200/90 z-40 px-2 py-1.5 shadow-[0_-4px_20px_rgba(0,0,0,0.04)]">
         <div class="grid grid-cols-3 gap-1">
-            <button onclick="switchTab('kunci')" id="mob-btn-kunci" class="mob-tab-btn flex flex-col items-center justify-center py-1.5 rounded-xl text-brand-600 bg-brand-50/80 font-bold transition">
+            <button type="button" onclick="switchTab('kunci')" id="mob-btn-kunci" class="mob-tab-btn flex flex-col items-center justify-center py-1.5 rounded-xl text-brand-600 bg-brand-50/80 font-bold transition">
                 <i class="fa-solid fa-key text-base mb-0.5"></i>
                 <span class="text-[10px]">Kunci & Rubrik</span>
             </button>
-            <button onclick="switchTab('periksa')" id="mob-btn-periksa" class="mob-tab-btn flex flex-col items-center justify-center py-1.5 rounded-xl text-slate-500 font-medium transition">
+            <button type="button" onclick="switchTab('periksa')" id="mob-btn-periksa" class="mob-tab-btn flex flex-col items-center justify-center py-1.5 rounded-xl text-slate-500 font-medium transition">
                 <i class="fa-solid fa-camera text-base mb-0.5"></i>
                 <span class="text-[10px]">Foto & Koreksi</span>
             </button>
-            <button onclick="switchTab('rekap')" id="mob-btn-rekap" class="mob-tab-btn relative flex flex-col items-center justify-center py-1.5 rounded-xl text-slate-500 font-medium transition">
+            <button type="button" onclick="switchTab('rekap')" id="mob-btn-rekap" class="mob-tab-btn relative flex flex-col items-center justify-center py-1.5 rounded-xl text-slate-500 font-medium transition">
                 <span id="mob-badge-rekap" class="absolute top-1 right-6 bg-brand-600 text-white text-[9px] font-bold px-1.5 rounded-full">0</span>
                 <i class="fa-solid fa-table-list text-base mb-0.5"></i>
                 <span class="text-[10px]">Rekap Nilai</span>
@@ -134,10 +135,10 @@
                         <p class="text-xs sm:text-sm text-slate-500 mt-1">Atur kunci Pilihan Ganda, Isian Singkat, dan Esai. Sistem mengoreksi 100% presisi sesuai standar ini.</p>
                     </div>
                     <div class="flex flex-wrap items-center gap-2.5">
-                        <button onclick="loadSampleData()" class="px-3.5 py-2.5 bg-slate-100 hover:bg-slate-200/80 text-slate-700 rounded-xl text-xs font-bold transition flex items-center gap-2 active:scale-95">
-                            <i class="fa-solid fa-sparkles text-amber-500"></i> Muat Contoh Soal
+                        <button type="button" onclick="loadSampleData()" class="px-3.5 py-2.5 bg-slate-100 hover:bg-slate-200/80 text-slate-700 rounded-xl text-xs font-bold transition flex items-center gap-2 active:scale-95">
+                            <i class="fa-solid fa-sparkles text-amber-500"></i> Muat Contoh
                         </button>
-                        <button onclick="saveAnswerKey()" class="px-5 py-2.5 bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-700 hover:to-indigo-700 text-white rounded-xl text-xs sm:text-sm font-bold shadow-glow transition flex items-center gap-2 active:scale-95">
+                        <button type="button" onclick="saveAnswerKey()" class="px-5 py-2.5 bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-700 hover:to-indigo-700 text-white rounded-xl text-xs sm:text-sm font-bold shadow-glow transition flex items-center gap-2 active:scale-95">
                             <i class="fa-solid fa-floppy-disk"></i> Simpan Kunci
                         </button>
                     </div>
@@ -205,17 +206,22 @@
                     
                     <!-- Kolom A: Pilihan Ganda -->
                     <div class="border border-slate-200/90 rounded-2xl p-4 sm:p-5 bg-slate-50/40 flex flex-col">
-                        <div class="flex items-center justify-between mb-3">
-                            <h3 class="font-display font-bold text-slate-900 flex items-center gap-2.5 text-sm">
-                                <span class="w-7 h-7 rounded-xl bg-brand-600 text-white flex items-center justify-center text-xs font-extrabold shadow-xs">A</span>
-                                Pilihan Ganda (PG)
+                        <div class="flex items-center justify-between gap-2 mb-3">
+                            <h3 class="font-display font-bold text-slate-900 flex items-center gap-2 text-sm">
+                                <span class="w-7 h-7 rounded-xl bg-brand-600 text-white flex items-center justify-center text-xs font-extrabold shadow-xs shrink-0">A</span>
+                                <span>Pilihan Ganda (PG)</span>
                             </h3>
-                            <span id="pg-count-badge" class="text-xs font-bold bg-brand-50 text-brand-700 border border-brand-200 px-2.5 py-1 rounded-lg">0 Soal</span>
+                            <div class="flex items-center gap-1.5">
+                                <button type="button" onclick="openKeyScanModal('pg')" class="px-2.5 py-1.5 bg-amber-500 hover:bg-amber-600 text-white rounded-xl text-[11px] font-bold transition flex items-center gap-1 shadow-2xs active:scale-95 cursor-pointer">
+                                    <i class="fa-solid fa-camera"></i> Foto / Upload
+                                </button>
+                                <span id="pg-count-badge" class="text-[11px] font-bold bg-brand-50 text-brand-700 border border-brand-200 px-2 py-1 rounded-lg">0 Soal</span>
+                            </div>
                         </div>
                         
-                        <p class="text-xs text-slate-500 mb-3 leading-relaxed">Ketik berurutan (Contoh: <code class="bg-white px-1.5 py-0.5 rounded-md border border-slate-200 text-brand-700 font-mono font-semibold">1.A, 2.B</code> atau <code class="bg-white px-1.5 py-0.5 rounded-md border border-slate-200 text-brand-700 font-mono font-semibold">ABCDA...</code>)</p>
+                        <p class="text-xs text-slate-500 mb-3 leading-relaxed">Ketik berurutan (Contoh: <code class="bg-white px-1.5 py-0.5 rounded-md border border-slate-200 text-brand-700 font-mono font-semibold">1.A, 2.B</code>) atau tekan <strong>Foto / Upload</strong> di atas.</p>
                         
-                        <textarea id="pg-key-input" rows="4" oninput="parsePGPreview()" placeholder="Ketik kunci jawaban PG di sini...&#10;Contoh: 1.A, 2.C, 3.B, 4.D, 5.A&#10;Atau: ACBDA" class="w-full p-3.5 bg-white border border-slate-200 rounded-xl text-sm font-mono focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none mb-3 shadow-2xs transition"></textarea>
+                        <textarea id="pg-key-input" rows="4" oninput="parsePGPreview()" placeholder="Ketik kunci jawaban PG di sini atau gunakan tombol Foto / Upload di atas...&#10;Contoh: 1.A, 2.C, 3.B, 4.D, 5.A" class="w-full p-3.5 bg-white border border-slate-200 rounded-xl text-sm font-mono focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none mb-3 shadow-2xs transition"></textarea>
                         
                         <!-- Preview Grid PG -->
                         <div class="bg-white border border-slate-200/90 rounded-xl p-3.5 flex-grow shadow-2xs">
@@ -228,16 +234,21 @@
 
                     <!-- Kolom B: Isian Singkat -->
                     <div class="border border-slate-200/90 rounded-2xl p-4 sm:p-5 bg-slate-50/40 flex flex-col">
-                        <div class="flex items-center justify-between mb-3">
-                            <h3 class="font-display font-bold text-slate-900 flex items-center gap-2.5 text-sm">
-                                <span class="w-7 h-7 rounded-xl bg-teal-600 text-white flex items-center justify-center text-xs font-extrabold shadow-xs">B</span>
-                                Isian Singkat
+                        <div class="flex items-center justify-between gap-2 mb-3">
+                            <h3 class="font-display font-bold text-slate-900 flex items-center gap-2 text-sm">
+                                <span class="w-7 h-7 rounded-xl bg-teal-600 text-white flex items-center justify-center text-xs font-extrabold shadow-xs shrink-0">B</span>
+                                <span>Isian Singkat</span>
                             </h3>
-                            <button type="button" onclick="addShortAnswerRow()" class="px-3 py-1.5 bg-teal-600 hover:bg-teal-700 text-white rounded-xl text-xs font-bold transition flex items-center gap-1.5 shadow-2xs active:scale-95">
-                                <i class="fa-solid fa-plus"></i> Tambah
-                            </button>
+                            <div class="flex items-center gap-1.5">
+                                <button type="button" onclick="openKeyScanModal('short')" class="px-2.5 py-1.5 bg-amber-500 hover:bg-amber-600 text-white rounded-xl text-[11px] font-bold transition flex items-center gap-1 shadow-2xs active:scale-95 cursor-pointer">
+                                    <i class="fa-solid fa-camera"></i> Foto
+                                </button>
+                                <button type="button" onclick="addShortAnswerRow()" class="px-2.5 py-1.5 bg-teal-600 hover:bg-teal-700 text-white rounded-xl text-[11px] font-bold transition flex items-center gap-1 shadow-2xs active:scale-95 cursor-pointer">
+                                    <i class="fa-solid fa-plus"></i> Tambah
+                                </button>
+                            </div>
                         </div>
-                        <p class="text-xs text-slate-500 mb-3 leading-relaxed">Tulis kata, istilah, atau angka jawaban pasti tiap nomor.</p>
+                        <p class="text-xs text-slate-500 mb-3 leading-relaxed">Tulis kata/angka jawaban pasti atau potret lembar kunci isian.</p>
                         
                         <div id="short-answer-list-container" class="space-y-2.5 max-h-[320px] overflow-y-auto pr-1">
                             <!-- Item isian singkat akan di-render di sini -->
@@ -246,16 +257,21 @@
 
                     <!-- Kolom C: Esai / Uraian -->
                     <div class="border border-slate-200/90 rounded-2xl p-4 sm:p-5 bg-slate-50/40 flex flex-col">
-                        <div class="flex items-center justify-between mb-3">
-                            <h3 class="font-display font-bold text-slate-900 flex items-center gap-2.5 text-sm">
-                                <span class="w-7 h-7 rounded-xl bg-indigo-600 text-white flex items-center justify-center text-xs font-extrabold shadow-xs">C</span>
-                                Esai / Uraian
+                        <div class="flex items-center justify-between gap-2 mb-3">
+                            <h3 class="font-display font-bold text-slate-900 flex items-center gap-2 text-sm">
+                                <span class="w-7 h-7 rounded-xl bg-indigo-600 text-white flex items-center justify-center text-xs font-extrabold shadow-xs shrink-0">C</span>
+                                <span>Esai / Uraian</span>
                             </h3>
-                            <button type="button" onclick="addEssayRow()" class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-bold transition flex items-center gap-1.5 shadow-2xs active:scale-95">
-                                <i class="fa-solid fa-plus"></i> Tambah
-                            </button>
+                            <div class="flex items-center gap-1.5">
+                                <button type="button" onclick="openKeyScanModal('essay')" class="px-2.5 py-1.5 bg-amber-500 hover:bg-amber-600 text-white rounded-xl text-[11px] font-bold transition flex items-center gap-1 shadow-2xs active:scale-95 cursor-pointer">
+                                    <i class="fa-solid fa-camera"></i> Foto
+                                </button>
+                                <button type="button" onclick="addEssayRow()" class="px-2.5 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-[11px] font-bold transition flex items-center gap-1 shadow-2xs active:scale-95 cursor-pointer">
+                                    <i class="fa-solid fa-plus"></i> Tambah
+                                </button>
+                            </div>
                         </div>
-                        <p class="text-xs text-slate-500 mb-3 leading-relaxed">Tuliskan poin konsep wajib & bobot skor maksimal tiap nomor uraian.</p>
+                        <p class="text-xs text-slate-500 mb-3 leading-relaxed">Tuliskan poin konsep wajib atau potret rubrik kunci uraian.</p>
                         
                         <div id="essay-list-container" class="space-y-3 max-h-[320px] overflow-y-auto pr-1">
                             <!-- Item esai akan di-render di sini -->
@@ -313,7 +329,7 @@
                                 <span class="text-xs font-bold text-slate-700 flex items-center gap-1.5">
                                     <i class="fa-solid fa-file-image text-brand-600"></i> Halaman Siap Diperiksa (<span id="image-count">0</span>)
                                 </span>
-                                <button onclick="clearImages()" class="text-xs text-red-600 hover:text-red-700 font-bold">Hapus Semua</button>
+                                <button type="button" onclick="clearImages()" class="text-xs text-red-600 hover:text-red-700 font-bold">Hapus Semua</button>
                             </div>
                             <div id="image-preview-list" class="grid grid-cols-2 gap-2.5 max-h-60 overflow-y-auto p-0.5">
                                 <!-- Thumbnail gambar muncul di sini -->
@@ -330,7 +346,7 @@
                         </div>
 
                         <!-- Tombol Mulai Koreksi -->
-                        <button id="btn-analyze" onclick="analyzeStudentSheet()" disabled class="w-full py-3.5 px-5 bg-gradient-to-r from-brand-600 via-indigo-600 to-blue-600 hover:from-brand-700 hover:to-blue-700 disabled:from-slate-200 disabled:to-slate-200 disabled:text-slate-400 disabled:shadow-none disabled:cursor-not-allowed text-white font-display font-bold rounded-2xl shadow-glow transition flex items-center justify-center gap-2.5 text-sm active:scale-[0.99]">
+                        <button type="button" id="btn-analyze" onclick="analyzeStudentSheet()" disabled class="w-full py-3.5 px-5 bg-gradient-to-r from-brand-600 via-indigo-600 to-blue-600 hover:from-brand-700 hover:to-blue-700 disabled:from-slate-200 disabled:to-slate-200 disabled:text-slate-400 disabled:shadow-none disabled:cursor-not-allowed text-white font-display font-bold rounded-2xl shadow-glow transition flex items-center justify-center gap-2.5 text-sm active:scale-[0.99]">
                             <i class="fa-solid fa-bolt"></i>
                             <span>Periksa & Hitung Nilai Sekarang</span>
                         </button>
@@ -446,10 +462,10 @@
 
                             <!-- Tombol Simpan ke Rekap Nilai -->
                             <div class="pt-4 border-t border-slate-100 flex flex-col sm:flex-row gap-3 justify-end">
-                                <button onclick="resetAnalysisView()" class="px-4 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-bold transition">
+                                <button type="button" onclick="resetAnalysisView()" class="px-4 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-bold transition">
                                     Batal / Foto Ulang
                                 </button>
-                                <button onclick="commitResultToRecap()" class="px-6 py-3 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white rounded-xl text-xs sm:text-sm font-bold shadow-md transition flex items-center justify-center gap-2 active:scale-[0.99]">
+                                <button type="button" onclick="commitResultToRecap()" class="px-6 py-3 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white rounded-xl text-xs sm:text-sm font-bold shadow-md transition flex items-center justify-center gap-2 active:scale-[0.99]">
                                     <i class="fa-solid fa-check-double"></i>
                                     <span>Simpan Nilai ke Daftar Rekap</span>
                                 </button>
@@ -467,7 +483,7 @@
         <!-- ========================================== -->
         <section id="tab-rekap" class="tab-content hidden space-y-6">
             
-            <!-- Statistik Ringkas Kelas (Modern KPI Cards) -->
+            <!-- Statistik Ringkas Kelas -->
             <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
                 <div class="bg-white p-5 rounded-3xl border border-slate-200/70 shadow-soft flex items-center justify-between">
                     <div>
@@ -517,10 +533,10 @@
                         <p id="recap-subtitle" class="text-xs text-slate-500 mt-0.5">Daftar nilai hasil koreksi otomatis yang telah diverifikasi.</p>
                     </div>
                     <div class="flex flex-wrap gap-2.5">
-                        <button onclick="exportToCSV()" class="px-4 py-2.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white rounded-xl text-xs font-bold shadow-sm transition flex items-center gap-2 active:scale-95">
+                        <button type="button" onclick="exportToCSV()" class="px-4 py-2.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white rounded-xl text-xs font-bold shadow-sm transition flex items-center gap-2 active:scale-95">
                             <i class="fa-solid fa-file-excel"></i> Unduh Excel (.CSV)
                         </button>
-                        <button onclick="confirmClearRecap()" class="px-3.5 py-2.5 bg-red-50 hover:bg-red-100 text-red-600 rounded-xl text-xs font-bold transition flex items-center gap-1.5">
+                        <button type="button" onclick="confirmClearRecap()" class="px-3.5 py-2.5 bg-red-50 hover:bg-red-100 text-red-600 rounded-xl text-xs font-bold transition flex items-center gap-1.5">
                             <i class="fa-solid fa-trash-can"></i> Hapus Semua
                         </button>
                     </div>
@@ -637,151 +653,215 @@
         <div class="bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl border border-slate-200/80 space-y-4">
             <div class="flex items-center justify-between border-b border-slate-100 pb-3.5">
                 <h3 id="modal-title" class="font-display text-base font-extrabold text-slate-900">Detail Jawaban Siswa</h3>
-                <button onclick="closeModal()" class="w-8 h-8 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-500 flex items-center justify-center transition"><i class="fa-solid fa-xmark"></i></button>
+                <button type="button" onclick="closeModal()" class="w-8 h-8 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-500 flex items-center justify-center transition"><i class="fa-solid fa-xmark"></i></button>
             </div>
             <div id="modal-body" class="text-xs text-slate-600 max-h-96 overflow-y-auto space-y-3 pr-1"></div>
             <div id="modal-footer" class="pt-3.5 border-t border-slate-100 flex justify-end gap-2">
-                <button onclick="closeModal()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-bold">Tutup</button>
+                <button type="button" onclick="closeModal()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-bold">Tutup</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Scan / Upload Foto Kunci Jawaban -->
+    <div id="key-scan-modal" class="fixed inset-0 bg-slate-950/60 backdrop-blur-xs z-50 hidden items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl border border-slate-200/80 space-y-4">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-3.5">
+                <div class="flex items-center gap-2.5">
+                    <span class="w-8 h-8 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center text-sm">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    </span>
+                    <div>
+                        <h3 id="key-scan-modal-title" class="font-display text-base font-extrabold text-slate-900">Scan Foto Kunci Jawaban</h3>
+                        <p id="key-scan-modal-subtitle" class="text-[11px] text-slate-500">Ekstrak PG, Isian Singkat & Esai otomatis dari foto</p>
+                    </div>
+                </div>
+                <button type="button" onclick="closeKeyScanModal()" class="w-8 h-8 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-500 flex items-center justify-center transition"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+
+            <div class="space-y-4">
+                <div>
+                    <label for="key-gallery-input" class="cursor-pointer flex flex-col items-center justify-center p-5 border-2 border-dashed border-amber-300 bg-amber-50/50 hover:bg-amber-100/50 rounded-2xl transition text-center active:scale-[0.99] w-full">
+                        <div class="w-11 h-11 rounded-2xl bg-amber-500 text-white flex items-center justify-center mb-2 shadow-sm">
+                            <i class="fa-solid fa-images text-lg"></i>
+                        </div>
+                        <span class="text-xs font-extrabold text-slate-800">Pilih Gambar Kunci Jawaban</span>
+                        <span class="text-[11px] text-slate-500 mt-0.5">Bisa pilih langsung dari galeri atau kamera (multi-halaman)</span>
+                        <input type="file" id="key-gallery-input" accept="image/*" multiple class="hidden" onchange="handleKeyImageUpload(event)">
+                    </label>
+                </div>
+
+                <!-- Preview Foto Kunci -->
+                <div id="key-images-wrapper" class="hidden bg-slate-50 p-3 rounded-2xl border border-slate-200/80 space-y-2">
+                    <div class="flex items-center justify-between text-xs font-bold text-slate-700">
+                        <span>Foto Kunci Terpilih (<span id="key-image-count">0</span>)</span>
+                        <button type="button" onclick="clearKeyImages()" class="text-red-600 hover:underline">Hapus</button>
+                    </div>
+                    <div id="key-image-preview-list" class="grid grid-cols-3 gap-2 max-h-40 overflow-y-auto"></div>
+                </div>
+
+                <!-- Loading State Ekstraksi Kunci -->
+                <div id="key-scan-loading" class="hidden py-6 text-center space-y-2 bg-amber-50/50 rounded-2xl border border-amber-100">
+                    <div class="w-9 h-9 border-4 border-amber-500 border-t-transparent rounded-full animate-spin mx-auto"></div>
+                    <p class="text-xs font-bold text-slate-800">AI sedang membaca & menyusun kunci jawaban...</p>
+                    <p class="text-[11px] text-slate-500">Mohon tunggu beberapa detik.</p>
+                </div>
+            </div>
+
+            <div class="pt-3 border-t border-slate-100 flex justify-end gap-2">
+                <button type="button" onclick="closeKeyScanModal()" class="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-bold">Batal</button>
+                <button type="button" id="btn-process-key-scan" onclick="processKeyScanImages()" disabled class="px-5 py-2.5 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 disabled:from-slate-200 disabled:to-slate-200 disabled:text-slate-400 text-white rounded-xl text-xs font-bold shadow-sm transition flex items-center gap-2">
+                    <i class="fa-solid fa-bolt"></i> Ekstrak Kunci Otomatis
+                </button>
             </div>
         </div>
     </div>
 
     <script>
         // ==========================================
-        // KONFIGURASI API & STATE UTAMA APLIKASI
+        // STATE & KONFIGURASI APLIKASI
         // ==========================================
-        const apiKey = ""; // Otomatis diisi oleh lingkungan runtime
+        const apiKey = ""; // Disediakan otomatis oleh runtime
         const GEMINI_MODEL = "gemini-3-flash-preview";
 
         let appState = {
-            examInfo: {
-                teacherName: "",
-                subject: "",
-                className: "",
-                kkm: 75,
-                weightPG: 50,
-                weightShort: 20,
-                weightEssay: 30
-            },
-            pgKeys: {}, // Format: { 1: 'A', 2: 'B', ... }
-            shortAnswerKeys: [
-                { number: 1, keyText: "" }
-            ],
-            essayKeys: [
-                { number: 1, keyText: "", maxScore: 10 }
-            ],
+            teacherName: "",
+            subject: "",
+            className: "",
+            kkm: 75,
+            weightPG: 50,
+            weightShort: 20,
+            weightEssay: 30,
+            pgKeys: {}, // { 1: 'A', 2: 'B', ... }
+            shortAnswerKeys: [], // [ { number: 1, keyText: '...' } ]
+            essayKeys: [], // [ { number: 1, keyText: '...', maxScore: 10 } ]
             uploadedImages: [], // Array of { base64, mimeType, previewUrl }
+            keyScanImages: [], // Array foto kunci jawaban untuk diekstrak
+            keyScanTarget: 'all', // 'all' | 'pg' | 'short' | 'essay'
             currentAnalysis: null,
             recapList: []
         };
 
+        let cameraStream = null;
+        let currentFacingMode = 'environment';
+        let cameraCheckTimeout = null;
+        let activeCameraPurpose = 'student'; // 'student' | 'key'
+
         // ==========================================
-        // INISIALISASI & PENYIMPANAN LOKAL (LOCALSTORAGE)
+        // INISIALISASI & PENYIMPANAN LOKAL
         // ==========================================
-        window.onload = function () {
+        window.addEventListener('DOMContentLoaded', () => {
             loadFromLocalStorage();
+            updateWeightValidation();
+            parsePGPreview();
             renderShortAnswerRows();
             renderEssayRows();
-            parsePGPreview();
-            updateWeightValidation();
             renderRecapTable();
-        };
+        });
 
         function saveToLocalStorage() {
             try {
-                const dataToSave = {
-                    examInfo: appState.examInfo,
+                const toSave = {
+                    teacherName: appState.teacherName,
+                    subject: appState.subject,
+                    className: appState.className,
+                    kkm: appState.kkm,
+                    weightPG: appState.weightPG,
+                    weightShort: appState.weightShort,
+                    weightEssay: appState.weightEssay,
                     pgKeys: appState.pgKeys,
                     shortAnswerKeys: appState.shortAnswerKeys,
                     essayKeys: appState.essayKeys,
                     recapList: appState.recapList
                 };
-                localStorage.setItem('sas_grader_ai_data_v1', JSON.stringify(dataToSave));
+                localStorage.setItem('sas_grader_ai_data_v2', JSON.stringify(toSave));
             } catch (e) {
-                console.warn("Gagal menyimpan ke localStorage:", e);
+                console.warn("Gagal menyimpan ke penyimpanan lokal:", e);
             }
         }
 
         function loadFromLocalStorage() {
             try {
-                const saved = localStorage.getItem('sas_grader_ai_data_v1');
-                if (saved) {
-                    const parsed = JSON.parse(saved);
-                    if (parsed.examInfo) appState.examInfo = { ...appState.examInfo, ...parsed.examInfo };
-                    if (parsed.pgKeys) appState.pgKeys = parsed.pgKeys;
-                    if (parsed.shortAnswerKeys && parsed.shortAnswerKeys.length > 0) appState.shortAnswerKeys = parsed.shortAnswerKeys;
-                    if (parsed.essayKeys && parsed.essayKeys.length > 0) appState.essayKeys = parsed.essayKeys;
-                    if (parsed.recapList) appState.recapList = parsed.recapList;
-
-                    // Sinkronkan ke form input
-                    document.getElementById('exam-teacher').value = appState.examInfo.teacherName || "";
-                    document.getElementById('exam-subject').value = appState.examInfo.subject || "";
-                    document.getElementById('exam-class').value = appState.examInfo.className || "";
-                    document.getElementById('exam-kkm').value = appState.examInfo.kkm ?? 75;
-                    document.getElementById('weight-pg').value = appState.examInfo.weightPG ?? 50;
-                    document.getElementById('weight-short').value = appState.examInfo.weightShort ?? 20;
-                    document.getElementById('weight-essay').value = appState.examInfo.weightEssay ?? 30;
-
-                    // Rekonstruksi teks kunci PG
-                    const pgEntries = Object.entries(appState.pgKeys).sort((a, b) => Number(a[0]) - Number(b[0]));
-                    if (pgEntries.length > 0) {
-                        document.getElementById('pg-key-input').value = pgEntries.map(([num, ans]) => `${num}.${ans}`).join(', ');
-                    }
+                const raw = localStorage.getItem('sas_grader_ai_data_v2');
+                if (!raw) {
+                    appState.shortAnswerKeys = [{ number: 1, keyText: "" }];
+                    appState.essayKeys = [{ number: 1, keyText: "", maxScore: 10 }];
+                    return;
                 }
+                const saved = JSON.parse(raw);
+                appState.teacherName = saved.teacherName || "";
+                appState.subject = saved.subject || "";
+                appState.className = saved.className || "";
+                appState.kkm = saved.kkm ?? 75;
+                appState.weightPG = saved.weightPG ?? 50;
+                appState.weightShort = saved.weightShort ?? 20;
+                appState.weightEssay = saved.weightEssay ?? 30;
+                appState.pgKeys = saved.pgKeys || {};
+                appState.shortAnswerKeys = (saved.shortAnswerKeys && saved.shortAnswerKeys.length > 0)
+                    ? saved.shortAnswerKeys
+                    : [{ number: 1, keyText: "" }];
+                appState.essayKeys = (saved.essayKeys && saved.essayKeys.length > 0)
+                    ? saved.essayKeys
+                    : [{ number: 1, keyText: "", maxScore: 10 }];
+                appState.recapList = saved.recapList || [];
+
+                document.getElementById('exam-teacher').value = appState.teacherName;
+                document.getElementById('exam-subject').value = appState.subject;
+                document.getElementById('exam-class').value = appState.className;
+                document.getElementById('exam-kkm').value = appState.kkm;
+                document.getElementById('weight-pg').value = appState.weightPG;
+                document.getElementById('weight-short').value = appState.weightShort;
+                document.getElementById('weight-essay').value = appState.weightEssay;
+
+                const pgEntries = Object.entries(appState.pgKeys)
+                    .sort((a, b) => Number(a[0]) - Number(b[0]))
+                    .map(([num, ans]) => `${num}.${ans}`);
+                document.getElementById('pg-key-input').value = pgEntries.join(', ');
             } catch (e) {
-                console.warn("Gagal memuat dari localStorage:", e);
+                console.warn("Gagal memuat data tersimpan:", e);
             }
         }
 
         // ==========================================
-        // NAVIGASI TAB (DESKTOP & MOBILE APP BAR)
+        // NAVIGASI TAB & NOTIFIKASI TOAST
         // ==========================================
         function switchTab(tabName) {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
-            
-            // Desktop tabs
-            document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.classList.remove('bg-white', 'text-brand-600', 'shadow-xs');
-                btn.classList.add('text-slate-600');
-            });
+            const targetSection = document.getElementById(`tab-${tabName}`);
+            if (targetSection) targetSection.classList.remove('hidden');
 
-            // Mobile bottom tabs
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.className = "tab-btn px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-200 text-slate-600 hover:text-slate-900 flex items-center gap-2";
+            });
+            const activeDesk = document.getElementById(`tab-btn-${tabName}`);
+            if (activeDesk) {
+                activeDesk.className = "tab-btn px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-200 bg-white text-brand-600 shadow-xs flex items-center gap-2";
+            }
+
             document.querySelectorAll('.mob-tab-btn').forEach(btn => {
                 btn.classList.remove('text-brand-600', 'bg-brand-50/80', 'font-bold');
                 btn.classList.add('text-slate-500', 'font-medium');
             });
-
-            const targetSection = document.getElementById(`tab-${tabName}`);
-            const targetBtn = document.getElementById(`tab-btn-${tabName}`);
-            const targetMobBtn = document.getElementById(`mob-btn-${tabName}`);
-
-            if (targetSection) targetSection.classList.remove('hidden');
-            if (targetBtn) {
-                targetBtn.classList.remove('text-slate-600');
-                targetBtn.classList.add('bg-white', 'text-brand-600', 'shadow-xs');
-            }
-            if (targetMobBtn) {
-                targetMobBtn.classList.remove('text-slate-500', 'font-medium');
-                targetMobBtn.classList.add('text-brand-600', 'bg-brand-50/80', 'font-bold');
+            const activeMob = document.getElementById(`mob-btn-${tabName}`);
+            if (activeMob) {
+                activeMob.classList.remove('text-slate-500', 'font-medium');
+                activeMob.classList.add('text-brand-600', 'bg-brand-50/80', 'font-bold');
             }
 
             if (tabName === 'rekap') {
                 renderRecapTable();
             }
-            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         function showToast(message, type = 'info') {
             const container = document.getElementById('toast-container');
-            const toast = document.createElement('div');
-            
-            const styles = {
-                success: 'bg-emerald-600 text-white border-emerald-700',
-                error: 'bg-red-600 text-white border-red-700',
-                warning: 'bg-amber-500 text-white border-amber-600',
-                info: 'bg-slate-900 text-white border-slate-800'
-            };
+            if (!container) return;
 
+            const colors = {
+                success: 'bg-emerald-600 text-white border-emerald-500',
+                error: 'bg-red-600 text-white border-red-500',
+                warning: 'bg-amber-500 text-white border-amber-400',
+                info: 'bg-slate-900 text-white border-slate-700'
+            };
             const icons = {
                 success: 'fa-circle-check',
                 error: 'fa-circle-exclamation',
@@ -789,18 +869,16 @@
                 info: 'fa-circle-info'
             };
 
-            toast.className = `${styles[type] || styles.info} border px-4 py-3.5 rounded-2xl shadow-xl text-xs font-bold flex items-center gap-3 pointer-events-auto transition-all duration-300 transform translate-y-2 opacity-0`;
-            toast.innerHTML = `<i class="fa-solid ${icons[type] || icons.info} text-base"></i><span class="leading-snug">${message}</span>`;
+            const toast = document.createElement('div');
+            toast.className = `pointer-events-auto flex items-center gap-2.5 px-4 py-3 rounded-2xl shadow-lg border text-xs font-bold transition-all duration-300 ${colors[type] || colors.info}`;
+            toast.innerHTML = `<i class="fa-solid ${icons[type] || icons.info} text-sm"></i><span>${escapeHtml(message)}</span>`;
 
             container.appendChild(toast);
-            requestAnimationFrame(() => {
-                toast.classList.remove('translate-y-2', 'opacity-0');
-            });
-
             setTimeout(() => {
-                toast.classList.add('opacity-0', 'translate-y-2');
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateY(8px)';
                 setTimeout(() => toast.remove(), 300);
-            }, 3500);
+            }, 3200);
         }
 
         // ==========================================
@@ -811,383 +889,636 @@
             const wShort = Number(document.getElementById('weight-short').value) || 0;
             const wEssay = Number(document.getElementById('weight-essay').value) || 0;
             const total = wPG + wShort + wEssay;
-            const badge = document.getElementById('weight-status');
 
-            badge.textContent = `Total Bobot: ${total}%`;
+            const statusEl = document.getElementById('weight-status');
             if (total === 100) {
-                badge.className = "text-xs font-extrabold px-3 py-1 rounded-full bg-emerald-100 text-emerald-700 border border-emerald-200 self-start sm:self-auto";
+                statusEl.textContent = "Total Bobot: 100% (Valid)";
+                statusEl.className = "text-xs font-extrabold px-3 py-1 rounded-full bg-emerald-100 text-emerald-700 border border-emerald-200 self-start sm:self-auto";
             } else {
-                badge.className = "text-xs font-extrabold px-3 py-1 rounded-full bg-amber-100 text-amber-800 border border-amber-200 self-start sm:self-auto";
+                statusEl.textContent = `Total Bobot: ${total}% (Harus 100%)`;
+                statusEl.className = "text-xs font-extrabold px-3 py-1 rounded-full bg-red-100 text-red-700 border border-red-200 self-start sm:self-auto";
             }
         }
 
         function parsePGPreview() {
-            const rawText = document.getElementById('pg-key-input').value.toUpperCase();
-            const parsed = {};
-
-            const pairRegex = /(\d+)\s*[.):\-=\s]\s*([A-E])\b/g;
-            let match;
-            let foundPairs = false;
-
-            while ((match = pairRegex.exec(rawText)) !== null) {
-                foundPairs = true;
-                const num = parseInt(match[1], 10);
-                const ans = match[2];
-                if (num > 0 && num <= 200) {
-                    parsed[num] = ans;
-                }
-            }
-
-            if (!foundPairs) {
-                const lettersOnly = rawText.replace(/[^A-E]/g, '');
-                for (let i = 0; i < lettersOnly.length; i++) {
-                    parsed[i + 1] = lettersOnly[i];
-                }
-            }
-
-            appState.pgKeys = parsed;
-            const keys = Object.keys(parsed).map(Number).sort((a, b) => a - b);
-            document.getElementById('pg-count-badge').textContent = `${keys.length} Soal`;
-
+            const raw = document.getElementById('pg-key-input').value.trim();
             const grid = document.getElementById('pg-preview-grid');
+            const badge = document.getElementById('pg-count-badge');
+
+            const parsedMap = {};
+            if (raw) {
+                const numberedMatches = [...raw.matchAll(/(\d+)\s*[\.\:\-\)\s]*([A-Ea-e])/g)];
+                if (numberedMatches.length > 0) {
+                    numberedMatches.forEach(m => {
+                        parsedMap[Number(m[1])] = m[2].toUpperCase();
+                    });
+                } else {
+                    const lettersOnly = raw.replace(/[^A-Ea-e]/g, '').toUpperCase();
+                    for (let i = 0; i < lettersOnly.length; i++) {
+                        parsedMap[i + 1] = lettersOnly[i];
+                    }
+                }
+            }
+
+            appState.pgKeys = parsedMap;
+            const keys = Object.keys(parsedMap).map(Number).sort((a, b) => a - b);
+            badge.textContent = `${keys.length} Soal`;
+
             if (keys.length === 0) {
                 grid.innerHTML = `<span class="text-xs text-slate-400 italic">Belum ada kunci PG dimasukkan...</span>`;
                 return;
             }
 
             grid.innerHTML = keys.map(num => `
-                <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-brand-50 border border-brand-200/80 text-xs font-mono font-extrabold text-brand-700">
-                    <span class="text-slate-400 font-normal">${num}.</span>${parsed[num]}
+                <span class="px-2 py-1 bg-brand-50 text-brand-800 border border-brand-200 rounded-lg text-[11px] font-mono font-bold">
+                    ${num}.${parsedMap[num]}
                 </span>
             `).join('');
         }
 
         function renderShortAnswerRows() {
             const container = document.getElementById('short-answer-list-container');
+            if (!container) return;
+
             if (appState.shortAnswerKeys.length === 0) {
-                container.innerHTML = `<div class="text-xs text-slate-400 italic text-center py-8 bg-white rounded-xl border border-dashed border-slate-200">Tidak ada isian singkat. Klik "+ Tambah" jika ada.</div>`;
+                container.innerHTML = `<div class="text-xs text-slate-400 italic text-center py-6 bg-white rounded-xl border border-dashed border-slate-200">Belum ada kunci isian singkat. Klik <strong>+ Tambah</strong> atau <strong>Foto</strong>.</div>`;
                 return;
             }
 
             container.innerHTML = appState.shortAnswerKeys.map((item, idx) => `
-                <div class="bg-white p-2.5 rounded-xl border border-slate-200/90 shadow-2xs flex items-center gap-2">
-                    <span class="text-[11px] font-bold text-teal-700 bg-teal-50 px-2 py-1 rounded-lg shrink-0">No.</span>
-                    <input type="number" min="1" value="${item.number}" onchange="updateShortAnswerField(${idx}, 'number', Number(this.value))" 
-                        class="w-12 px-1.5 py-1 bg-slate-50 border border-slate-200 rounded-lg text-xs font-extrabold text-center shrink-0">
-                    <input type="text" value="${item.keyText.replace(/"/g, '&quot;')}" oninput="updateShortAnswerField(${idx}, 'keyText', this.value)" 
-                        placeholder="Kunci isian no. ${item.number}..." 
-                        class="w-full px-2.5 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs font-medium focus:bg-white focus:ring-2 focus:ring-teal-500 outline-none transition">
-                    <button type="button" onclick="removeShortAnswerRow(${idx})" class="w-7 h-7 rounded-lg bg-red-50 hover:bg-red-100 text-red-600 flex items-center justify-center text-xs shrink-0 transition" title="Hapus nomor">
-                        <i class="fa-solid fa-trash-can"></i>
+                <div class="bg-white p-2.5 rounded-xl border border-slate-200 shadow-2xs flex items-center gap-2">
+                    <span class="w-7 h-7 rounded-lg bg-teal-50 text-teal-700 font-extrabold text-xs flex items-center justify-center shrink-0">
+                        ${item.number}
+                    </span>
+                    <input type="text" value="${escapeHtml(item.keyText)}" onchange="updateShortAnswerKey(${idx}, this.value)" placeholder="Kunci jawaban singkat..." class="w-full text-xs font-semibold text-slate-800 bg-slate-50 px-2.5 py-1.5 rounded-lg border border-slate-200 focus:bg-white focus:border-teal-500 outline-none">
+                    <button type="button" onclick="removeShortAnswerRow(${idx})" class="text-slate-400 hover:text-red-500 p-1.5 transition" title="Hapus">
+                        <i class="fa-solid fa-trash-can text-xs"></i>
                     </button>
                 </div>
             `).join('');
         }
 
         function addShortAnswerRow() {
-            const nextNum = appState.shortAnswerKeys.length > 0 
-                ? Math.max(...appState.shortAnswerKeys.map(s => Number(s.number))) + 1 
+            const nextNum = appState.shortAnswerKeys.length > 0
+                ? Math.max(...appState.shortAnswerKeys.map(s => s.number)) + 1
                 : 1;
             appState.shortAnswerKeys.push({ number: nextNum, keyText: "" });
             renderShortAnswerRows();
         }
 
-        function removeShortAnswerRow(index) {
-            appState.shortAnswerKeys.splice(index, 1);
-            renderShortAnswerRows();
+        function updateShortAnswerKey(index, val) {
+            if (appState.shortAnswerKeys[index]) {
+                appState.shortAnswerKeys[index].keyText = val;
+            }
         }
 
-        function updateShortAnswerField(index, field, value) {
-            if (appState.shortAnswerKeys[index]) {
-                appState.shortAnswerKeys[index][field] = value;
-            }
+        function removeShortAnswerRow(index) {
+            appState.shortAnswerKeys.splice(index, 1);
+            appState.shortAnswerKeys.forEach((item, i) => item.number = i + 1);
+            renderShortAnswerRows();
         }
 
         function renderEssayRows() {
             const container = document.getElementById('essay-list-container');
+            if (!container) return;
+
             if (appState.essayKeys.length === 0) {
-                container.innerHTML = `<div class="text-xs text-slate-400 italic text-center py-8 bg-white rounded-xl border border-dashed border-slate-200">Tidak ada soal esai. Klik "+ Tambah" jika ada soal uraian.</div>`;
+                container.innerHTML = `<div class="text-xs text-slate-400 italic text-center py-6 bg-white rounded-xl border border-dashed border-slate-200">Belum ada rubrik esai. Klik <strong>+ Tambah</strong> atau <strong>Foto</strong>.</div>`;
                 return;
             }
 
             container.innerHTML = appState.essayKeys.map((item, idx) => `
-                <div class="bg-white p-3.5 rounded-xl border border-slate-200/90 shadow-2xs space-y-2.5">
+                <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-2xs space-y-2">
                     <div class="flex items-center justify-between gap-2">
+                        <span class="text-xs font-extrabold text-indigo-700 bg-indigo-50 px-2.5 py-1 rounded-lg">Esai No. ${item.number}</span>
                         <div class="flex items-center gap-1.5">
-                            <span class="text-[11px] font-bold text-indigo-700 bg-indigo-50 px-2 py-1 rounded-lg">No.</span>
-                            <input type="number" min="1" value="${item.number}" onchange="updateEssayField(${idx}, 'number', Number(this.value))" 
-                                class="w-12 px-1.5 py-1 bg-slate-50 border border-slate-200 rounded-lg text-xs font-extrabold text-center">
-                        </div>
-                        <div class="flex items-center gap-1.5">
-                            <label class="text-[11px] font-semibold text-slate-500">Maks:</label>
-                            <input type="number" min="1" max="100" value="${item.maxScore}" onchange="updateEssayField(${idx}, 'maxScore', Number(this.value))" 
-                                class="w-14 px-1.5 py-1 bg-indigo-50/70 border border-indigo-200 rounded-lg text-xs font-extrabold text-center text-indigo-700">
-                            <button type="button" onclick="removeEssayRow(${idx})" class="w-7 h-7 rounded-lg bg-red-50 hover:bg-red-100 text-red-600 flex items-center justify-center text-xs transition" title="Hapus nomor esai">
-                                <i class="fa-solid fa-trash-can"></i>
+                            <span class="text-[10px] font-bold text-slate-500">Maks Skor:</span>
+                            <input type="number" min="1" max="100" value="${item.maxScore}" onchange="updateEssayScoreMax(${idx}, this.value)" class="w-14 text-xs font-extrabold text-center bg-slate-50 border border-slate-200 rounded-lg py-1 outline-none focus:border-indigo-500">
+                            <button type="button" onclick="removeEssayRow(${idx})" class="text-slate-400 hover:text-red-500 p-1 transition" title="Hapus">
+                                <i class="fa-solid fa-trash-can text-xs"></i>
                             </button>
                         </div>
                     </div>
-                    <textarea rows="2" oninput="updateEssayField(${idx}, 'keyText', this.value)" placeholder="Tuliskan kunci jawaban / kata kunci wajib esai nomor ${item.number}..." 
-                        class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg text-xs focus:bg-white focus:ring-2 focus:ring-indigo-500 outline-none transition">${item.keyText}</textarea>
+                    <textarea rows="2" onchange="updateEssayText(${idx}, this.value)" placeholder="Tuliskan poin kunci / rubrik penilaian..." class="w-full text-xs text-slate-700 bg-slate-50 p-2 rounded-lg border border-slate-200 focus:bg-white focus:border-indigo-500 outline-none">${escapeHtml(item.keyText)}</textarea>
                 </div>
             `).join('');
         }
 
         function addEssayRow() {
-            const nextNum = appState.essayKeys.length > 0 
-                ? Math.max(...appState.essayKeys.map(e => Number(e.number))) + 1 
+            const nextNum = appState.essayKeys.length > 0
+                ? Math.max(...appState.essayKeys.map(e => e.number)) + 1
                 : 1;
             appState.essayKeys.push({ number: nextNum, keyText: "", maxScore: 10 });
             renderEssayRows();
         }
 
-        function removeEssayRow(index) {
-            appState.essayKeys.splice(index, 1);
-            renderEssayRows();
+        function updateEssayText(index, val) {
+            if (appState.essayKeys[index]) appState.essayKeys[index].keyText = val;
         }
 
-        function updateEssayField(index, field, value) {
+        function updateEssayScoreMax(index, val) {
             if (appState.essayKeys[index]) {
-                appState.essayKeys[index][field] = value;
+                appState.essayKeys[index].maxScore = Math.max(1, Number(val) || 10);
             }
+        }
+
+        function removeEssayRow(index) {
+            appState.essayKeys.splice(index, 1);
+            appState.essayKeys.forEach((item, i) => item.number = i + 1);
+            renderEssayRows();
         }
 
         function saveAnswerKey() {
             parsePGPreview();
-            appState.examInfo = {
-                teacherName: document.getElementById('exam-teacher').value.trim(),
-                subject: document.getElementById('exam-subject').value.trim(),
-                className: document.getElementById('exam-class').value.trim(),
-                kkm: Number(document.getElementById('exam-kkm').value) || 75,
-                weightPG: Number(document.getElementById('weight-pg').value) || 0,
-                weightShort: Number(document.getElementById('weight-short').value) || 0,
-                weightEssay: Number(document.getElementById('weight-essay').value) || 0
-            };
+            const wPG = Number(document.getElementById('weight-pg').value) || 0;
+            const wShort = Number(document.getElementById('weight-short').value) || 0;
+            const wEssay = Number(document.getElementById('weight-essay').value) || 0;
 
+            if (wPG + wShort + wEssay !== 100) {
+                showToast("Total bobot PG + Isian + Esai harus tepat 100%!", "warning");
+                return;
+            }
+
+            appState.teacherName = document.getElementById('exam-teacher').value.trim();
+            appState.subject = document.getElementById('exam-subject').value.trim();
+            appState.className = document.getElementById('exam-class').value.trim();
+            appState.kkm = Number(document.getElementById('exam-kkm').value) || 75;
+            appState.weightPG = wPG;
+            appState.weightShort = wShort;
+            appState.weightEssay = wEssay;
+
+            appState.shortAnswerKeys = appState.shortAnswerKeys.filter(s => s.keyText.trim() !== "");
+            appState.essayKeys = appState.essayKeys.filter(e => e.keyText.trim() !== "");
+
+            renderShortAnswerRows();
+            renderEssayRows();
             saveToLocalStorage();
             renderRecapTable();
-            showToast("Kunci jawaban & pengaturan ujian berhasil disimpan!", "success");
+            showToast("Kunci jawaban & rubrik berhasil disimpan!", "success");
         }
 
         function loadSampleData() {
-            document.getElementById('exam-subject').value = "Ilmu Pengetahuan Alam (Contoh)";
+            document.getElementById('exam-teacher').value = "Asep Jamhur, S.Pd., M.M.";
+            document.getElementById('exam-subject').value = "Ilmu Pengetahuan Alam (IPA)";
             document.getElementById('exam-class').value = "VIII-A";
-            document.getElementById('exam-kkm').value = 75;
-            document.getElementById('weight-pg').value = 50;
-            document.getElementById('weight-short').value = 20;
-            document.getElementById('weight-essay').value = 30;
+            document.getElementById('exam-kkm').value = "75";
+            document.getElementById('weight-pg').value = "50";
+            document.getElementById('weight-short').value = "20";
+            document.getElementById('weight-essay').value = "30";
+            updateWeightValidation();
+
             document.getElementById('pg-key-input').value = "1.A, 2.C, 3.B, 4.D, 5.A, 6.B, 7.D, 8.C, 9.A, 10.B";
+            parsePGPreview();
 
             appState.shortAnswerKeys = [
-                { number: 1, keyText: "Klorofil / Zat hijau daun" },
-                { number: 2, keyText: "Oksigen (O2)" },
-                { number: 3, keyText: "Alveolus" },
-                { number: 4, keyText: "Jantung" }
+                { number: 1, keyText: "Fotosintesis" },
+                { number: 2, keyText: "Mitokondria" },
+                { number: 3, keyText: "Newton" }
             ];
+            renderShortAnswerRows();
 
             appState.essayKeys = [
-                { number: 1, keyText: "Fotosintesis adalah proses tumbuhan hijau mengubah air dan karbon dioksida menjadi glukosa dan oksigen dengan bantuan cahaya matahari dan klorofil.", maxScore: 15 },
-                { number: 2, keyText: "Tiga cara menjaga kesehatan sistem pernapasan: tidak merokok, memakai masker di area berpolusi, dan rutin berolahraga.", maxScore: 15 }
+                { number: 1, keyText: "Menjelaskan proses perubahan energi cahaya menjadi energi kimia pada klorofil tumbuhan.", maxScore: 10 },
+                { number: 2, keyText: "Menyebutkan 3 contoh perpindahan kalor (konduksi, konveksi, radiasi) beserta penerapannya.", maxScore: 15 }
             ];
-
-            parsePGPreview();
-            renderShortAnswerRows();
             renderEssayRows();
-            updateWeightValidation();
+
             saveAnswerKey();
-            showToast("Contoh soal PG, Isian Singkat & Esai berhasil dimuat!", "info");
+            showToast("Contoh kunci jawaban berhasil dimuat!", "info");
         }
 
         // ==========================================
-        // TAB 2: KAMERA LANGSUNG (WEBRTC) & UNGGAH GAMBAR
+        // SCAN / UPLOAD FOTO KUNCI JAWABAN (AI OCR)
         // ==========================================
-        let activeMediaStream = null;
-        let currentFacingMode = 'environment';
-        let cameraCheckTimer = null;
+        function openKeyScanModal(target = 'all') {
+            appState.keyScanTarget = target;
+            appState.keyScanImages = [];
+            renderKeyScanPreviews();
 
-        function triggerNativeCamera() {
-            closeLiveCamera();
-            document.getElementById('fallback-camera-input').click();
+            const titleMap = {
+                pg: "Scan Kunci Pilihan Ganda (PG)",
+                short: "Scan Kunci Isian Singkat",
+                essay: "Scan Rubrik Kunci Esai / Uraian",
+                all: "Scan Foto Kunci Jawaban"
+            };
+            const subMap = {
+                pg: "Potret atau unggah daftar kunci huruf PG (A/B/C/D/E)",
+                short: "Potret atau unggah lembar kunci jawaban isian singkat",
+                essay: "Potret atau unggah pedoman penskoran esai / uraian",
+                all: "Ekstrak PG, Isian Singkat & Esai otomatis dari foto"
+            };
+
+            document.getElementById('key-scan-modal-title').textContent = titleMap[target] || titleMap.all;
+            document.getElementById('key-scan-modal-subtitle').textContent = subMap[target] || subMap.all;
+            document.getElementById('key-scan-loading').classList.add('hidden');
+
+            const modal = document.getElementById('key-scan-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
         }
 
-        async function openLiveCamera() {
+        function closeKeyScanModal() {
+            const modal = document.getElementById('key-scan-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        async function handleKeyImageUpload(event) {
+            const files = Array.from(event.target.files || []);
+            if (files.length === 0) return;
+
+            for (const file of files) {
+                try {
+                    const compressed = await compressImageToBase64(file, 1600, 0.85);
+                    appState.keyScanImages.push(compressed);
+                } catch (err) {
+                    showToast("Gagal memproses foto kunci jawaban.", "error");
+                }
+            }
+            event.target.value = "";
+            renderKeyScanPreviews();
+        }
+
+        function renderKeyScanPreviews() {
+            const wrapper = document.getElementById('key-images-wrapper');
+            const list = document.getElementById('key-image-preview-list');
+            const countEl = document.getElementById('key-image-count');
+            const processBtn = document.getElementById('btn-process-key-scan');
+
+            countEl.textContent = appState.keyScanImages.length;
+
+            if (appState.keyScanImages.length === 0) {
+                wrapper.classList.add('hidden');
+                processBtn.disabled = true;
+                return;
+            }
+
+            wrapper.classList.remove('hidden');
+            processBtn.disabled = false;
+
+            list.innerHTML = appState.keyScanImages.map((img, idx) => `
+                <div class="relative rounded-xl overflow-hidden border border-slate-200 aspect-[3/4] bg-slate-100">
+                    <img src="${img.previewUrl}" alt="Kunci ${idx + 1}" class="w-full h-full object-cover">
+                    <button type="button" onclick="removeKeyScanImage(${idx})" class="absolute top-1 right-1 bg-red-600 text-white w-5 h-5 rounded-full text-[10px] flex items-center justify-center shadow">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        function removeKeyScanImage(idx) {
+            appState.keyScanImages.splice(idx, 1);
+            renderKeyScanPreviews();
+        }
+
+        function clearKeyImages() {
+            appState.keyScanImages = [];
+            renderKeyScanPreviews();
+        }
+
+        async function processKeyScanImages() {
+            if (appState.keyScanImages.length === 0) return;
+
+            const loadingEl = document.getElementById('key-scan-loading');
+            const processBtn = document.getElementById('btn-process-key-scan');
+            loadingEl.classList.remove('hidden');
+            processBtn.disabled = true;
+
+            try {
+                const target = appState.keyScanTarget;
+                const focusPrompt = target === 'pg'
+                    ? "Fokus ekstrak hanya bagian Pilihan Ganda (nomor dan huruf A-E)."
+                    : target === 'short'
+                    ? "Fokus ekstrak hanya bagian Isian Singkat (nomor dan jawaban singkat)."
+                    : target === 'essay'
+                    ? "Fokus ekstrak hanya bagian Esai/Uraian (nomor, kunci pembahasan, dan skor maksimal jika tercantum, default 10)."
+                    : "Ekstrak seluruh bagian kunci jawaban yang terlihat (Pilihan Ganda, Isian Singkat, dan Esai).";
+
+                const userParts = [{
+                    text: `Baca gambar lembar kunci jawaban guru ini dengan sangat teliti. ${focusPrompt} Kembalikan dalam format JSON terstruktur.`
+                }];
+
+                appState.keyScanImages.forEach(img => {
+                    userParts.push({
+                        inlineData: {
+                            mimeType: img.mimeType,
+                            data: img.base64
+                        }
+                    });
+                });
+
+                const payload = {
+                    contents: [{ role: "user", parts: userParts }],
+                    generationConfig: {
+                        temperature: 0.1,
+                        responseMimeType: "application/json",
+                        responseSchema: {
+                            type: "OBJECT",
+                            properties: {
+                                pgItems: {
+                                    type: "ARRAY",
+                                    items: {
+                                        type: "OBJECT",
+                                        properties: {
+                                            number: { type: "INTEGER" },
+                                            answer: { type: "STRING" }
+                                        },
+                                        required: ["number", "answer"]
+                                    }
+                                },
+                                shortItems: {
+                                    type: "ARRAY",
+                                    items: {
+                                        type: "OBJECT",
+                                        properties: {
+                                            number: { type: "INTEGER" },
+                                            keyText: { type: "STRING" }
+                                        },
+                                        required: ["number", "keyText"]
+                                    }
+                                },
+                                essayItems: {
+                                    type: "ARRAY",
+                                    items: {
+                                        type: "OBJECT",
+                                        properties: {
+                                            number: { type: "INTEGER" },
+                                            keyText: { type: "STRING" },
+                                            maxScore: { type: "NUMBER" }
+                                        },
+                                        required: ["number", "keyText", "maxScore"]
+                                    }
+                                }
+                            },
+                            required: ["pgItems", "shortItems", "essayItems"]
+                        }
+                    }
+                };
+
+                const extracted = await fetchGeminiWithRetry(payload);
+
+                if ((target === 'pg' || target === 'all') && extracted.pgItems && extracted.pgItems.length > 0) {
+                    const formattedPG = extracted.pgItems
+                        .sort((a, b) => a.number - b.number)
+                        .map(i => `${i.number}.${String(i.answer).toUpperCase().replace(/[^A-E]/g, '')}`)
+                        .filter(s => s.length >= 3)
+                        .join(', ');
+                    document.getElementById('pg-key-input').value = formattedPG;
+                    parsePGPreview();
+                }
+
+                if ((target === 'short' || target === 'all') && extracted.shortItems && extracted.shortItems.length > 0) {
+                    appState.shortAnswerKeys = extracted.shortItems
+                        .sort((a, b) => a.number - b.number)
+                        .map((i, idx) => ({
+                            number: i.number || (idx + 1),
+                            keyText: i.keyText || ""
+                        }));
+                    renderShortAnswerRows();
+                }
+
+                if ((target === 'essay' || target === 'all') && extracted.essayItems && extracted.essayItems.length > 0) {
+                    appState.essayKeys = extracted.essayItems
+                        .sort((a, b) => a.number - b.number)
+                        .map((i, idx) => ({
+                            number: i.number || (idx + 1),
+                            keyText: i.keyText || "",
+                            maxScore: Number(i.maxScore) > 0 ? Number(i.maxScore) : 10
+                        }));
+                    renderEssayRows();
+                }
+
+                saveToLocalStorage();
+                closeKeyScanModal();
+                showToast("Kunci jawaban berhasil diekstrak dari foto!", "success");
+            } catch (err) {
+                console.error("Gagal ekstrak kunci:", err);
+                showToast(`Gagal membaca foto kunci: ${err.message}`, "error");
+            } finally {
+                loadingEl.classList.add('hidden');
+                processBtn.disabled = false;
+            }
+        }
+
+        // ==========================================
+        // KAMERA LANGSUNG (WEBRTC) & UNGGAH GAMBAR
+        // ==========================================
+        async function openLiveCamera(purpose = 'student') {
+            activeCameraPurpose = purpose;
             const modal = document.getElementById('live-camera-modal');
+            const loadingOverlay = document.getElementById('camera-loading-overlay');
+            const statusText = document.getElementById('camera-status-text');
+
+            if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+                triggerNativeCamera();
+                return;
+            }
+
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            loadingOverlay.classList.remove('hidden');
+            statusText.textContent = "Menghubungkan ke lensa kamera...";
+
+            await startCameraStream();
+        }
+
+        async function startCameraStream() {
+            stopCameraStream();
             const videoEl = document.getElementById('camera-video-stream');
             const loadingOverlay = document.getElementById('camera-loading-overlay');
             const statusText = document.getElementById('camera-status-text');
 
-            stopCameraStream();
-
-            if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-                showToast("Membuka kamera bawaan perangkat...", "info");
-                document.getElementById('fallback-camera-input').click();
-                return;
-            }
-
-            loadingOverlay.classList.remove('hidden');
-            statusText.textContent = "Menghubungkan ke lensa kamera...";
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
-
             try {
-                const constraints = {
-                    video: { facingMode: currentFacingMode },
+                cameraStream = await navigator.mediaDevices.getUserMedia({
+                    video: {
+                        facingMode: { ideal: currentFacingMode },
+                        width: { ideal: 1920 },
+                        height: { ideal: 1080 }
+                    },
                     audio: false
-                };
+                });
 
-                activeMediaStream = await navigator.mediaDevices.getUserMedia(constraints);
-                videoEl.srcObject = activeMediaStream;
-                videoEl.setAttribute('playsinline', '');
-                videoEl.muted = true;
-
-                await videoEl.play();
-
-                const hideLoadingWhenReady = () => {
-                    if (videoEl.videoWidth > 0 && videoEl.videoHeight > 0) {
+                videoEl.srcObject = cameraStream;
+                videoEl.onloadedmetadata = async () => {
+                    try {
+                        await videoEl.play();
                         loadingOverlay.classList.add('hidden');
+                    } catch (playErr) {
+                        statusText.textContent = "Ketuk layar atau gunakan Kamera Bawaan HP.";
                     }
                 };
 
-                videoEl.onloadeddata = hideLoadingWhenReady;
-                videoEl.onplaying = hideLoadingWhenReady;
-
-                cameraCheckTimer = setTimeout(() => {
+                clearTimeout(cameraCheckTimeout);
+                cameraCheckTimeout = setTimeout(() => {
                     if (videoEl.videoWidth === 0 || videoEl.readyState < 2) {
-                        statusText.textContent = "Layar kamera terblokir oleh browser/APK.";
-                        showToast("Kamera langsung diblokir. Klik 'Kamera Bawaan HP' untuk memotret.", "warning");
+                        statusText.textContent = "Kamera dibatasi sistem. Gunakan tombol Kamera Bawaan HP di bawah.";
                     } else {
                         loadingOverlay.classList.add('hidden');
                     }
                 }, 2500);
-
             } catch (err) {
-                console.warn("Akses WebRTC kamera ditolak atau tidak tersedia:", err);
-                closeLiveCamera();
-                showToast("Mengalihkan ke Kamera Bawaan Perangkat...", "info");
-                document.getElementById('fallback-camera-input').click();
+                console.warn("Akses getUserMedia ditolak/tidak tersedia:", err);
+                statusText.textContent = "Izin kamera langsung tidak tersedia. Mengalihkan ke Kamera Bawaan HP...";
+                setTimeout(() => triggerNativeCamera(), 600);
             }
-        }
-
-        function switchCameraFacing() {
-            currentFacingMode = currentFacingMode === 'environment' ? 'user' : 'environment';
-            openLiveCamera();
         }
 
         function stopCameraStream() {
-            if (cameraCheckTimer) {
-                clearTimeout(cameraCheckTimer);
-                cameraCheckTimer = null;
-            }
-            if (activeMediaStream) {
-                activeMediaStream.getTracks().forEach(track => track.stop());
-                activeMediaStream = null;
+            clearTimeout(cameraCheckTimeout);
+            if (cameraStream) {
+                cameraStream.getTracks().forEach(track => track.stop());
+                cameraStream = null;
             }
             const videoEl = document.getElementById('camera-video-stream');
-            if (videoEl) {
-                videoEl.srcObject = null;
-            }
+            if (videoEl) videoEl.srcObject = null;
         }
 
         function closeLiveCamera() {
             stopCameraStream();
             const modal = document.getElementById('live-camera-modal');
-            modal.classList.add('hidden');
-            modal.classList.remove('flex');
+            if (modal) {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }
+        }
+
+        async function switchCameraFacing() {
+            currentFacingMode = currentFacingMode === 'environment' ? 'user' : 'environment';
+            const loadingOverlay = document.getElementById('camera-loading-overlay');
+            if (loadingOverlay) loadingOverlay.classList.remove('hidden');
+            await startCameraStream();
+        }
+
+        function triggerNativeCamera() {
+            closeLiveCamera();
+            if (activeCameraPurpose === 'key') {
+                const fallbackKeyInput = document.getElementById('fallback-key-camera-input');
+                if (fallbackKeyInput) fallbackKeyInput.click();
+            } else {
+                const fallbackInput = document.getElementById('fallback-camera-input');
+                if (fallbackInput) fallbackInput.click();
+            }
         }
 
         function capturePhotoFromStream() {
             const videoEl = document.getElementById('camera-video-stream');
-            if (!videoEl || !videoEl.videoWidth || videoEl.videoWidth === 0) {
-                showToast("Gambar kamera belum muncul. Silakan klik 'Kamera Bawaan HP'.", "warning");
+            if (!videoEl || videoEl.videoWidth === 0 || videoEl.videoHeight === 0) {
+                showToast("Gambar kamera belum muncul. Mengalihkan ke Kamera Bawaan HP...", "warning");
+                triggerNativeCamera();
                 return;
             }
 
-            const canvas = document.createElement('canvas');
-            const MAX_DIM = 1600;
-            let width = videoEl.videoWidth;
-            let height = videoEl.videoHeight;
+            try {
+                const canvas = document.createElement('canvas');
+                const maxDim = 1600;
+                let width = videoEl.videoWidth;
+                let height = videoEl.videoHeight;
 
-            if (width > height && width > MAX_DIM) {
-                height *= MAX_DIM / width;
-                width = MAX_DIM;
-            } else if (height > MAX_DIM) {
-                width *= MAX_DIM / height;
-                height = MAX_DIM;
+                if (width > maxDim || height > maxDim) {
+                    if (width > height) {
+                        height = Math.round((height * maxDim) / width);
+                        width = maxDim;
+                    } else {
+                        width = Math.round((width * maxDim) / height);
+                        height = maxDim;
+                    }
+                }
+
+                canvas.width = width;
+                canvas.height = height;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(videoEl, 0, 0, width, height);
+
+                const dataUrl = canvas.toDataURL('image/jpeg', 0.88);
+                const base64 = dataUrl.split(',')[1];
+
+                if (activeCameraPurpose === 'key') {
+                    appState.keyScanImages.push({
+                        base64,
+                        mimeType: 'image/jpeg',
+                        previewUrl: dataUrl
+                    });
+                    renderKeyScanPreviews();
+                    closeLiveCamera();
+                    showToast("Foto kunci jawaban berhasil diambil!", "success");
+                } else {
+                    appState.uploadedImages.push({
+                        base64,
+                        mimeType: 'image/jpeg',
+                        previewUrl: dataUrl
+                    });
+                    renderImagePreviews();
+                    closeLiveCamera();
+                    showToast("Foto lembar jawaban berhasil diambil!", "success");
+                }
+            } catch (err) {
+                console.error("Gagal mengambil gambar:", err);
+                showToast("Gagal memotret dari layar. Menggunakan Kamera Bawaan HP...", "warning");
+                triggerNativeCamera();
             }
-
-            canvas.width = width;
-            canvas.height = height;
-            const ctx = canvas.getContext('2d');
-            ctx.drawImage(videoEl, 0, 0, width, height);
-
-            const dataUrl = canvas.toDataURL('image/jpeg', 0.90);
-            const base64Data = dataUrl.split(',')[1];
-
-            appState.uploadedImages.push({
-                base64: base64Data,
-                mimeType: 'image/jpeg',
-                previewUrl: dataUrl
-            });
-
-            renderUploadedImages();
-            closeLiveCamera();
-            showToast(`Foto halaman ke-${appState.uploadedImages.length} berhasil dijepret!`, "success");
         }
 
-        function handleImageUpload(event) {
-            const files = Array.from(event.target.files);
-            if (!files.length) return;
+        async function handleImageUpload(event) {
+            const files = Array.from(event.target.files || []);
+            if (files.length === 0) return;
 
-            files.forEach(file => {
-                if (!file.type.startsWith('image/')) return;
-                
+            for (const file of files) {
+                try {
+                    const compressed = await compressImageToBase64(file, 1600, 0.85);
+                    appState.uploadedImages.push(compressed);
+                } catch (err) {
+                    showToast("Gagal memproses salah satu gambar.", "error");
+                }
+            }
+
+            event.target.value = "";
+            renderImagePreviews();
+        }
+
+        function compressImageToBase64(file, maxDimension, quality) {
+            return new Promise((resolve, reject) => {
                 const reader = new FileReader();
-                reader.onload = function (e) {
+                reader.onload = (e) => {
                     const img = new Image();
-                    img.onload = function () {
-                        const canvas = document.createElement('canvas');
-                        const MAX_DIM = 1600;
+                    img.onload = () => {
                         let width = img.width;
                         let height = img.height;
 
-                        if (width > height && width > MAX_DIM) {
-                            height *= MAX_DIM / width;
-                            width = MAX_DIM;
-                        } else if (height > MAX_DIM) {
-                            width *= MAX_DIM / height;
-                            height = MAX_DIM;
+                        if (width > maxDimension || height > maxDimension) {
+                            if (width > height) {
+                                height = Math.round((height * maxDimension) / width);
+                                width = maxDimension;
+                            } else {
+                                width = Math.round((width * maxDimension) / height);
+                                height = maxDimension;
+                            }
                         }
 
+                        const canvas = document.createElement('canvas');
                         canvas.width = width;
                         canvas.height = height;
                         const ctx = canvas.getContext('2d');
                         ctx.drawImage(img, 0, 0, width, height);
 
-                        const dataUrl = canvas.toDataURL('image/jpeg', 0.88);
-                        const base64Data = dataUrl.split(',')[1];
-
-                        appState.uploadedImages.push({
-                            base64: base64Data,
-                            mimeType: 'image/jpeg',
-                            previewUrl: dataUrl
-                        });
-                        renderUploadedImages();
+                        const dataUrl = canvas.toDataURL('image/jpeg', quality);
+                        const base64 = dataUrl.split(',')[1];
+                        resolve({ base64, mimeType: 'image/jpeg', previewUrl: dataUrl });
                     };
+                    img.onerror = reject;
                     img.src = e.target.result;
                 };
+                reader.onerror = reject;
                 reader.readAsDataURL(file);
             });
-
-            event.target.value = '';
         }
 
-        function renderUploadedImages() {
+        function renderImagePreviews() {
             const wrapper = document.getElementById('uploaded-images-wrapper');
             const list = document.getElementById('image-preview-list');
-            const countSpan = document.getElementById('image-count');
+            const countEl = document.getElementById('image-count');
             const analyzeBtn = document.getElementById('btn-analyze');
 
-            countSpan.textContent = appState.uploadedImages.length;
+            countEl.textContent = appState.uploadedImages.length;
 
             if (appState.uploadedImages.length === 0) {
                 wrapper.classList.add('hidden');
@@ -1199,12 +1530,10 @@
             analyzeBtn.disabled = false;
 
             list.innerHTML = appState.uploadedImages.map((img, idx) => `
-                <div class="relative group rounded-2xl overflow-hidden border border-slate-200 bg-slate-100 aspect-[3/4] shadow-2xs">
+                <div class="relative group rounded-xl overflow-hidden border border-slate-200 aspect-[3/4] bg-slate-100">
                     <img src="${img.previewUrl}" alt="Halaman ${idx + 1}" class="w-full h-full object-cover">
-                    <div class="absolute top-2 left-2 bg-slate-950/75 backdrop-blur-xs text-white text-[10px] font-bold px-2.5 py-0.5 rounded-lg">
-                        Hal. ${idx + 1}
-                    </div>
-                    <button onclick="removeSingleImage(${idx})" class="absolute top-2 right-2 w-7 h-7 bg-red-600 text-white rounded-xl flex items-center justify-center text-xs shadow-md hover:bg-red-700 transition">
+                    <div class="absolute bottom-1.5 left-1.5 bg-slate-900/80 text-white text-[10px] font-bold px-2 py-0.5 rounded-md">Hal. ${idx + 1}</div>
+                    <button type="button" onclick="removeSingleImage(${idx})" class="absolute top-1.5 right-1.5 bg-red-600 text-white w-6 h-6 rounded-full text-xs flex items-center justify-center shadow hover:bg-red-700 transition">
                         <i class="fa-solid fa-xmark"></i>
                     </button>
                 </div>
@@ -1213,49 +1542,26 @@
 
         function removeSingleImage(index) {
             appState.uploadedImages.splice(index, 1);
-            renderUploadedImages();
+            renderImagePreviews();
         }
 
         function clearImages() {
             appState.uploadedImages = [];
-            renderUploadedImages();
+            renderImagePreviews();
         }
 
-        async function fetchWithBackoff(url, payload, maxRetries = 4) {
-            let delay = 1000;
-            for (let attempt = 0; attempt <= maxRetries; attempt++) {
-                try {
-                    const response = await fetch(url, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
-                    });
-                    if (!response.ok) {
-                        throw new Error(`HTTP Error: ${response.status}`);
-                    }
-                    return await response.json();
-                } catch (err) {
-                    if (attempt === maxRetries) throw err;
-                    await new Promise(res => setTimeout(res, delay));
-                    delay *= 2;
-                }
-            }
-        }
-
+        // ==========================================
+        // ANALISIS AI & VALIDASI DETERMINISTIK KETAT
+        // ==========================================
         async function analyzeStudentSheet() {
-            parsePGPreview();
-            const pgNumbers = Object.keys(appState.pgKeys).map(Number).sort((a, b) => a - b);
-            const validShorts = appState.shortAnswerKeys.filter(s => s.keyText.trim() !== "");
-            const validEssays = appState.essayKeys.filter(e => e.keyText.trim() !== "");
-
-            if (pgNumbers.length === 0 && validShorts.length === 0 && validEssays.length === 0) {
-                showToast("Kunci jawaban masih kosong! Silakan isi di Tab 1 terlebih dahulu.", "error");
+            if (Object.keys(appState.pgKeys).length === 0 && appState.shortAnswerKeys.length === 0 && appState.essayKeys.length === 0) {
+                showToast("Atur dan simpan Kunci Jawaban terlebih dahulu di Tab 1!", "warning");
                 switchTab('kunci');
                 return;
             }
 
             if (appState.uploadedImages.length === 0) {
-                showToast("Silakan foto atau unggah lembar jawaban siswa terlebih dahulu.", "warning");
+                showToast("Ambil foto atau unggah gambar lembar jawaban siswa terlebih dahulu.", "warning");
                 return;
             }
 
@@ -1264,389 +1570,387 @@
             document.getElementById('result-loading-state').classList.remove('hidden');
             document.getElementById('btn-analyze').disabled = true;
 
-            const pgKeyString = pgNumbers.map(n => `Nomor ${n}: ${appState.pgKeys[n]}`).join('\n');
-            const shortKeyString = validShorts.map(s => `Isian Nomor ${s.number}: ${s.keyText}`).join('\n');
-            const essayRubricString = validEssays.map(e => 
-                `Esai Nomor ${e.number} (Skor Maksimal: ${e.maxScore}):\nKunci Jawaban/Rubrik: ${e.keyText}`
-            ).join('\n\n');
-
-            const manualName = document.getElementById('manual-student-name').value.trim();
-
-            const systemInstruction = `Anda adalah sistem korektor ujian SAS (Sumatif Akhir Semester) dengan tingkat ketelitian dan akurasi 100% absolut.
-Tugas Anda adalah membaca foto lembar jawaban siswa, mengekstrak jawaban yang ditulis/dipilih siswa, dan mencocokkannya secara ketat dengan KUNCI JAWABAN resmi untuk 3 bagian: Pilihan Ganda (PG), Isian Singkat, dan Esai/Uraian.
-
-ATURAN KETAT PEMERIKSAAN (ZERO-ERROR POLICY):
-1. IDENTITAS SISWA: Baca Nama Lengkap dan Kelas/No. Absen siswa dari bagian atas lembar jawaban. Jika tidak terbaca atau kosong, tulis "Tanpa Nama".
-2. PILIHAN GANDA (PG):
-   - Periksa tanda silang (X), lingkaran (O), arsiran, atau huruf jawaban (A/B/C/D/E) yang dipilih siswa untuk setiap nomor soal pada kunci PG.
-   - Jika siswa memilih dua jawaban sekaligus tanpa coretan pembatalan yang jelas, atau membiarkannya kosong, catat jawaban siswa sebagai "KOSONG" atau "GANDA" dan tandai salah.
-   - Bandingkan pilihan siswa persis dengan kunci PG yang diberikan.
-3. ISIAN SINGKAT:
-   - Baca jawaban singkat yang ditulis siswa pada bagian Isian Singkat untuk setiap nomor pada kunci Isian Singkat. Jika kosong, tulis "KOSONG".
-   - Tandai isCorrect = true HANYA JIKA makna kata, istilah, atau angka jawaban siswa tepat dan sesuai dengan kunci isian singkat (toleransi perbedaan huruf kapital atau typo minor yang tidak mengubah makna istilah/angka). Selain itu tandai isCorrect = false.
-4. ESAI / URAIAN:
-   - Transkripsikan tulisan tangan jawaban siswa pada setiap nomor esai secara akurat.
-   - Nilai jawaban siswa berdasarkan kesesuaian konsep, langkah pengerjaan, dan kata kunci pada RUBRIK ESAI.
-   - Berikan skor numerik antara 0 hingga Skor Maksimal soal tersebut secara adil dan objektif. Jika jawaban kosong atau melenceng jauh, beri skor 0. Jika sebagian konsep benar, beri skor proporsional.
-   - Berikan alasan singkat dan jelas mengapa siswa mendapat skor tersebut.`;
-
-            const promptText = `Periksa lembar jawaban siswa pada gambar terlampir berdasarkan kunci berikut:
-
-=== BAGIAN A: KUNCI JAWABAN PILIHAN GANDA (${pgNumbers.length} Soal) ===
-${pgNumbers.length > 0 ? pgKeyString : "Tidak ada soal Pilihan Ganda."}
-
-=== BAGIAN B: KUNCI JAWABAN ISIAN SINGKAT (${validShorts.length} Soal) ===
-${validShorts.length > 0 ? shortKeyString : "Tidak ada soal Isian Singkat."}
-
-=== BAGIAN C: KUNCI & RUBRIK JAWABAN ESAI (${validEssays.length} Soal) ===
-${validEssays.length > 0 ? essayRubricString : "Tidak ada soal Esai."}
-
-Pastikan semua nomor soal pada ketiga bagian diperiksa seluruhnya tanpa ada satu nomor pun yang terlewat.`;
-
-            const userParts = [{ text: promptText }];
-            appState.uploadedImages.forEach(img => {
-                userParts.push({
-                    inlineData: {
-                        mimeType: img.mimeType,
-                        data: img.base64
-                    }
-                });
-            });
-
-            const payload = {
-                contents: [{ role: "user", parts: userParts }],
-                systemInstruction: { parts: [{ text: systemInstruction }] },
-                generationConfig: {
-                    temperature: 0.0,
-                    responseMimeType: "application/json",
-                    responseSchema: {
-                        type: "OBJECT",
-                        properties: {
-                            studentName: { type: "STRING" },
-                            studentClass: { type: "STRING" },
-                            generalNotes: { type: "STRING" },
-                            pgResults: {
-                                type: "ARRAY",
-                                items: {
-                                    type: "OBJECT",
-                                    properties: {
-                                        number: { type: "INTEGER" },
-                                        studentAnswer: { type: "STRING" },
-                                        correctKey: { type: "STRING" },
-                                        isCorrect: { type: "BOOLEAN" }
-                                    },
-                                    required: ["number", "studentAnswer", "correctKey", "isCorrect"]
-                                }
-                            },
-                            shortAnswerResults: {
-                                type: "ARRAY",
-                                items: {
-                                    type: "OBJECT",
-                                    properties: {
-                                        number: { type: "INTEGER" },
-                                        studentAnswer: { type: "STRING" },
-                                        correctKey: { type: "STRING" },
-                                        isCorrect: { type: "BOOLEAN" }
-                                    },
-                                    required: ["number", "studentAnswer", "correctKey", "isCorrect"]
-                                }
-                            },
-                            essayResults: {
-                                type: "ARRAY",
-                                items: {
-                                    type: "OBJECT",
-                                    properties: {
-                                        number: { type: "INTEGER" },
-                                        transcribedAnswer: { type: "STRING" },
-                                        maxScore: { type: "NUMBER" },
-                                        awardedScore: { type: "NUMBER" },
-                                        feedback: { type: "STRING" }
-                                    },
-                                    required: ["number", "transcribedAnswer", "maxScore", "awardedScore", "feedback"]
-                                }
-                            }
-                        },
-                        required: ["studentName", "studentClass", "generalNotes", "pgResults", "shortAnswerResults", "essayResults"]
-                    }
-                }
-            };
-
             try {
-                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${apiKey}`;
-                const result = await fetchWithBackoff(apiUrl, payload);
-                const rawJsonText = result?.candidates?.[0]?.content?.parts?.[0]?.text;
+                const pgNumbers = Object.keys(appState.pgKeys).map(Number).sort((a, b) => a - b);
+                const shortList = appState.shortAnswerKeys;
+                const essayRubricList = appState.essayKeys;
 
-                if (!rawJsonText) {
-                    throw new Error("Respons AI kosong atau tidak valid.");
-                }
+                const systemInstruction = `Anda adalah sistem OCR dan pemeriksa lembar ujian SAS (Sumatif Akhir Semester) yang sangat teliti dan objektif.
+Tugas Anda:
+1. Baca identitas siswa (Nama Lengkap dan Kelas/No Absen) yang tertulis di lembar jawaban. Jika tidak terbaca, isi "Siswa Tanpa Nama".
+2. Untuk Pilihan Ganda (nomor: ${pgNumbers.join(', ') || 'tidak ada'}):
+   - Identifikasi huruf pilihan siswa (A, B, C, D, atau E) yang disilang, dilingkari, atau dicentang.
+   - Jika kosong, ragu-ragu, atau memilih lebih dari satu jawaban tanpa coretan pembatalan yang jelas, isi studentAnswer dengan "-".
+3. Untuk Isian Singkat:
+   - Baca jawaban tulisan tangan siswa untuk setiap nomor soal isian singkat.
+   - Bandingkan makna/angka/istilah jawaban siswa dengan kunci jawaban resmi (toleransi kesalahan ejaan huruf kecil/kapital jika makna dan istilahnya tepat sesuai kunci).
+   - Tentukan isCorrect (true/false).
+4. Untuk Esai / Uraian:
+   - Transkripsikan teks jawaban tulisan tangan siswa apa adanya.
+   - Bandingkan dengan kunci jawaban dan berikan skor objektif antara 0 hingga maxScore untuk tiap nomor.
+   - Berikan alasan singkat penilaian untuk setiap nomor esai.`;
 
-                const parsedResult = JSON.parse(rawJsonText);
+                const userPromptText = `Periksa foto lembar jawaban siswa berikut berdasarkan daftar soal dan rubrik ini:
+- Daftar Nomor Pilihan Ganda yang diperiksa: ${pgNumbers.length > 0 ? pgNumbers.join(', ') : 'Tidak ada soal PG'}
+- Kunci Jawaban Isian Singkat:
+${shortList.length > 0 ? shortList.map(s => `  Nomor ${s.number}: Kunci="${s.keyText}"`).join('\n') : '  Tidak ada soal Isian Singkat'}
+- Rubrik & Kunci Jawaban Esai:
+${essayRubricList.length > 0 ? essayRubricList.map(e => `  Nomor ${e.number} (Skor Maksimal: ${e.maxScore}): Kunci="${e.keyText}"`).join('\n') : '  Tidak ada soal Esai'}`;
 
-                const verifiedPG = pgNumbers.map(num => {
-                    const officialKey = appState.pgKeys[num];
-                    const found = (parsedResult.pgResults || []).find(p => Number(p.number) === num);
-                    const studentAns = found ? String(found.studentAnswer).trim().toUpperCase() : "KOSONG";
-                    const isExactMatch = studentAns === officialKey;
+                const userParts = [{ text: userPromptText }];
+                appState.uploadedImages.forEach(img => {
+                    userParts.push({
+                        inlineData: {
+                            mimeType: img.mimeType,
+                            data: img.base64
+                        }
+                    });
+                });
+
+                const payload = {
+                    contents: [{ role: "user", parts: userParts }],
+                    systemInstruction: { parts: [{ text: systemInstruction }] },
+                    generationConfig: {
+                        temperature: 0.1,
+                        responseMimeType: "application/json",
+                        responseSchema: {
+                            type: "OBJECT",
+                            properties: {
+                                studentName: { type: "STRING" },
+                                studentClass: { type: "STRING" },
+                                generalNote: { type: "STRING" },
+                                pgAnswers: {
+                                    type: "ARRAY",
+                                    items: {
+                                        type: "OBJECT",
+                                        properties: {
+                                            number: { type: "INTEGER" },
+                                            studentAnswer: { type: "STRING" }
+                                        },
+                                        required: ["number", "studentAnswer"]
+                                    }
+                                },
+                                shortAnswers: {
+                                    type: "ARRAY",
+                                    items: {
+                                        type: "OBJECT",
+                                        properties: {
+                                            number: { type: "INTEGER" },
+                                            studentText: { type: "STRING" },
+                                            isCorrect: { type: "BOOLEAN" },
+                                            feedback: { type: "STRING" }
+                                        },
+                                        required: ["number", "studentText", "isCorrect", "feedback"]
+                                    }
+                                },
+                                essayAnswers: {
+                                    type: "ARRAY",
+                                    items: {
+                                        type: "OBJECT",
+                                        properties: {
+                                            number: { type: "INTEGER" },
+                                            studentText: { type: "STRING" },
+                                            scoreAwarded: { type: "NUMBER" },
+                                            feedback: { type: "STRING" }
+                                        },
+                                        required: ["number", "studentText", "scoreAwarded", "feedback"]
+                                    }
+                                }
+                            },
+                            required: ["studentName", "studentClass", "generalNote", "pgAnswers", "shortAnswers", "essayAnswers"]
+                        }
+                    }
+                };
+
+                const aiData = await fetchGeminiWithRetry(payload);
+
+                // =========================================================
+                // VALIDASI DETERMINISTIK KETAT (ANTI-KESALAHAN HITUNG)
+                // =========================================================
+                const manualName = document.getElementById('manual-student-name').value.trim();
+                const finalStudentName = manualName || aiData.studentName || "Siswa Tanpa Nama";
+                const finalStudentClass = aiData.studentClass || appState.className || "-";
+
+                // 1. Validasi Ketat Pilihan Ganda
+                const aiPgMap = {};
+                (aiData.pgAnswers || []).forEach(item => {
+                    aiPgMap[item.number] = String(item.studentAnswer || "-").toUpperCase().trim();
+                });
+
+                const validatedPG = pgNumbers.map(num => {
+                    const keyAns = appState.pgKeys[num];
+                    let studAns = aiPgMap[num] || "-";
+                    if (!/^[A-E]$/.test(studAns)) studAns = "-";
+                    const isCorrect = (studAns === keyAns);
+                    return { number: num, keyAnswer: keyAns, studentAnswer: studAns, isCorrect };
+                });
+
+                // 2. Validasi Ketat Isian Singkat
+                const aiShortMap = {};
+                (aiData.shortAnswers || []).forEach(item => {
+                    aiShortMap[item.number] = item;
+                });
+
+                const validatedShort = shortList.map(item => {
+                    const found = aiShortMap[item.number] || { studentText: "(Tidak dijawab)", isCorrect: false, feedback: "Tidak terbaca" };
                     return {
-                        number: num,
-                        studentAnswer: studentAns,
-                        correctKey: officialKey,
-                        isCorrect: isExactMatch
+                        number: item.number,
+                        keyText: item.keyText,
+                        studentText: found.studentText || "-",
+                        isCorrect: Boolean(found.isCorrect),
+                        feedback: found.feedback || ""
                     };
                 });
 
-                const verifiedShort = validShorts.map(sKey => {
-                    const found = (parsedResult.shortAnswerResults || []).find(s => Number(s.number) === Number(sKey.number));
-                    const studentAns = found ? String(found.studentAnswer).trim() : "KOSONG";
-                    const isEmpty = !studentAns || studentAns.toUpperCase() === "KOSONG" || studentAns === "-";
-                    return {
-                        number: Number(sKey.number),
-                        studentAnswer: isEmpty ? "KOSONG" : studentAns,
-                        correctKey: sKey.keyText,
-                        isCorrect: isEmpty ? false : Boolean(found && found.isCorrect)
-                    };
+                // 3. Validasi Ketat Esai
+                const aiEssayMap = {};
+                (aiData.essayAnswers || []).forEach(item => {
+                    aiEssayMap[item.number] = item;
                 });
 
-                const verifiedEssay = validEssays.map(rubric => {
-                    const found = (parsedResult.essayResults || []).find(e => Number(e.number) === Number(rubric.number));
-                    let score = found ? Number(found.awardedScore) : 0;
-                    if (isNaN(score) || score < 0) score = 0;
-                    if (score > rubric.maxScore) score = rubric.maxScore;
+                const validatedEssay = essayRubricList.map(rubric => {
+                    const found = aiEssayMap[rubric.number] || { studentText: "(Tidak dijawab)", scoreAwarded: 0, feedback: "Tidak ada jawaban." };
+                    let rawScore = Number(found.scoreAwarded) || 0;
+                    if (rawScore < 0) rawScore = 0;
+                    if (rawScore > rubric.maxScore) rawScore = rubric.maxScore;
 
                     return {
-                        number: Number(rubric.number),
-                        transcribedAnswer: found ? found.transcribedAnswer : "(Tidak terbaca / Kosong)",
-                        maxScore: Number(rubric.maxScore),
-                        awardedScore: score,
-                        feedback: found ? found.feedback : "Tidak ada jawaban."
+                        number: rubric.number,
+                        keyText: rubric.keyText,
+                        maxScore: rubric.maxScore,
+                        studentText: found.studentText || "-",
+                        scoreAwarded: rawScore,
+                        feedback: found.feedback || ""
                     };
                 });
 
                 appState.currentAnalysis = {
-                    studentName: manualName || parsedResult.studentName || "Siswa Tanpa Nama",
-                    studentClass: parsedResult.studentClass || appState.examInfo.className || "-",
-                    generalNotes: parsedResult.generalNotes || "Koreksi berhasil dilakukan.",
-                    pgResults: verifiedPG,
-                    shortAnswerResults: verifiedShort,
-                    essayResults: verifiedEssay
+                    studentName: finalStudentName,
+                    studentClass: finalStudentClass,
+                    generalNote: aiData.generalNote || "Koreksi otomatis selesai.",
+                    pgDetails: validatedPG,
+                    shortDetails: validatedShort,
+                    essayDetails: validatedEssay
                 };
 
-                renderAnalysisResult();
-                showToast("Lembar jawaban berhasil diperiksa dengan presisi!", "success");
+                recalculateAndRenderResult();
+                showToast("Lembar jawaban berhasil diperiksa!", "success");
 
             } catch (error) {
-                console.error("Error saat memeriksa lembar:", error);
+                console.error("Error saat analisis:", error);
                 document.getElementById('result-loading-state').classList.add('hidden');
                 document.getElementById('result-empty-state').classList.remove('hidden');
-                showToast("Gagal memproses gambar. Pastikan koneksi & API Key aktif, lalu coba lagi.", "error");
+                showToast(`Terjadi kendala saat memeriksa gambar: ${error.message}`, "error");
             } finally {
                 document.getElementById('btn-analyze').disabled = false;
             }
         }
 
-        // ==========================================
-        // RENDER HASIL KOREKSI & HITUNG NILAI AKHIR
-        // ==========================================
-        function calculateCurrentScores() {
-            const data = appState.currentAnalysis;
-            if (!data) {
-                return {
-                    pgCorrect: 0, pgTotal: 0, pgWeightedScore: 0,
-                    shortCorrect: 0, shortTotal: 0, shortWeightedScore: 0,
-                    essayEarned: 0, essayMax: 0, essayWeightedScore: 0,
-                    finalScore: 0
-                };
+        async function fetchGeminiWithRetry(payload, maxRetries = 4) {
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${apiKey}`;
+            let delay = 1000;
+
+            for (let attempt = 0; attempt <= maxRetries; attempt++) {
+                try {
+                    const response = await fetch(url, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (!response.ok) {
+                        const errBody = await response.text();
+                        throw new Error(`HTTP ${response.status}: ${errBody}`);
+                    }
+
+                    const result = await response.json();
+                    const textContent = result?.candidates?.[0]?.content?.parts?.[0]?.text;
+                    if (!textContent) throw new Error("Respons AI kosong.");
+
+                    return JSON.parse(textContent);
+                } catch (err) {
+                    if (attempt === maxRetries) throw err;
+                    await new Promise(res => setTimeout(res, delay));
+                    delay *= 2;
+                }
             }
-
-            const pgTotal = data.pgResults.length;
-            const pgCorrect = data.pgResults.filter(p => p.isCorrect).length;
-            const rawWeightPG = pgTotal > 0 ? (Number(appState.examInfo.weightPG) || 0) : 0;
-
-            const shortList = data.shortAnswerResults || [];
-            const shortTotal = shortList.length;
-            const shortCorrect = shortList.filter(s => s.isCorrect).length;
-            const rawWeightShort = shortTotal > 0 ? (Number(appState.examInfo.weightShort) || 0) : 0;
-
-            const essayMax = data.essayResults.reduce((sum, e) => sum + Number(e.maxScore), 0);
-            const essayEarned = data.essayResults.reduce((sum, e) => sum + Number(e.awardedScore), 0);
-            const rawWeightEssay = essayMax > 0 ? (Number(appState.examInfo.weightEssay) || 0) : 0;
-
-            const activeWeightSum = rawWeightPG + rawWeightShort + rawWeightEssay;
-            const scaleFactor = activeWeightSum > 0 ? (100 / activeWeightSum) : 0;
-
-            const effectiveWeightPG = rawWeightPG * scaleFactor;
-            const effectiveWeightShort = rawWeightShort * scaleFactor;
-            const effectiveWeightEssay = rawWeightEssay * scaleFactor;
-
-            const pgWeightedScore = pgTotal > 0 ? (pgCorrect / pgTotal) * effectiveWeightPG : 0;
-            const shortWeightedScore = shortTotal > 0 ? (shortCorrect / shortTotal) * effectiveWeightShort : 0;
-            const essayWeightedScore = essayMax > 0 ? (essayEarned / essayMax) * effectiveWeightEssay : 0;
-            const finalScore = Math.round((pgWeightedScore + shortWeightedScore + essayWeightedScore) * 100) / 100;
-
-            return {
-                pgCorrect,
-                pgTotal,
-                pgWeightedScore: Math.round(pgWeightedScore * 100) / 100,
-                shortCorrect,
-                shortTotal,
-                shortWeightedScore: Math.round(shortWeightedScore * 100) / 100,
-                essayEarned: Math.round(essayEarned * 100) / 100,
-                essayMax,
-                essayWeightedScore: Math.round(essayWeightedScore * 100) / 100,
-                finalScore
-            };
         }
 
-        function renderAnalysisResult() {
+        // ==========================================
+        // PERHITUNGAN SKOR PRESISI & KOREKSI MANUAL
+        // ==========================================
+        function recalculateAndRenderResult() {
             const data = appState.currentAnalysis;
             if (!data) return;
 
-            document.getElementById('result-loading-state').classList.add('hidden');
+            const totalPG = data.pgDetails.length;
+            const correctPG = data.pgDetails.filter(item => item.isCorrect).length;
+
+            const totalShort = data.shortDetails.length;
+            const correctShort = data.shortDetails.filter(item => item.isCorrect).length;
+
+            const maxEssayTotal = data.essayDetails.reduce((acc, item) => acc + item.maxScore, 0);
+            const earnedEssayTotal = data.essayDetails.reduce((acc, item) => acc + item.scoreAwarded, 0);
+
+            const rawPGPercent = totalPG > 0 ? (correctPG / totalPG) * 100 : 0;
+            const rawShortPercent = totalShort > 0 ? (correctShort / totalShort) * 100 : 0;
+            const rawEssayPercent = maxEssayTotal > 0 ? (earnedEssayTotal / maxEssayTotal) * 100 : 0;
+
+            let activeWeightSum = 0;
+            if (totalPG > 0) activeWeightSum += appState.weightPG;
+            if (totalShort > 0) activeWeightSum += appState.weightShort;
+            if (maxEssayTotal > 0) activeWeightSum += appState.weightEssay;
+
+            let pgContribution = 0;
+            let shortContribution = 0;
+            let essayContribution = 0;
+            let finalScore = 0;
+
+            if (activeWeightSum > 0) {
+                if (totalPG > 0) pgContribution = (rawPGPercent * appState.weightPG) / activeWeightSum;
+                if (totalShort > 0) shortContribution = (rawShortPercent * appState.weightShort) / activeWeightSum;
+                if (maxEssayTotal > 0) essayContribution = (rawEssayPercent * appState.weightEssay) / activeWeightSum;
+                finalScore = pgContribution + shortContribution + essayContribution;
+            }
+
+            data.summary = {
+                correctPG,
+                totalPG,
+                pgContribution: Number(pgContribution.toFixed(1)),
+                correctShort,
+                totalShort,
+                shortContribution: Number(shortContribution.toFixed(1)),
+                earnedEssayTotal: Number(earnedEssayTotal.toFixed(1)),
+                maxEssayTotal,
+                essayContribution: Number(essayContribution.toFixed(1)),
+                finalScore: Number(finalScore.toFixed(1))
+            };
+
             document.getElementById('result-empty-state').classList.add('hidden');
+            document.getElementById('result-loading-state').classList.add('hidden');
             document.getElementById('result-content-state').classList.remove('hidden');
 
             document.getElementById('res-student-name').value = data.studentName;
             document.getElementById('res-student-class').value = data.studentClass;
-            document.getElementById('res-general-note-text').textContent = data.generalNotes;
+            document.getElementById('res-total-score').textContent = data.summary.finalScore;
+            document.getElementById('res-pg-score-summary').textContent = `${data.summary.pgContribution} poin`;
+            document.getElementById('res-short-score-summary').textContent = `${data.summary.shortContribution} poin`;
+            document.getElementById('res-essay-score-summary').textContent = `${data.summary.essayContribution} poin`;
+            document.getElementById('res-general-note-text').textContent = data.generalNote;
 
-            updateScoreDisplayHeader();
+            const kkmBadge = document.getElementById('res-kkm-badge');
+            if (data.summary.finalScore >= appState.kkm) {
+                kkmBadge.textContent = `TUNTAS (KKM ${appState.kkm})`;
+                kkmBadge.className = "text-[10px] uppercase tracking-wider bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2.5 py-0.5 rounded-full font-bold";
+            } else {
+                kkmBadge.textContent = `REMEDIAL (KKM ${appState.kkm})`;
+                kkmBadge.className = "text-[10px] uppercase tracking-wider bg-red-500/20 text-red-300 border border-red-500/30 px-2.5 py-0.5 rounded-full font-bold";
+            }
 
-            // Render Grid Pilihan Ganda
+            // Render PG Grid
+            document.getElementById('res-pg-fraction').textContent = `Benar: ${correctPG} / ${totalPG}`;
             const pgGrid = document.getElementById('res-pg-grid');
-            if (data.pgResults.length === 0) {
-                pgGrid.innerHTML = `<div class="col-span-full text-xs text-slate-400 italic py-2">Tidak ada soal Pilihan Ganda.</div>`;
+            if (totalPG === 0) {
+                pgGrid.innerHTML = '<div class="col-span-full text-xs text-slate-400 italic">Tidak ada soal Pilihan Ganda.</div>';
             } else {
-                pgGrid.innerHTML = data.pgResults.map((item, idx) => `
-                    <button type="button" onclick="togglePGCorrectness(${idx})" title="Klik untuk mengoreksi manual benar/salah"
-                        class="flex items-center justify-between p-2.5 rounded-xl border text-left transition shadow-2xs ${
-                            item.isCorrect 
-                            ? 'bg-emerald-50 border-emerald-200 hover:bg-emerald-100/80' 
-                            : 'bg-red-50 border-red-200 hover:bg-red-100/80'
-                        }">
+                pgGrid.innerHTML = data.pgDetails.map((item, idx) => `
+                    <button type="button" onclick="togglePGManualOverride(${idx})" class="p-2.5 rounded-xl border text-left transition flex items-center justify-between shadow-2xs ${
+                        item.isCorrect
+                        ? 'bg-emerald-50/90 border-emerald-200 text-emerald-900 hover:bg-emerald-100'
+                        : 'bg-red-50/90 border-red-200 text-red-900 hover:bg-red-100'
+                    }" title="Klik untuk ubah status benar/salah secara manual">
                         <div>
-                            <div class="text-[10px] font-bold text-slate-500">No. ${item.number}</div>
-                            <div class="text-xs font-extrabold ${item.isCorrect ? 'text-emerald-800' : 'text-red-800'}">
-                                ${item.studentAnswer} <span class="font-normal text-[10px] text-slate-500">(${item.correctKey})</span>
+                            <div class="text-[10px] font-bold opacity-70">No. ${item.number}</div>
+                            <div class="text-xs font-mono font-extrabold">
+                                ${item.studentAnswer} <span class="font-normal text-[10px] opacity-75">(Kunci:${item.keyAnswer})</span>
                             </div>
                         </div>
-                        <div class="w-5 h-5 rounded-full flex items-center justify-center text-[10px] ${
-                            item.isCorrect ? 'bg-emerald-600 text-white' : 'bg-red-600 text-white'
-                        }">
-                            <i class="fa-solid ${item.isCorrect ? 'fa-check' : 'fa-xmark'}"></i>
-                        </div>
+                        <i class="fa-solid ${item.isCorrect ? 'fa-circle-check text-emerald-600' : 'fa-circle-xmark text-red-600'} text-sm"></i>
                     </button>
                 `).join('');
             }
 
-            // Render Grid Isian Singkat
+            // Render Isian Singkat Grid
+            document.getElementById('res-short-fraction').textContent = `Benar: ${correctShort} / ${totalShort}`;
             const shortGrid = document.getElementById('res-short-grid');
-            const shortList = data.shortAnswerResults || [];
-            if (shortList.length === 0) {
-                shortGrid.innerHTML = `<div class="col-span-full text-xs text-slate-400 italic py-2">Tidak ada soal Isian Singkat.</div>`;
+            if (totalShort === 0) {
+                shortGrid.innerHTML = '<div class="col-span-full text-xs text-slate-400 italic">Tidak ada soal Isian Singkat.</div>';
             } else {
-                shortGrid.innerHTML = shortList.map((item, idx) => `
-                    <button type="button" onclick="toggleShortCorrectness(${idx})" title="Klik untuk mengoreksi manual benar/salah"
-                        class="flex items-center justify-between p-2.5 rounded-xl border text-left transition gap-2 shadow-2xs ${
-                            item.isCorrect 
-                            ? 'bg-teal-50 border-teal-200 hover:bg-teal-100/80' 
-                            : 'bg-red-50 border-red-200 hover:bg-red-100/80'
-                        }">
-                        <div class="min-w-0 flex-grow">
-                            <div class="text-[10px] font-bold text-slate-500">Isian No. ${item.number}</div>
-                            <div class="text-xs font-extrabold truncate ${item.isCorrect ? 'text-teal-900' : 'text-red-800'}">
-                                "${item.studentAnswer}"
-                            </div>
-                            <div class="text-[10px] text-slate-500 truncate">Kunci: ${item.correctKey}</div>
+                shortGrid.innerHTML = data.shortDetails.map((item, idx) => `
+                    <button type="button" onclick="toggleShortManualOverride(${idx})" class="p-3 rounded-xl border text-left transition flex items-start justify-between gap-2 shadow-2xs ${
+                        item.isCorrect
+                        ? 'bg-teal-50/90 border-teal-200 text-teal-950 hover:bg-teal-100'
+                        : 'bg-red-50/90 border-red-200 text-red-950 hover:bg-red-100'
+                    }" title="Klik untuk ubah status benar/salah secara manual">
+                        <div class="space-y-0.5">
+                            <div class="text-[10px] font-bold opacity-70">Isian No. ${item.number}</div>
+                            <div class="text-xs font-bold">Siswa: "${escapeHtml(item.studentText)}"</div>
+                            <div class="text-[11px] opacity-80">Kunci: <strong>${escapeHtml(item.keyText)}</strong></div>
                         </div>
-                        <div class="w-5 h-5 rounded-full shrink-0 flex items-center justify-center text-[10px] ${
-                            item.isCorrect ? 'bg-teal-600 text-white' : 'bg-red-600 text-white'
-                        }">
-                            <i class="fa-solid ${item.isCorrect ? 'fa-check' : 'fa-xmark'}"></i>
-                        </div>
+                        <i class="fa-solid ${item.isCorrect ? 'fa-circle-check text-teal-600' : 'fa-circle-xmark text-red-600'} text-base mt-1 shrink-0"></i>
                     </button>
                 `).join('');
             }
 
-            // Render Daftar Esai
+            // Render Esai List
+            document.getElementById('res-essay-fraction').textContent = `Poin: ${data.summary.earnedEssayTotal} / ${maxEssayTotal}`;
             const essayList = document.getElementById('res-essay-list');
-            if (data.essayResults.length === 0) {
-                essayList.innerHTML = `<div class="text-xs text-slate-400 italic py-2">Tidak ada soal Esai.</div>`;
+            if (data.essayDetails.length === 0) {
+                essayList.innerHTML = '<div class="text-xs text-slate-400 italic">Tidak ada soal Esai.</div>';
             } else {
-                essayList.innerHTML = data.essayResults.map((item, idx) => `
-                    <div class="bg-white border border-slate-200/90 rounded-2xl p-3.5 space-y-2.5 shadow-2xs">
-                        <div class="flex flex-wrap items-center justify-between gap-2">
-                            <span class="text-xs font-extrabold text-indigo-700 bg-indigo-50 border border-indigo-100 px-2.5 py-1 rounded-lg">Esai Nomor ${item.number}</span>
-                            <div class="flex items-center gap-1.5 bg-slate-50 px-3 py-1 rounded-xl border border-slate-200">
-                                <label class="text-[11px] font-semibold text-slate-600">Skor:</label>
-                                <input type="number" step="0.5" min="0" max="${item.maxScore}" value="${item.awardedScore}" 
-                                    onchange="overrideEssayScore(${idx}, this.value)"
-                                    class="w-12 text-center font-extrabold text-xs text-indigo-700 bg-white rounded border border-indigo-200 py-0.5 focus:outline-none">
-                                <span class="text-xs text-slate-400 font-bold">/ ${item.maxScore}</span>
+                essayList.innerHTML = data.essayDetails.map((item, idx) => `
+                    <div class="p-3.5 rounded-2xl border border-slate-200 bg-white space-y-2.5 shadow-2xs">
+                        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-2">
+                            <span class="text-xs font-extrabold text-indigo-700">Esai No. ${item.number}</span>
+                            <div class="flex items-center gap-1.5 bg-indigo-50 px-2.5 py-1 rounded-xl border border-indigo-100">
+                                <label class="text-[11px] font-bold text-indigo-900">Skor:</label>
+                                <input type="number" step="0.5" min="0" max="${item.maxScore}" value="${item.scoreAwarded}" onchange="overrideEssayScore(${idx}, this.value)" class="w-14 px-1.5 py-0.5 text-xs font-extrabold text-center bg-white border border-indigo-200 rounded-lg focus:ring-2 focus:ring-brand-500 outline-none">
+                                <span class="text-xs font-bold text-indigo-700">/ ${item.maxScore}</span>
                             </div>
                         </div>
-                        <div class="bg-slate-50/80 p-2.5 rounded-xl border border-slate-200/60 text-xs text-slate-700">
-                            <span class="text-[10px] font-bold uppercase text-slate-400 block mb-0.5">Jawaban Terbaca di Kertas:</span>
-                            "${item.transcribedAnswer}"
+                        <div class="text-xs">
+                            <span class="font-bold text-slate-700">Jawaban Siswa:</span>
+                            <p class="text-slate-600 italic mt-1 bg-slate-50 p-2.5 rounded-xl border border-slate-100">"${escapeHtml(item.studentText)}"</p>
                         </div>
-                        <div class="text-[11px] text-slate-600 flex items-start gap-2">
-                            <i class="fa-solid fa-comment-dots text-indigo-500 mt-0.5"></i>
-                            <span><strong>Analisis:</strong> ${item.feedback}</span>
+                        <div class="text-[11px] text-slate-500 flex items-start gap-1.5">
+                            <i class="fa-solid fa-comment-dots text-brand-500 mt-0.5"></i>
+                            <span><strong class="text-slate-700">Catatan AI:</strong> ${escapeHtml(item.feedback)}</span>
                         </div>
                     </div>
                 `).join('');
             }
         }
 
-        function updateScoreDisplayHeader() {
-            const scores = calculateCurrentScores();
-            const kkm = Number(appState.examInfo.kkm) || 75;
-            const isPass = scores.finalScore >= kkm;
-
-            document.getElementById('res-total-score').textContent = scores.finalScore;
-            document.getElementById('res-pg-score-summary').textContent = `${scores.pgWeightedScore} (${scores.pgCorrect}/${scores.pgTotal})`;
-            document.getElementById('res-short-score-summary').textContent = `${scores.shortWeightedScore} (${scores.shortCorrect}/${scores.shortTotal})`;
-            document.getElementById('res-essay-score-summary').textContent = `${scores.essayWeightedScore} (${scores.essayEarned}/${scores.essayMax})`;
-            
-            document.getElementById('res-pg-fraction').textContent = `Benar: ${scores.pgCorrect} / ${scores.pgTotal}`;
-            document.getElementById('res-short-fraction').textContent = `Benar: ${scores.shortCorrect} / ${scores.shortTotal}`;
-            document.getElementById('res-essay-fraction').textContent = `Poin: ${scores.essayEarned} / ${scores.essayMax}`;
-
-            const kkmBadge = document.getElementById('res-kkm-badge');
-            if (isPass) {
-                kkmBadge.textContent = `TUNTAS (KKM ${kkm})`;
-                kkmBadge.className = "text-[10px] uppercase tracking-wider bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2.5 py-0.5 rounded-full font-bold";
-            } else {
-                kkmBadge.textContent = `REMEDIAL (KKM ${kkm})`;
-                kkmBadge.className = "text-[10px] uppercase tracking-wider bg-red-500/20 text-red-300 border border-red-500/30 px-2.5 py-0.5 rounded-full font-bold";
-            }
+        function togglePGManualOverride(index) {
+            if (!appState.currentAnalysis || !appState.currentAnalysis.pgDetails[index]) return;
+            const item = appState.currentAnalysis.pgDetails[index];
+            item.isCorrect = !item.isCorrect;
+            recalculateAndRenderResult();
+            showToast(`PG No. ${item.number} diubah menjadi ${item.isCorrect ? 'BENAR' : 'SALAH'}`, "info");
         }
 
-        function togglePGCorrectness(index) {
-            if (!appState.currentAnalysis) return;
-            appState.currentAnalysis.pgResults[index].isCorrect = !appState.currentAnalysis.pgResults[index].isCorrect;
-            renderAnalysisResult();
+        function toggleShortManualOverride(index) {
+            if (!appState.currentAnalysis || !appState.currentAnalysis.shortDetails[index]) return;
+            const item = appState.currentAnalysis.shortDetails[index];
+            item.isCorrect = !item.isCorrect;
+            recalculateAndRenderResult();
+            showToast(`Isian No. ${item.number} diubah menjadi ${item.isCorrect ? 'BENAR' : 'SALAH'}`, "info");
         }
 
-        function toggleShortCorrectness(index) {
-            if (!appState.currentAnalysis || !appState.currentAnalysis.shortAnswerResults) return;
-            appState.currentAnalysis.shortAnswerResults[index].isCorrect = !appState.currentAnalysis.shortAnswerResults[index].isCorrect;
-            renderAnalysisResult();
-        }
-
-        function overrideEssayScore(index, newValue) {
-            if (!appState.currentAnalysis) return;
-            const item = appState.currentAnalysis.essayResults[index];
-            let val = parseFloat(newValue);
-            if (isNaN(val) || val < 0) val = 0;
-            if (val > item.maxScore) val = item.maxScore;
-            item.awardedScore = val;
-            updateScoreDisplayHeader();
+        function overrideEssayScore(index, newVal) {
+            if (!appState.currentAnalysis || !appState.currentAnalysis.essayDetails[index]) return;
+            const item = appState.currentAnalysis.essayDetails[index];
+            let parsed = parseFloat(newVal);
+            if (isNaN(parsed) || parsed < 0) parsed = 0;
+            if (parsed > item.maxScore) parsed = item.maxScore;
+            item.scoreAwarded = parsed;
+            recalculateAndRenderResult();
         }
 
         function resetAnalysisView() {
             appState.currentAnalysis = null;
             clearImages();
-            document.getElementById('manual-student-name').value = '';
+            document.getElementById('manual-student-name').value = "";
             document.getElementById('result-content-state').classList.add('hidden');
             document.getElementById('result-loading-state').classList.add('hidden');
             document.getElementById('result-empty-state').classList.remove('hidden');
@@ -1655,168 +1959,152 @@ Pastikan semua nomor soal pada ketiga bagian diperiksa seluruhnya tanpa ada satu
         function commitResultToRecap() {
             if (!appState.currentAnalysis) return;
 
-            const studentName = document.getElementById('res-student-name').value.trim() || "Siswa Tanpa Nama";
-            const studentClass = document.getElementById('res-student-class').value.trim() || "-";
-            const scores = calculateCurrentScores();
-            const kkm = Number(appState.examInfo.kkm) || 75;
+            const updatedName = document.getElementById('res-student-name').value.trim() || "Siswa Tanpa Nama";
+            const updatedClass = document.getElementById('res-student-class').value.trim() || appState.className || "-";
+
+            appState.currentAnalysis.studentName = updatedName;
+            appState.currentAnalysis.studentClass = updatedClass;
 
             const record = {
                 id: Date.now(),
                 timestamp: new Date().toLocaleString('id-ID'),
-                studentName,
-                studentClass,
-                pgCorrect: scores.pgCorrect,
-                pgTotal: scores.pgTotal,
-                pgWeightedScore: scores.pgWeightedScore,
-                shortCorrect: scores.shortCorrect,
-                shortTotal: scores.shortTotal,
-                shortWeightedScore: scores.shortWeightedScore,
-                essayEarned: scores.essayEarned,
-                essayMax: scores.essayMax,
-                essayWeightedScore: scores.essayWeightedScore,
-                finalScore: scores.finalScore,
-                isPass: scores.finalScore >= kkm,
-                details: JSON.parse(JSON.stringify(appState.currentAnalysis))
+                studentName: updatedName,
+                studentClass: updatedClass,
+                summary: { ...appState.currentAnalysis.summary },
+                pgDetails: [...appState.currentAnalysis.pgDetails],
+                shortDetails: [...appState.currentAnalysis.shortDetails],
+                essayDetails: [...appState.currentAnalysis.essayDetails],
+                generalNote: appState.currentAnalysis.generalNote
             };
 
             appState.recapList.push(record);
             saveToLocalStorage();
             renderRecapTable();
             resetAnalysisView();
-
-            showToast(`Nilai ${studentName} (${record.finalScore}) berhasil ditambahkan ke Rekap!`, "success");
+            showToast(`Nilai ${updatedName} (${record.summary.finalScore}) berhasil direkap!`, "success");
         }
 
         // ==========================================
-        // TAB 3: REKAPITULASI NILAI & EKSPOR CSV
+        // TAB 3: REKAPITULASI NILAI & EKSPOR EXCEL
         // ==========================================
         function renderRecapTable() {
-            const list = appState.recapList;
-            document.getElementById('badge-rekap').textContent = list.length;
-            const mobBadge = document.getElementById('mob-badge-rekap');
-            if (mobBadge) mobBadge.textContent = list.length;
-
-            const teacherLabel = appState.examInfo.teacherName && appState.examInfo.teacherName !== "-" ? `Guru: ${appState.examInfo.teacherName} | ` : "";
-            const subjectLabel = appState.examInfo.subject || "Umum";
-            const classLabel = appState.examInfo.className || "-";
-            document.getElementById('recap-subtitle').textContent = `${teacherLabel}Mapel: ${subjectLabel} | Kelas: ${classLabel} | KKM: ${appState.examInfo.kkm}`;
-
-            const totalStudents = list.length;
-            const avgScore = totalStudents > 0 
-                ? (list.reduce((sum, r) => sum + r.finalScore, 0) / totalStudents).toFixed(1) 
-                : "0.0";
-            const maxScore = totalStudents > 0 
-                ? Math.max(...list.map(r => r.finalScore)) 
-                : 0;
-            const passCount = list.filter(r => r.isPass).length;
-            const passRate = totalStudents > 0 ? Math.round((passCount / totalStudents) * 100) : 0;
-
-            document.getElementById('stat-total-students').textContent = totalStudents;
-            document.getElementById('stat-avg-score').textContent = avgScore;
-            document.getElementById('stat-max-score').textContent = maxScore;
-            document.getElementById('stat-pass-rate').textContent = `${passRate}%`;
-
             const tbody = document.getElementById('recap-table-body');
-            if (totalStudents === 0) {
+            const badgeDesk = document.getElementById('badge-rekap');
+            const badgeMob = document.getElementById('mob-badge-rekap');
+            const subtitle = document.getElementById('recap-subtitle');
+
+            const list = appState.recapList;
+            if (badgeDesk) badgeDesk.textContent = list.length;
+            if (badgeMob) badgeMob.textContent = list.length;
+
+            const teacherText = appState.teacherName ? `Guru: ${appState.teacherName} | ` : '';
+            subtitle.textContent = `${teacherText}Mapel: ${appState.subject || 'Umum'} | Kelas: ${appState.className || '-'} | KKM: ${appState.kkm}`;
+
+            document.getElementById('stat-total-students').textContent = list.length;
+            if (list.length === 0) {
+                document.getElementById('stat-avg-score').textContent = "0.0";
+                document.getElementById('stat-max-score').textContent = "0";
+                document.getElementById('stat-pass-rate').textContent = "0%";
                 tbody.innerHTML = `
                     <tr>
-                        <td colspan="11" class="py-14 text-center text-slate-400">
-                            <div class="w-14 h-14 rounded-2xl bg-slate-100 text-slate-300 flex items-center justify-center mx-auto mb-3 text-2xl">
-                                <i class="fa-solid fa-folder-open"></i>
-                            </div>
-                            <span class="text-xs font-semibold block">Belum ada data nilai siswa</span>
-                            <span class="text-[11px] text-slate-400">Silakan pindai lembar jawaban siswa pada menu Foto & Koreksi.</span>
+                        <td colspan="11" class="py-12 text-center text-slate-400 text-xs">
+                            Belum ada data nilai siswa. Silakan periksa lembar jawaban di Tab 2 terlebih dahulu.
                         </td>
                     </tr>
                 `;
                 return;
             }
 
-            tbody.innerHTML = list.map((row, idx) => `
-                <tr class="hover:bg-slate-50/90 transition">
-                    <td class="py-3.5 px-4 text-center font-bold text-slate-400 text-xs">${idx + 1}</td>
-                    <td class="py-3.5 px-4 font-bold text-slate-900">${row.studentName}</td>
-                    <td class="py-3.5 px-4 text-xs font-medium text-slate-600">${row.studentClass}</td>
-                    <td class="py-3.5 px-4 text-center text-xs font-mono text-slate-600">${row.pgCorrect}/${row.pgTotal}</td>
-                    <td class="py-3.5 px-4 text-center font-semibold text-slate-700">${row.pgWeightedScore}</td>
-                    <td class="py-3.5 px-4 text-center text-xs font-mono text-slate-600">${row.shortCorrect ?? 0}/${row.shortTotal ?? 0}</td>
-                    <td class="py-3.5 px-4 text-center font-semibold text-slate-700">${row.shortWeightedScore ?? 0}</td>
-                    <td class="py-3.5 px-4 text-center font-semibold text-slate-700">${row.essayWeightedScore}</td>
-                    <td class="py-3.5 px-4 text-center">
-                        <span class="font-display font-extrabold text-base ${row.isPass ? 'text-brand-700' : 'text-red-600'}">${row.finalScore}</span>
-                    </td>
-                    <td class="py-3.5 px-4 text-center">
-                        <span class="px-2.5 py-1 rounded-full text-[10px] font-extrabold ${
-                            row.isPass ? 'bg-emerald-100 text-emerald-700' : 'bg-red-100 text-red-700'
-                        }">
-                            ${row.isPass ? 'TUNTAS' : 'REMEDIAL'}
-                        </span>
-                    </td>
-                    <td class="py-3.5 px-4 text-right space-x-1 whitespace-nowrap">
-                        <button onclick="viewStudentDetail(${row.id})" class="px-2.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-bold transition" title="Lihat Detail Jawaban">
-                            <i class="fa-solid fa-eye"></i>
-                        </button>
-                        <button onclick="deleteRecapRow(${row.id})" class="px-2.5 py-1.5 bg-red-50 hover:bg-red-100 text-red-600 rounded-xl text-xs font-bold transition" title="Hapus Data">
-                            <i class="fa-solid fa-trash"></i>
-                        </button>
-                    </td>
-                </tr>
-            `).join('');
+            const scores = list.map(r => r.summary.finalScore);
+            const avg = scores.reduce((a, b) => a + b, 0) / scores.length;
+            const max = Math.max(...scores);
+            const passedCount = scores.filter(s => s >= appState.kkm).length;
+            const passRate = Math.round((passedCount / list.length) * 100);
+
+            document.getElementById('stat-avg-score').textContent = avg.toFixed(1);
+            document.getElementById('stat-max-score').textContent = max;
+            document.getElementById('stat-pass-rate').textContent = `${passRate}%`;
+
+            tbody.innerHTML = list.map((rec, idx) => {
+                const isPassed = rec.summary.finalScore >= appState.kkm;
+                return `
+                    <tr class="hover:bg-slate-50/90 transition">
+                        <td class="py-3.5 px-4 text-center text-xs font-semibold text-slate-500">${idx + 1}</td>
+                        <td class="py-3.5 px-4 font-bold text-slate-900 text-xs sm:text-sm">${escapeHtml(rec.studentName)}</td>
+                        <td class="py-3.5 px-4 text-xs font-medium text-slate-600">${escapeHtml(rec.studentClass)}</td>
+                        <td class="py-3.5 px-4 text-center text-xs font-mono text-slate-700">${rec.summary.correctPG}/${rec.summary.totalPG}</td>
+                        <td class="py-3.5 px-4 text-center text-xs font-bold text-brand-600">${rec.summary.pgContribution}</td>
+                        <td class="py-3.5 px-4 text-center text-xs font-mono text-slate-700">${rec.summary.correctShort ?? 0}/${rec.summary.totalShort ?? 0}</td>
+                        <td class="py-3.5 px-4 text-center text-xs font-bold text-teal-600">${rec.summary.shortContribution ?? 0}</td>
+                        <td class="py-3.5 px-4 text-center text-xs font-bold text-indigo-600">${rec.summary.essayContribution}</td>
+                        <td class="py-3.5 px-4 text-center font-display font-extrabold text-sm sm:text-base text-slate-900">${rec.summary.finalScore}</td>
+                        <td class="py-3.5 px-4 text-center">
+                            <span class="px-2.5 py-1 rounded-full text-[10px] font-extrabold ${isPassed ? 'bg-emerald-100 text-emerald-700' : 'bg-red-100 text-red-700'}">
+                                ${isPassed ? 'TUNTAS' : 'REMEDIAL'}
+                            </span>
+                        </td>
+                        <td class="py-3.5 px-4 text-right space-x-1">
+                            <button type="button" onclick="viewRecapDetail(${idx})" class="p-2 text-brand-600 hover:bg-brand-50 rounded-xl transition" title="Lihat Rincian">
+                                <i class="fa-solid fa-eye text-xs"></i>
+                            </button>
+                            <button type="button" onclick="deleteRecapItem(${idx})" class="p-2 text-red-500 hover:bg-red-50 rounded-xl transition" title="Hapus Baris">
+                                <i class="fa-solid fa-trash-can text-xs"></i>
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
         }
 
-        function viewStudentDetail(id) {
-            const record = appState.recapList.find(r => r.id === id);
-            if (!record) return;
+        function viewRecapDetail(index) {
+            const rec = appState.recapList[index];
+            if (!rec) return;
 
-            document.getElementById('modal-title').textContent = `Detail Koreksi: ${record.studentName} (${record.studentClass})`;
-            
-            let pgHtml = (record.details.pgResults || []).map(p => 
-                `<span class="inline-block px-2 py-1 m-0.5 rounded-lg text-[11px] font-mono border ${
-                    p.isCorrect ? 'bg-emerald-50 border-emerald-200 text-emerald-800' : 'bg-red-50 border-red-200 text-red-800'
-                }">${p.number}.${p.studentAnswer} ${p.isCorrect ? '✓' : `(✗ Kunci:${p.correctKey})`}</span>`
-            ).join('');
+            document.getElementById('modal-title').textContent = `Rincian Jawaban: ${rec.studentName} (${rec.studentClass})`;
+            const body = document.getElementById('modal-body');
 
-            let shortHtml = (record.details.shortAnswerResults || []).map(s => `
-                <div class="p-2.5 rounded-xl border text-[11px] flex justify-between items-center ${
-                    s.isCorrect ? 'bg-teal-50 border-teal-200 text-teal-900' : 'bg-red-50 border-red-200 text-red-900'
-                }">
-                    <span><strong>No.${s.number}:</strong> "${s.studentAnswer}" <span class="text-slate-500">(Kunci: ${s.correctKey})</span></span>
-                    <span class="font-bold">${s.isCorrect ? '✓ Benar' : '✗ Salah'}</span>
+            const pgHtml = rec.pgDetails.map(p => `
+                <span class="inline-block px-2 py-1 rounded-lg text-[11px] font-mono border ${p.isCorrect ? 'bg-emerald-50 border-emerald-200 text-emerald-800' : 'bg-red-50 border-red-200 text-red-800'}">
+                    ${p.number}.${p.studentAnswer}${p.isCorrect ? '✓' : '✗(' + p.keyAnswer + ')'}
+                </span>
+            `).join(' ');
+
+            const shortHtml = (rec.shortDetails || []).map(s => `
+                <div class="p-2 rounded-xl border ${s.isCorrect ? 'bg-teal-50/70 border-teal-200' : 'bg-red-50/70 border-red-200'}">
+                    <div class="font-bold text-slate-800">Isian No. ${s.number}: ${s.isCorrect ? 'Benar ✓' : 'Salah ✗'}</div>
+                    <div class="text-slate-700">Jawaban Siswa: "${escapeHtml(s.studentText)}" | Kunci: "${escapeHtml(s.keyText)}"</div>
                 </div>
             `).join('');
 
-            let essayHtml = (record.details.essayResults || []).map(e => `
-                <div class="p-3 bg-slate-50 rounded-2xl border border-slate-200/80 space-y-1">
-                    <div class="flex justify-between font-bold text-slate-800">
-                        <span>Esai No. ${e.number}</span>
-                        <span class="text-indigo-600">Skor: ${e.awardedScore} / ${e.maxScore}</span>
-                    </div>
-                    <p class="text-slate-600 italic">"${e.transcribedAnswer}"</p>
-                    <p class="text-[11px] text-slate-500">Catatan: ${e.feedback}</p>
+            const essayHtml = rec.essayDetails.map(e => `
+                <div class="p-2.5 bg-slate-50 rounded-xl border border-slate-200">
+                    <div class="font-bold text-slate-800">Esai No. ${e.number} &mdash; Skor: ${e.scoreAwarded} / ${e.maxScore}</div>
+                    <div class="italic text-slate-600 mt-1">"${escapeHtml(e.studentText)}"</div>
+                    <div class="text-[11px] text-slate-500 mt-1">Catatan: ${escapeHtml(e.feedback)}</div>
                 </div>
             `).join('');
 
-            document.getElementById('modal-body').innerHTML = `
-                <div class="bg-slate-900 text-white p-3.5 rounded-2xl flex justify-between items-center">
-                    <span>Nilai Akhir: <strong class="font-display text-amber-400 text-lg">${record.finalScore}</strong></span>
-                    <span class="text-[11px] text-slate-300">Diperiksa: ${record.timestamp}</span>
+            body.innerHTML = `
+                <div class="p-3.5 bg-brand-50 border border-brand-100 rounded-2xl flex justify-between items-center">
+                    <span class="font-bold text-brand-900">Nilai Akhir: ${rec.summary.finalScore}</span>
+                    <span class="text-[11px] text-brand-700">${rec.timestamp}</span>
                 </div>
                 <div>
-                    <h4 class="font-bold text-slate-800 mb-1">Pilihan Ganda (${record.pgCorrect}/${record.pgTotal} Benar):</h4>
-                    <div>${pgHtml || '-'}</div>
+                    <div class="font-bold text-slate-700 mb-1.5">Pilihan Ganda (${rec.summary.correctPG}/${rec.summary.totalPG}):</div>
+                    <div class="flex flex-wrap gap-1.5">${pgHtml || '-'}</div>
                 </div>
-                <div class="space-y-1.5">
-                    <h4 class="font-bold text-slate-800">Isian Singkat (${record.shortCorrect ?? 0}/${record.shortTotal ?? 0} Benar):</h4>
-                    ${shortHtml || '-'}
+                <div>
+                    <div class="font-bold text-slate-700 mb-1.5">Isian Singkat (${rec.summary.correctShort ?? 0}/${rec.summary.totalShort ?? 0}):</div>
+                    <div class="space-y-1.5">${shortHtml || '-'}</div>
                 </div>
-                <div class="space-y-2">
-                    <h4 class="font-bold text-slate-800">Esai / Uraian:</h4>
-                    ${essayHtml || '-'}
+                <div>
+                    <div class="font-bold text-slate-700 mb-1.5">Uraian / Esai:</div>
+                    <div class="space-y-2">${essayHtml || '-'}</div>
                 </div>
             `;
 
             document.getElementById('modal-footer').innerHTML = `
-                <button onclick="closeModal()" class="px-4 py-2 bg-slate-900 text-white rounded-xl text-xs font-bold">Tutup</button>
+                <button type="button" onclick="closeModal()" class="px-4 py-2 bg-slate-800 text-white rounded-xl text-xs font-bold">Tutup</button>
             `;
 
             const modal = document.getElementById('custom-modal');
@@ -1824,14 +2112,8 @@ Pastikan semua nomor soal pada ketiga bagian diperiksa seluruhnya tanpa ada satu
             modal.classList.add('flex');
         }
 
-        function closeModal() {
-            const modal = document.getElementById('custom-modal');
-            modal.classList.add('hidden');
-            modal.classList.remove('flex');
-        }
-
-        function deleteRecapRow(id) {
-            appState.recapList = appState.recapList.filter(r => r.id !== id);
+        function deleteRecapItem(index) {
+            appState.recapList.splice(index, 1);
             saveToLocalStorage();
             renderRecapTable();
             showToast("Data siswa dihapus dari rekap.", "info");
@@ -1839,14 +2121,11 @@ Pastikan semua nomor soal pada ketiga bagian diperiksa seluruhnya tanpa ada satu
 
         function confirmClearRecap() {
             if (appState.recapList.length === 0) return;
-
             document.getElementById('modal-title').textContent = "Konfirmasi Hapus Semua Rekap";
-            document.getElementById('modal-body').innerHTML = `
-                <p class="text-sm text-slate-700 leading-relaxed">Apakah Anda yakin ingin menghapus seluruh <strong>${appState.recapList.length} data nilai siswa</strong> dari daftar rekap? Tindakan ini tidak dapat dibatalkan.</p>
-            `;
+            document.getElementById('modal-body').innerHTML = `<p class="text-sm text-slate-700">Apakah Anda yakin ingin menghapus seluruh <strong>${appState.recapList.length}</strong> data nilai siswa dari daftar rekap? Tindakan ini tidak dapat dibatalkan.</p>`;
             document.getElementById('modal-footer').innerHTML = `
-                <button onclick="closeModal()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-bold">Batal</button>
-                <button onclick="executeClearRecap()" class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-xl text-xs font-bold">Ya, Hapus Semua</button>
+                <button type="button" onclick="closeModal()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-bold">Batal</button>
+                <button type="button" onclick="executeClearRecap()" class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-xl text-xs font-bold">Ya, Hapus Semua</button>
             `;
             const modal = document.getElementById('custom-modal');
             modal.classList.remove('hidden');
@@ -1858,7 +2137,13 @@ Pastikan semua nomor soal pada ketiga bagian diperiksa seluruhnya tanpa ada satu
             saveToLocalStorage();
             renderRecapTable();
             closeModal();
-            showToast("Seluruh rekap nilai berhasil dikosongkan.", "info");
+            showToast("Seluruh data rekap berhasil dikosongkan.", "success");
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('custom-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
         }
 
         function exportToCSV() {
@@ -1870,62 +2155,77 @@ Pastikan semua nomor soal pada ketiga bagian diperiksa seluruhnya tanpa ada satu
             const headers = [
                 "No",
                 "Nama Siswa",
-                "Kelas / Absen",
-                "Mata Pelajaran",
+                "Kelas",
                 "Guru Pemeriksa",
+                "Mata Pelajaran",
                 "PG Benar",
                 "Total Soal PG",
                 "Skor PG",
                 "Isian Benar",
-                "Total Isian",
+                "Total Soal Isian",
                 "Skor Isian",
-                "Poin Esai",
-                "Maks Poin Esai",
+                "Poin Esai Diperoleh",
+                "Skor Maks Esai",
                 "Skor Esai",
                 "Nilai Akhir",
                 "KKM",
-                "Status Ketuntasan",
-                "Waktu Koreksi"
+                "Status Kelulusan",
+                "Waktu Pemeriksaan"
             ];
 
-            const rows = appState.recapList.map((r, index) => [
-                index + 1,
-                `"${r.studentName.replace(/"/g, '""')}"`,
-                `"${r.studentClass.replace(/"/g, '""')}"`,
-                `"${(appState.examInfo.subject || 'Umum').replace(/"/g, '""')}"`,
-                `"${(appState.examInfo.teacherName || '-').replace(/"/g, '""')}"`,
-                r.pgCorrect,
-                r.pgTotal,
-                String(r.pgWeightedScore).replace('.', ','),
-                r.shortCorrect ?? 0,
-                r.shortTotal ?? 0,
-                String(r.shortWeightedScore ?? 0).replace('.', ','),
-                String(r.essayEarned).replace('.', ','),
-                r.essayMax,
-                String(r.essayWeightedScore).replace('.', ','),
-                String(r.finalScore).replace('.', ','),
-                appState.examInfo.kkm,
-                r.isPass ? "TUNTAS" : "REMEDIAL",
-                `"${r.timestamp}"`
-            ]);
+            const rows = appState.recapList.map((rec, idx) => {
+                const status = rec.summary.finalScore >= appState.kkm ? "TUNTAS" : "REMEDIAL";
+                return [
+                    idx + 1,
+                    `"${rec.studentName.replace(/"/g, '""')}"`,
+                    `"${rec.studentClass.replace(/"/g, '""')}"`,
+                    `"${(appState.teacherName || "-").replace(/"/g, '""')}"`,
+                    `"${(appState.subject || "Umum").replace(/"/g, '""')}"`,
+                    rec.summary.correctPG,
+                    rec.summary.totalPG,
+                    rec.summary.pgContribution,
+                    rec.summary.correctShort ?? 0,
+                    rec.summary.totalShort ?? 0,
+                    rec.summary.shortContribution ?? 0,
+                    rec.summary.earnedEssayTotal,
+                    rec.summary.maxEssayTotal,
+                    rec.summary.essayContribution,
+                    rec.summary.finalScore,
+                    appState.kkm,
+                    status,
+                    `"${rec.timestamp}"`
+                ].join(",");
+            });
 
-            const footerNote = ["", `"Dicetak melalui SAS Grader AI - Pengembang: Asep Jamhur, S.Pd., M.M."`];
+            rows.push("");
+            rows.push(`"Dihasilkan oleh Aplikasi SAS Grader AI — Pengembang: Asep Jamhur, S.Pd., M.M."`);
 
-            const csvContent = "\uFEFF" + [headers.join(";"), ...rows.map(e => e.join(";")), "", footerNote.join(";")].join("\n");
+            const csvContent = "\uFEFF" + [headers.join(","), ...rows].join("\n");
             const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
             const url = URL.createObjectURL(blob);
             
             const link = document.createElement("a");
-            const safeSubject = (appState.examInfo.subject || 'Umum').replace(/[^a-zA-Z0-9]/g, '_');
+            const safeSubject = (appState.subject || "SAS").replace(/[^a-zA-Z0-9]/g, "_");
             link.setAttribute("href", url);
-            link.setAttribute("download", `Rekap_Nilai_SAS_${safeSubject}_${new Date().toISOString().slice(0,10)}.csv`);
+            link.setAttribute("download", `Rekap_Nilai_${safeSubject}_${new Date().toISOString().slice(0, 10)}.csv`);
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
             URL.revokeObjectURL(url);
 
-            showToast("File Rekap Excel (.CSV) berhasil diunduh!", "success");
+            showToast("File Excel (.CSV) berhasil diunduh!", "success");
+        }
+
+        function escapeHtml(text) {
+            if (!text) return "";
+            return String(text)
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
         }
     </script>
 </body>
 </html>
+```
